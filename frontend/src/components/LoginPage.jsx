@@ -18,7 +18,6 @@ const LoginPage = ({ onLogin }) => {
       .max(20, t('validation.maxLength', { max: 20 }))
       .required(t('validation.required')),
     password: Yup.string()
-      .min(6, t('interface.atLeast6'))
       .required(t('validation.required')),
   });
 
