@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+// import { toast } from 'react-toastify';
 import { authAPI } from '../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,10 +14,11 @@ const LoginPage = ({ onLogin }) => {
 
   const validationSchema = Yup.object({
     username: Yup.string()
-      .min(3, t('validation.minLength', { min: 3 }))
+      .min(3, t('interface.from3To20'))
+      .max(20, t('validation.maxLength', { max: 20 }))
       .required(t('validation.required')),
     password: Yup.string()
-      .min(6, t('validation.passwordMin'))
+      .min(6, t('interface.atLeast6'))
       .required(t('validation.required')),
   });
 
@@ -31,16 +33,16 @@ const LoginPage = ({ onLogin }) => {
         localStorage.setItem('token', response.token);
         onLogin(response.token);
       } else {
-        setError(t('errors.unknownError'));
+        setError(t('interface.invalidCredentials'));
       }
     } catch (err) {
       console.error('Login error:', err);
       if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else if (err.response?.status === 401) {
-        setError(t('errors.unknownError'));
+        setError(t('interface.invalidCredentials'));
       } else {
-        setError(t('errors.unknownError'));
+        setError(t('notifications.networkError'));
       }
     } finally {
       setSubmitting(false);
@@ -53,7 +55,7 @@ const LoginPage = ({ onLogin }) => {
         <Col md={6} lg={4}>
           <Card>
             <Card.Header as="h5" className="text-center">
-              {t('auth.loginTitle')}
+              {t('interface.login')}
             </Card.Header>
             <Card.Body>
               {error && <Alert variant="danger">{error}</Alert>}
@@ -67,28 +69,28 @@ const LoginPage = ({ onLogin }) => {
                   <Form>
                     <div className="mb-3">
                       <label htmlFor="username" className="form-label">
-                        {t('auth.username')}
+                        {t('interface.yourNick')}
                       </label>
                       <Field
                         type="text"
                         name="username"
                         id="username"
                         className="form-control"
-                        placeholder={t('auth.username')}
+                        placeholder={t('interface.username')}
                       />
                       <ErrorMessage name="username" component="div" className="text-danger mt-1" />
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="password" className="form-label">
-                        {t('auth.password')}
+                        {t('interface.password')}
                       </label>
                       <Field
                         type="password"
                         name="password"
                         id="password"
                         className="form-control"
-                        placeholder={t('auth.password')}
+                        placeholder={t('interface.password')}
                       />
                       <ErrorMessage name="password" component="div" className="text-danger mt-1" />
                     </div>
@@ -99,13 +101,13 @@ const LoginPage = ({ onLogin }) => {
                       className="w-100 mb-3"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? t('auth.login') + '...' : t('auth.login')}
+                      {isSubmitting ? t('interface.login') + '...' : t('interface.login')}
                     </Button>
 
                     <div className="text-center">
                       <span className="text-muted">{t('auth.noAccount')} </span>
                       <Link to="/signup" className="text-decoration-none">
-                        {t('auth.signupLink')}
+                        {t('interface.signup')}
                       </Link>
                     </div>
                   </Form>

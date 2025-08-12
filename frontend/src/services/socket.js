@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client';
+import { toast } from 'react-toastify';
 import { store } from '../store';
 import { addMessage } from '../store/slices/messagesSlice';
 import { setConnectionStatus, setConnectionError } from '../store/slices/uiSlice';
@@ -36,6 +37,7 @@ class SocketService {
     this.socket.on('connect_error', (error) => {
       console.error('Connection error:', error);
       store.dispatch(setConnectionError(error.message));
+      toast.error('Ошибка соединения');
     });
 
     this.socket.on('newMessage', (message) => {

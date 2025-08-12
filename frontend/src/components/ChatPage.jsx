@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import ChannelsList from './ChannelsList';
 import MessagesList from './MessagesList';
 import MessageForm from './MessageForm';
@@ -12,6 +14,7 @@ import { fetchMessages } from '../store/slices/messagesSlice';
 import socketService from '../services/socket';
 
 const ChatPage = ({ onLogout }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
   const { connectionError } = useSelector((state) => state.ui);
@@ -23,19 +26,25 @@ const ChatPage = ({ onLogout }) => {
       socketService.connect(token);
       
       // Загружаем каналы
-      dispatch(fetchChannels());
+      dispatch(fetchChannels()).catch((error) => {
+        console.error('Error fetching channels:', error);
+        toast.error(t('notifications.dataLoadError'));
+      });
     }
-  }, [dispatch]);
+  }, [dispatch, t]);
 
   useEffect(() => {
     if (currentChannelId) {
       // Загружаем сообщения для текущего канала
-      dispatch(fetchMessages(currentChannelId));
+      dispatch(fetchMessages(currentChannelId)).catch((error) => {
+        console.error('Error fetching messages:', error);
+        toast.error(t('notifications.dataLoadError'));
+      });
       
       // Присоединяемся к каналу через WebSocket
       socketService.joinChannel(currentChannelId);
     }
-  }, [currentChannelId, dispatch]);
+  }, [currentChannelId, dispatch, t]);
 
   const handleLogout = () => {
     socketService.disconnect();

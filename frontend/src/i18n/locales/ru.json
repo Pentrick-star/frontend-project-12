@@ -66,5 +66,34 @@
     "connected": "Подключено",
     "connecting": "Подключение...",
     "connectionError": "Ошибка соединения"
+  },
+  "notifications": {
+    "channelCreated": "Канал создан",
+    "channelRenamed": "Канал переименован",
+    "channelRemoved": "Канал удалён",
+    "networkError": "Ошибка сети",
+    "connectionLost": "Соединение потеряно",
+    "dataLoadError": "Ошибка загрузки данных",
+    "messageSent": "Сообщение отправлено",
+    "messageError": "Ошибка отправки сообщения"
+  },
+  "interface": {
+    "yourNick": "Ваш ник",
+    "password": "Пароль",
+    "login": "Войти",
+    "invalidCredentials": "Неверные имя пользователя или пароль",
+    "signup": "Регистрация",
+    "confirmPassword": "Подтвердите пароль",
+    "register": "Зарегистрироваться",
+    "username": "Имя пользователя",
+    "from3To20": "От 3 до 20 символов",
+    "atLeast6": "Не менее 6 символов",
+    "passwordsMustMatch": "Пароли должны совпадать",
+    "send": "Отправить",
+    "add": "+",
+    "channelName": "Имя канала",
+    "channelManagement": "Управление каналом",
+    "rename": "Переименовать",
+    "remove": "Удалить"
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { removeChannel } from '../../store/slices/channelsSlice';
 import { clearMessages } from '../../store/slices/messagesSlice';
 
@@ -15,13 +16,19 @@ const RemoveChannelModal = ({ show, onHide, channelId }) => {
   const handleRemove = () => {
     if (!channel) return;
 
-    // Удаляем канал
-    dispatch(removeChannel(channelId));
-    
-    // Удаляем сообщения канала
-    dispatch(clearMessages(channelId));
-    
-    onHide();
+    try {
+      // Удаляем канал
+      dispatch(removeChannel(channelId));
+      
+      // Удаляем сообщения канала
+      dispatch(clearMessages(channelId));
+      
+      toast.success(t('notifications.channelRemoved'));
+      onHide();
+    } catch (error) {
+      console.error('Error removing channel:', error);
+      toast.error(t('notifications.networkError'));
+    }
   };
 
   if (!channel) return null;
@@ -29,7 +36,7 @@ const RemoveChannelModal = ({ show, onHide, channelId }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{t('channels.removeChannel')}</Modal.Title>
+        <Modal.Title>{t('interface.remove')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>{t('channels.confirmRemove', { name: channel.name })}</p>
@@ -40,7 +47,7 @@ const RemoveChannelModal = ({ show, onHide, channelId }) => {
           {t('channels.cancel')}
         </Button>
         <Button variant="danger" onClick={handleRemove}>
-          {t('channels.removeChannel')}
+          {t('interface.remove')}
         </Button>
       </Modal.Footer>
     </Modal>

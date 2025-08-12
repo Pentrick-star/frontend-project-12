@@ -50,15 +50,15 @@ const ChannelsList = () => {
   return (
     <div className="channels-list">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h6 className="text-muted mb-0">{t('chat.channels')}</h6>
-        <Button
-          variant="link"
-          size="sm"
-          className="text-muted p-0"
-          onClick={() => setShowAddModal(true)}
-        >
-          +
-        </Button>
+        <h6 className="text-muted mb-0">{t('interface.channelManagement')}</h6>
+                  <Button
+            variant="link"
+            size="sm"
+            className="text-muted p-0"
+            onClick={() => setShowAddModal(true)}
+          >
+            {t('interface.add')}
+          </Button>
       </div>
       
       <ListGroup variant="flush">

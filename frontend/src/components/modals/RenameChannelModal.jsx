@@ -4,7 +4,9 @@ import { Modal, Button } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { renameChannel } from '../../store/slices/channelsSlice';
+import { filterProfanity } from '../../utils/profanityFilter';
 
 const RenameChannelModal = ({ show, onHide, channelId }) => {
   const { t } = useTranslation();
@@ -15,7 +17,7 @@ const RenameChannelModal = ({ show, onHide, channelId }) => {
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      .min(3, t('validation.minLength', { min: 3 }))
+      .min(3, t('interface.from3To20'))
       .max(20, t('validation.maxLength', { max: 20 }))
       .required(t('validation.required'))
       .test('unique', t('validation.channelNameExists'), (value) => {
@@ -26,12 +28,15 @@ const RenameChannelModal = ({ show, onHide, channelId }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      dispatch(renameChannel({ id: channelId, name: values.name }));
+      const filteredName = filterProfanity(values.name);
+      dispatch(renameChannel({ id: channelId, name: filteredName }));
       
+      toast.success(t('notifications.channelRenamed'));
       resetForm();
       onHide();
     } catch (error) {
       console.error('Error renaming channel:', error);
+      toast.error(t('notifications.networkError'));
     } finally {
       setSubmitting(false);
     }
@@ -42,7 +47,7 @@ const RenameChannelModal = ({ show, onHide, channelId }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{t('channels.renameChannel')}</Modal.Title>
+        <Modal.Title>{t('interface.rename')}</Modal.Title>
       </Modal.Header>
       <Formik
         initialValues={{ name: channel.name }}
@@ -56,7 +61,7 @@ const RenameChannelModal = ({ show, onHide, channelId }) => {
                 <Field
                   name="name"
                   type="text"
-                  placeholder={t('channels.channelName')}
+                  placeholder={t('interface.channelName')}
                   className={`form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
                   autoFocus
                 />
@@ -72,7 +77,7 @@ const RenameChannelModal = ({ show, onHide, channelId }) => {
                 variant="primary"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? t('channels.renameChannel') + '...' : t('channels.renameChannel')}
+                {isSubmitting ? t('interface.rename') + '...' : t('interface.rename')}
               </Button>
             </Modal.Footer>
           </Form>

@@ -4,8 +4,9 @@ import { Modal, Button } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChannel } from '../../store/slices/channelsSlice';
-import { setCurrentChannel } from '../../store/slices/channelsSlice';
+import { toast } from 'react-toastify';
+import { addChannel, setCurrentChannel } from '../../store/slices/channelsSlice';
+import { filterProfanity } from '../../utils/profanityFilter';
 
 const AddChannelModal = ({ show, onHide }) => {
   const { t } = useTranslation();
@@ -14,7 +15,7 @@ const AddChannelModal = ({ show, onHide }) => {
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      .min(3, t('validation.minLength', { min: 3 }))
+      .min(3, t('interface.from3To20'))
       .max(20, t('validation.maxLength', { max: 20 }))
       .required(t('validation.required'))
       .test('unique', t('validation.channelNameExists'), (value) => {
@@ -25,19 +26,22 @@ const AddChannelModal = ({ show, onHide }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
+      const filteredName = filterProfanity(values.name);
       const newChannel = {
         id: Date.now(), // В реальном приложении ID будет приходить с сервера
-        name: values.name,
+        name: filteredName,
         removable: true,
       };
 
       dispatch(addChannel(newChannel));
       dispatch(setCurrentChannel(newChannel.id));
       
+      toast.success(t('notifications.channelCreated'));
       resetForm();
       onHide();
     } catch (error) {
       console.error('Error adding channel:', error);
+      toast.error(t('notifications.networkError'));
     } finally {
       setSubmitting(false);
     }
@@ -46,7 +50,7 @@ const AddChannelModal = ({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{t('channels.addChannel')}</Modal.Title>
+        <Modal.Title>{t('interface.channelName')}</Modal.Title>
       </Modal.Header>
       <Formik
         initialValues={{ name: '' }}
@@ -60,7 +64,7 @@ const AddChannelModal = ({ show, onHide }) => {
                 <Field
                   name="name"
                   type="text"
-                  placeholder={t('channels.channelName')}
+                  placeholder={t('interface.channelName')}
                   className={`form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
                   autoFocus
                 />
@@ -76,7 +80,7 @@ const AddChannelModal = ({ show, onHide }) => {
                 variant="primary"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? t('channels.addChannel') + '...' : t('channels.addChannel')}
+                {isSubmitting ? t('interface.add') + '...' : t('interface.add')}
               </Button>
             </Modal.Footer>
           </Form>

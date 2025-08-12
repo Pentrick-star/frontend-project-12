@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { sendMessage } from '../store/slices/messagesSlice';
 import socketService from '../services/socket';
+import { filterProfanity } from '../utils/profanityFilter';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -24,20 +26,24 @@ const MessageForm = () => {
     setIsSending(true);
     
     try {
+      const filteredMessage = filterProfanity(message.trim());
       // Отправляем сообщение через WebSocket
-      await socketService.sendMessage(currentChannelId, message.trim());
+      await socketService.sendMessage(currentChannelId, filteredMessage);
       setMessage('');
+      toast.success(t('notifications.messageSent'));
     } catch (error) {
       console.error('Error sending message:', error);
       // Если WebSocket не работает, пробуем через HTTP
       try {
         await dispatch(sendMessage({ 
           channelId: currentChannelId, 
-          message: message.trim() 
+          message: filterProfanity(message.trim())
         })).unwrap();
         setMessage('');
+        toast.success(t('notifications.messageSent'));
       } catch (httpError) {
         console.error('HTTP fallback also failed:', httpError);
+        toast.error(t('notifications.messageError'));
       }
     } finally {
       setIsSending(false);
@@ -75,7 +81,7 @@ const MessageForm = () => {
                 {t('chat.sending')}
               </>
             ) : (
-              t('chat.send')
+              t('interface.send')
             )}
           </Button>
         </InputGroup>

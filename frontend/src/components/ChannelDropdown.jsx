@@ -37,10 +37,10 @@ const ChannelDropdown = ({ channelId, onRename, onRemove }) => {
         {channel.removable && (
           <>
             <Dropdown.Item onClick={handleRename}>
-              {t('channels.rename')}
+              {t('interface.rename')}
             </Dropdown.Item>
             <Dropdown.Item onClick={handleRemove} className="text-danger">
-              {t('channels.remove')}
+              {t('interface.remove')}
             </Dropdown.Item>
           </>
         )}
