@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: frontend-project-12
+    env: node
+    buildCommand: make build
+    startCommand: make start
+    envVars:
+      - key: NODE_ENV
+        value: production
