@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignupPage';
 import ChatPage from './components/ChatPage';
 import NotFoundPage from './components/NotFoundPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import Header from './components/Header';
 import './App.css';
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
     setIsLoading(false);
   }, []);
 
-  const handleLogin = (token) => {
+  const handleLogin = () => {
     setIsAuthenticated(true);
   };
 
@@ -40,13 +42,16 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Header onLogout={handleLogout} isAuthenticated={isAuthenticated} />
         <Routes>
           <Route 
             path="/" 
             element={
-              <ProtectedRoute>
+              isAuthenticated ? (
                 <ChatPage onLogout={handleLogout} />
-              </ProtectedRoute>
+              ) : (
+                <Navigate to="/login" replace />
+              )
             } 
           />
           <Route 
@@ -56,6 +61,16 @@ function App() {
                 <Navigate to="/" replace />
               ) : (
                 <LoginPage onLogin={handleLogin} />
+              )
+            } 
+          />
+          <Route 
+            path="/signup" 
+            element={
+              isAuthenticated ? (
+                <Navigate to="/" replace />
+              ) : (
+                <SignupPage onLogin={handleLogin} />
               )
             } 
           />

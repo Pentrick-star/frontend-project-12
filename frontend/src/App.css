@@ -1,8 +1,59 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-container {
+  height: 100%;
+}
+
+.messages-list {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
+.message-text {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.channels-list .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.channels-list .list-group-item.active {
+  background-color: #e3f2fd;
+  border-color: #e3f2fd;
+  color: #000;
+}
+
+.message-form {
+  background-color: #f8f9fa;
+}
+
+/* Стили для скроллбара */
+.messages-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.messages-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.messages-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 
 .logo {

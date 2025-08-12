@@ -1,12 +1,113 @@
-# React + Vite
+# Hexlet Chat - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для обмена сообщениями в реальном времени, построенное на React с использованием Redux Toolkit и Socket.IO.
 
-Currently, two official plugins are available:
+## Функциональность
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Основные возможности:
+- ✅ Авторизация пользователей
+- ✅ Просмотр списка каналов
+- ✅ Отправка и получение сообщений в реальном времени
+- ✅ WebSocket соединение для мгновенной доставки сообщений
+- ✅ Автоматическое переподключение при потере соединения
+- ✅ Fallback на HTTP API при проблемах с WebSocket
+- ✅ Адаптивный интерфейс
 
-## Expanding the ESLint configuration
+### Технические особенности:
+- **Redux Toolkit** для управления состоянием
+- **Socket.IO** для WebSocket соединений
+- **React Bootstrap** для UI компонентов
+- **Axios** для HTTP запросов
+- **React Router** для навигации
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Установка и запуск
+
+1. Установите зависимости:
+```bash
+npm install
+```
+
+2. Запустите сервер разработки:
+```bash
+npm run dev
+```
+
+3. Откройте браузер и перейдите по адресу `http://localhost:5173`
+
+## Структура проекта
+
+```
+src/
+├── components/          # React компоненты
+│   ├── ChatPage.jsx     # Главная страница чата
+│   ├── ChannelsList.jsx # Список каналов
+│   ├── MessagesList.jsx # Список сообщений
+│   ├── MessageForm.jsx  # Форма отправки сообщений
+│   ├── ConnectionStatus.jsx # Статус соединения
+│   └── ...
+├── store/              # Redux store
+│   ├── index.js        # Конфигурация store
+│   └── slices/         # Redux слайсы
+│       ├── channelsSlice.js
+│       ├── messagesSlice.js
+│       └── uiSlice.js
+├── services/           # Сервисы
+│   ├── api.js          # HTTP API клиент
+│   └── socket.js       # WebSocket сервис
+└── ...
+```
+
+## API Endpoints
+
+Приложение использует следующие API endpoints:
+
+- `POST /api/v1/login` - авторизация
+- `GET /api/v1/channels` - получение списка каналов
+- `GET /api/v1/channels/:id/messages` - получение сообщений канала
+- `POST /api/v1/channels/:id/messages` - отправка сообщения
+
+## WebSocket Events
+
+- `newMessage` - новое сообщение
+- `channelCreated` - создан новый канал
+- `channelRemoved` - удален канал
+- `channelRenamed` - переименован канал
+
+## Состояние приложения
+
+### Channels Slice:
+- `channels` - список каналов
+- `currentChannelId` - ID текущего канала
+- `loading` - состояние загрузки
+- `error` - ошибки
+
+### Messages Slice:
+- `messages` - сообщения по каналам
+- `loading` - состояние загрузки
+- `error` - ошибки
+
+### UI Slice:
+- `isConnected` - статус WebSocket соединения
+- `connectionError` - ошибки соединения
+- `showModal` - показ модальных окон
+- `modalType` - тип модального окна
+
+## Особенности реализации
+
+1. **Автоматическое переподключение**: Приложение автоматически пытается переподключиться к серверу при потере соединения.
+
+2. **Fallback механизм**: Если WebSocket недоступен, сообщения отправляются через HTTP API.
+
+3. **Оптимистичные обновления**: Сообщения добавляются в UI сразу после отправки, не дожидаясь подтверждения от сервера.
+
+4. **Автоскролл**: Автоматическая прокрутка к новым сообщениям.
+
+5. **Обработка ошибок**: Пользователь получает уведомления о проблемах с соединением и отправкой сообщений.
+
+## Требования к серверу
+
+Сервер должен поддерживать:
+- REST API для авторизации и получения данных
+- WebSocket соединения через Socket.IO
+- Аутентификацию через JWT токены
+- События для уведомления о новых сообщениях

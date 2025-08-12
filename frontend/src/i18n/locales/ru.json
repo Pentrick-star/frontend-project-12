@@ -1,0 +1,70 @@
+{
+  "chat": {
+    "title": "Hexlet Chat",
+    "logout": "Выйти",
+    "channels": "Каналы",
+    "selectChannel": "Выберите канал",
+    "noMessages": "Нет сообщений в этом канале",
+    "startConversation": "Начните разговор!",
+    "enterMessage": "Введите сообщение...",
+    "send": "Отправить",
+    "sending": "Отправка...",
+    "connectionError": "Нет соединения с сервером",
+    "connectionWarning": "Нет соединения с сервером. Сообщения могут не отправляться."
+  },
+  "auth": {
+    "login": "Войти",
+    "signup": "Регистрация",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "loginTitle": "Войти в аккаунт",
+    "signupTitle": "Регистрация нового пользователя",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "signupLink": "Регистрация",
+    "loginLink": "Войти"
+  },
+  "validation": {
+    "required": "Обязательное поле",
+    "minLength": "Минимум {{min}} символов",
+    "maxLength": "Максимум {{max}} символов",
+    "passwordMin": "Пароль должен содержать минимум 6 символов",
+    "passwordsMatch": "Пароли должны совпадать",
+    "usernameExists": "Пользователь с таким именем уже существует",
+    "channelNameExists": "Канал с таким именем уже существует"
+  },
+  "channels": {
+    "add": "Добавить канал",
+    "remove": "Удалить канал",
+    "rename": "Переименовать канал",
+    "channelName": "Имя канала",
+    "confirmRemove": "Удалить канал «{{name}}»?",
+    "confirmRemoveText": "Канал будет удален навсегда, а все сообщения в нем будут потеряны.",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить",
+    "addChannel": "Добавить канал",
+    "renameChannel": "Переименовать канал",
+    "removeChannel": "Удалить канал"
+  },
+  "demo": {
+    "title": "Демо режим",
+    "description": "Сервер не подключен. Для демонстрации работы приложения нажмите кнопку ниже.",
+    "enable": "Включить демо режим",
+    "active": "Демо режим активен",
+    "addMessage": "Добавить тестовое сообщение",
+    "disable": "Отключить демо"
+  },
+  "errors": {
+    "networkError": "Ошибка сети",
+    "serverError": "Ошибка сервера",
+    "unknownError": "Неизвестная ошибка",
+    "connectionLost": "Соединение потеряно",
+    "reconnecting": "Переподключение..."
+  },
+  "status": {
+    "connected": "Подключено",
+    "connecting": "Подключение...",
+    "connectionError": "Ошибка соединения"
+  }
+}

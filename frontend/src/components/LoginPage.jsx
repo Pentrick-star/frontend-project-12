@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { authAPI } from '../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const validationSchema = Yup.object({
-  username: Yup.string()
-    .min(3, 'Имя пользователя должно содержать минимум 3 символа')
-    .required('Имя пользователя обязательно'),
-  password: Yup.string()
-    .min(6, 'Пароль должен содержать минимум 6 символов')
-    .required('Пароль обязателен'),
-});
-
 const LoginPage = ({ onLogin }) => {
+  const { t } = useTranslation();
   const [error, setError] = useState('');
+
+  const validationSchema = Yup.object({
+    username: Yup.string()
+      .min(3, t('validation.minLength', { min: 3 }))
+      .required(t('validation.required')),
+    password: Yup.string()
+      .min(6, t('validation.passwordMin'))
+      .required(t('validation.required')),
+  });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
@@ -28,16 +31,16 @@ const LoginPage = ({ onLogin }) => {
         localStorage.setItem('token', response.token);
         onLogin(response.token);
       } else {
-        setError('Неверные учетные данные');
+        setError(t('errors.unknownError'));
       }
     } catch (err) {
       console.error('Login error:', err);
       if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else if (err.response?.status === 401) {
-        setError('Неверные учетные данные');
+        setError(t('errors.unknownError'));
       } else {
-        setError('Ошибка при авторизации. Попробуйте еще раз.');
+        setError(t('errors.unknownError'));
       }
     } finally {
       setSubmitting(false);
@@ -50,7 +53,7 @@ const LoginPage = ({ onLogin }) => {
         <Col md={6} lg={4}>
           <Card>
             <Card.Header as="h5" className="text-center">
-              Вход в чат
+              {t('auth.loginTitle')}
             </Card.Header>
             <Card.Body>
               {error && <Alert variant="danger">{error}</Alert>}
@@ -64,28 +67,28 @@ const LoginPage = ({ onLogin }) => {
                   <Form>
                     <div className="mb-3">
                       <label htmlFor="username" className="form-label">
-                        Имя пользователя
+                        {t('auth.username')}
                       </label>
                       <Field
                         type="text"
                         name="username"
                         id="username"
                         className="form-control"
-                        placeholder="Введите имя пользователя"
+                        placeholder={t('auth.username')}
                       />
                       <ErrorMessage name="username" component="div" className="text-danger mt-1" />
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="password" className="form-label">
-                        Пароль
+                        {t('auth.password')}
                       </label>
                       <Field
                         type="password"
                         name="password"
                         id="password"
                         className="form-control"
-                        placeholder="Введите пароль"
+                        placeholder={t('auth.password')}
                       />
                       <ErrorMessage name="password" component="div" className="text-danger mt-1" />
                     </div>
@@ -93,11 +96,18 @@ const LoginPage = ({ onLogin }) => {
                     <Button
                       type="submit"
                       variant="primary"
-                      className="w-100"
+                      className="w-100 mb-3"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? 'Вход...' : 'Войти'}
+                      {isSubmitting ? t('auth.login') + '...' : t('auth.login')}
                     </Button>
+
+                    <div className="text-center">
+                      <span className="text-muted">{t('auth.noAccount')} </span>
+                      <Link to="/signup" className="text-decoration-none">
+                        {t('auth.signupLink')}
+                      </Link>
+                    </div>
                   </Form>
                 )}
               </Formik>
