@@ -8,12 +8,11 @@ import MessagesList from './MessagesList';
 import MessageForm from './MessageForm';
 import ConnectionStatus from './ConnectionStatus';
 import DemoMode from './DemoMode';
-import Header from './Header';
 import { fetchChannels } from '../store/slices/channelsSlice';
 import { fetchMessages } from '../store/slices/messagesSlice';
 import socketService from '../services/socket';
 
-const ChatPage = ({ onLogout }) => {
+const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
@@ -46,15 +45,8 @@ const ChatPage = ({ onLogout }) => {
     }
   }, [currentChannelId, dispatch, t]);
 
-  const handleLogout = () => {
-    socketService.disconnect();
-    localStorage.removeItem('token');
-    onLogout();
-  };
-
   return (
     <>
-      <Header onLogout={handleLogout} isAuthenticated={true} />
       <Container fluid className="h-100 p-0">
         <Row className="h-100 g-0">
           {/* Сайдбар с каналами */}

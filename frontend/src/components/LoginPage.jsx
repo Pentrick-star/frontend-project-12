@@ -6,7 +6,6 @@ import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 // import { toast } from 'react-toastify';
 import { authAPI } from '../services/api';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginPage = ({ onLogin }) => {
   const { t } = useTranslation();

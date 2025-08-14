@@ -4,7 +4,6 @@ import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import ChatPage from './components/ChatPage';
 import NotFoundPage from './components/NotFoundPage';
-import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import './App.css';
 
@@ -26,6 +25,7 @@ function App() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setIsAuthenticated(false);
   };
 
@@ -48,7 +48,7 @@ function App() {
             path="/" 
             element={
               isAuthenticated ? (
-                <ChatPage onLogout={handleLogout} />
+                <ChatPage />
               ) : (
                 <Navigate to="/login" replace />
               )

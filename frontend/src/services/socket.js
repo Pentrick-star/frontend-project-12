@@ -7,7 +7,7 @@ import { setConnectionStatus, setConnectionError } from '../store/slices/uiSlice
 class SocketService {
   constructor() {
     this.socket = null;
-    this.isConnected = false;
+    this.connected = false;
   }
 
   connect(token) {
@@ -24,13 +24,13 @@ class SocketService {
 
     this.socket.on('connect', () => {
       console.log('Connected to server');
-      this.isConnected = true;
+      this.connected = true;
       store.dispatch(setConnectionStatus(true));
     });
 
     this.socket.on('disconnect', () => {
       console.log('Disconnected from server');
-      this.isConnected = false;
+      this.connected = false;
       store.dispatch(setConnectionStatus(false));
     });
 
@@ -68,13 +68,13 @@ class SocketService {
     if (this.socket) {
       this.socket.disconnect();
       this.socket = null;
-      this.isConnected = false;
+      this.connected = false;
     }
   }
 
   sendMessage(channelId, message) {
     return new Promise((resolve, reject) => {
-      if (!this.socket || !this.isConnected) {
+      if (!this.socket || !this.connected) {
         reject(new Error('Socket not connected'));
         return;
       }
@@ -90,19 +90,19 @@ class SocketService {
   }
 
   joinChannel(channelId) {
-    if (this.socket && this.isConnected) {
+    if (this.socket && this.connected) {
       this.socket.emit('joinChannel', { channelId });
     }
   }
 
   leaveChannel(channelId) {
-    if (this.socket && this.isConnected) {
+    if (this.socket && this.connected) {
       this.socket.emit('leaveChannel', { channelId });
     }
   }
 
   isConnected() {
-    return this.isConnected;
+    return this.connected;
   }
 }
 
