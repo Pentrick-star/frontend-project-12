@@ -42,7 +42,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header onLogout={handleLogout} isAuthenticated={isAuthenticated} />
         <Routes>
           <Route 
             path="/" 

@@ -19,7 +19,7 @@ const channelsSlice = createSlice({
   name: 'channels',
   initialState: {
     channels: mockChannels, // Инициализируем с тестовыми данными
-    currentChannelId: 1, // Устанавливаем General как текущий канал
+    currentChannelId: mockChannels[0]?.id || null, // Устанавливаем первый канал как текущий
     loading: false,
     error: null,
   },

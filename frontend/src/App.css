@@ -8,15 +8,55 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-.messages-container {
+.messages-list-container {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
-.messages-list {
-  max-height: calc(100vh - 300px);
+.messages-header {
+  flex-shrink: 0;
+}
+
+.messages-scroll-area {
+  flex: 1;
   overflow-y: auto;
+  min-height: 0;
+  position: relative;
+}
+
+.messages-content {
+  padding: 1rem;
+}
+
+.messages-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.messages-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.messages-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.message-item {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.message-item:last-child {
+  border-bottom: none;
 }
 
 .message-text {
@@ -39,20 +79,20 @@
 }
 
 /* Стили для скроллбара */
-.messages-list::-webkit-scrollbar {
+.messages-scroll-area::-webkit-scrollbar {
   width: 6px;
 }
 
-.messages-list::-webkit-scrollbar-track {
+.messages-scroll-area::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-.messages-list::-webkit-scrollbar-thumb {
+.messages-scroll-area::-webkit-scrollbar-thumb {
   background: #c1c1c1;
   border-radius: 3px;
 }
 
-.messages-list::-webkit-scrollbar-thumb:hover {
+.messages-scroll-area::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
 

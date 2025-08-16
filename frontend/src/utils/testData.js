@@ -1,5 +1,4 @@
-// Тестовые данные для демонстрации работы приложения
-// В реальном приложении эти данные будут приходить с сервера
+// Простые тестовые данные для учебного проекта
 
 export const mockChannels = [
   {
@@ -12,65 +11,37 @@ export const mockChannels = [
     name: 'Random',
     removable: false,
   },
-  {
-    id: 3,
-    name: 'Help',
-    removable: false,
-  },
 ];
 
 export const mockMessages = {
   1: [
     {
       id: 1,
-      body: 'Привет всем! Добро пожаловать в чат!',
+      body: 'Привет всем!',
       username: 'admin',
       channelId: 1,
       createdAt: new Date(Date.now() - 3600000).toISOString(),
     },
     {
       id: 2,
-      body: 'Спасибо! Рад быть здесь!',
+      body: 'Как дела?',
       username: 'user1',
       channelId: 1,
       createdAt: new Date(Date.now() - 1800000).toISOString(),
     },
-    {
-      id: 3,
-      body: 'Как дела у всех?',
-      username: 'user2',
-      channelId: 1,
-      createdAt: new Date(Date.now() - 900000).toISOString(),
-    },
   ],
   2: [
     {
-      id: 4,
-      body: 'Кто-нибудь играет в игры?',
-      username: 'gamer',
+      id: 3,
+      body: 'Кто-нибудь здесь?',
+      username: 'user2',
       channelId: 2,
-      createdAt: new Date(Date.now() - 7200000).toISOString(),
-    },
-  ],
-  3: [
-    {
-      id: 5,
-      body: 'Нужна помощь с React!',
-      username: 'newbie',
-      channelId: 3,
-      createdAt: new Date(Date.now() - 5400000).toISOString(),
-    },
-    {
-      id: 6,
-      body: 'Конечно! Что именно нужно?',
-      username: 'helper',
-      channelId: 3,
-      createdAt: new Date(Date.now() - 3600000).toISOString(),
+      createdAt: new Date(Date.now() - 900000).toISOString(),
     },
   ],
 };
 
-// Функция для добавления нового сообщения
+// Простая функция для добавления сообщения
 export const addMockMessage = (channelId, message, username = 'user') => {
   const newMessage = {
     id: Date.now(),

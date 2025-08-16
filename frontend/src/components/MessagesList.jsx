@@ -20,6 +20,10 @@ const MessagesList = () => {
     scrollToBottom();
   }, [currentMessages.length]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [currentChannelId]);
+
   const formatTime = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleTimeString('ru-RU', {
@@ -39,7 +43,7 @@ const MessagesList = () => {
   }
 
   return (
-    <div className="messages-container d-flex flex-column h-100">
+    <div className="messages-list-container">
       <div className="messages-header p-3 border-bottom">
         <h5 className="mb-0">
           {currentChannelId ? `# ${channels.find(ch => ch.id === currentChannelId)?.name || t('chat.selectChannel')}` : t('chat.selectChannel')}
@@ -51,18 +55,18 @@ const MessagesList = () => {
         )}
       </div>
       
-      <div className="messages-list flex-grow-1 overflow-auto p-3">
+      <div className="messages-scroll-area">
         {currentMessages.length === 0 ? (
           <div className="text-center text-muted mt-4">
             <p>{t('chat.noMessages')}</p>
             <p>{t('chat.startConversation')}</p>
           </div>
         ) : (
-          <ListGroup variant="flush">
+          <div className="messages-content">
             {currentMessages.map((message) => (
-              <ListGroup.Item
+              <div
                 key={message.id}
-                className="border-0 px-0 py-2"
+                className="message-item border-0 px-3 py-2"
               >
                 <div className="d-flex align-items-start">
                   <div className="flex-shrink-0 me-3">
@@ -92,11 +96,11 @@ const MessagesList = () => {
                     </div>
                   </div>
                 </div>
-              </ListGroup.Item>
+              </div>
             ))}
-          </ListGroup>
+            <div ref={messagesEndRef} />
+          </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
     </div>
   );

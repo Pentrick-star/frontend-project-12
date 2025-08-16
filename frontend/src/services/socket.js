@@ -15,30 +15,49 @@ class SocketService {
       this.disconnect();
     }
 
-    this.socket = io('/', {
-      auth: {
-        token,
-      },
-      transports: ['websocket', 'polling'],
-    });
+    try {
+      this.socket = io('http://localhost:5001', {
+        path: '/socket.io/',
+        auth: {
+          token,
+        },
+        transports: ['websocket', 'polling'],
+        timeout: 5000, // 5 секунд таймаут
+      });
 
-    this.socket.on('connect', () => {
-      console.log('Connected to server');
-      this.isConnected = true;
-      store.dispatch(setConnectionStatus(true));
-    });
+      this.socket.on('connect', () => {
+        console.log('Connected to server');
+        this.isConnected = true;
+        store.dispatch(setConnectionStatus(true));
+        store.dispatch(setConnectionError(null));
+      });
 
-    this.socket.on('disconnect', () => {
-      console.log('Disconnected from server');
+      this.socket.on('disconnect', () => {
+        console.log('Disconnected from server');
+        this.isConnected = false;
+        store.dispatch(setConnectionStatus(false));
+      });
+
+      this.socket.on('connect_error', (error) => {
+        console.error('Connection error:', error);
+        // Не меняем состояние соединения при ошибке WebSocket
+        console.log('WebSocket connection failed, staying in demo mode');
+        toast.error('WebSocket недоступен, используется демо режим');
+      });
+
+      // Таймаут для подключения
+      setTimeout(() => {
+        if (!this.isConnected) {
+          console.log('WebSocket connection timeout, staying in demo mode');
+          // Не меняем состояние, оставляем демо режим
+        }
+      }, 5000);
+    } catch (error) {
+      console.error('Failed to create WebSocket connection:', error);
       this.isConnected = false;
       store.dispatch(setConnectionStatus(false));
-    });
-
-    this.socket.on('connect_error', (error) => {
-      console.error('Connection error:', error);
-      store.dispatch(setConnectionError(error.message));
-      toast.error('Ошибка соединения');
-    });
+      store.dispatch(setConnectionError('Ошибка создания соединения'));
+    }
 
     this.socket.on('newMessage', (message) => {
       console.log('New message received:', message);

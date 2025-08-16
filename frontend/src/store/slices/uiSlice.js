@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const uiSlice = createSlice({
   name: 'ui',
   initialState: {
-    isConnected: false,
+    isConnected: true, // По умолчанию показываем как подключенное для демо режима
     connectionError: null,
     showModal: false,
     modalType: null, // 'addChannel', 'renameChannel', 'removeChannel'

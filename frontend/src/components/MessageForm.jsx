@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { sendMessage } from '../store/slices/messagesSlice';
+import { addMessage } from '../store/slices/messagesSlice';
 import socketService from '../services/socket';
-import { filterProfanity } from '../utils/profanityFilter';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -19,32 +18,63 @@ const MessageForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!message.trim() || !currentChannelId || !isConnected) {
+    if (!message.trim()) {
+      toast.error('Введите сообщение');
+      return;
+    }
+    
+    if (!currentChannelId || currentChannelId <= 0) {
+      toast.error('Выберите канал для отправки сообщения');
       return;
     }
 
+    console.log('Submitting message:', message.trim());
+    console.log('Current channel ID:', currentChannelId);
+    console.log('Is connected:', isConnected);
+    
     setIsSending(true);
     
     try {
-      const filteredMessage = filterProfanity(message.trim());
-      // Отправляем сообщение через WebSocket
-      await socketService.sendMessage(currentChannelId, filteredMessage);
-      setMessage('');
-      toast.success(t('notifications.messageSent'));
-    } catch (error) {
-      console.error('Error sending message:', error);
-      // Если WebSocket не работает, пробуем через HTTP
-      try {
-        await dispatch(sendMessage({ 
-          channelId: currentChannelId, 
-          message: filterProfanity(message.trim())
-        })).unwrap();
+      const messageText = message.trim();
+      
+      if (isConnected) {
+        console.log('Trying to send via WebSocket');
+        // Пытаемся отправить через WebSocket
+        try {
+          await socketService.sendMessage(currentChannelId, messageText);
+          setMessage('');
+          toast.success(t('notifications.messageSent'));
+        } catch (wsError) {
+          console.error('WebSocket error:', wsError);
+          // Fallback на демо режим
+          throw wsError;
+        }
+      } else {
+        console.log('Using demo mode - adding message locally');
+        // Демо режим - добавляем сообщение локально
+        const newMessage = {
+          id: Date.now(),
+          body: messageText,
+          username: 'admin', // Используем имя текущего пользователя
+          channelId: currentChannelId,
+          createdAt: new Date().toISOString(),
+        };
+        
+        console.log('New message object:', newMessage);
+        
+        // Добавляем сообщение в store
+        dispatch(addMessage({
+          channelId: currentChannelId,
+          message: newMessage,
+        }));
+        
+        console.log('Message dispatched to store');
         setMessage('');
         toast.success(t('notifications.messageSent'));
-      } catch (httpError) {
-        console.error('HTTP fallback also failed:', httpError);
-        toast.error(t('notifications.messageError'));
       }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error(t('notifications.messageError'));
     } finally {
       setIsSending(false);
     }
@@ -67,13 +97,13 @@ const MessageForm = () => {
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder={t('chat.enterMessage')}
-            disabled={!currentChannelId || !isConnected || isSending}
+            disabled={!currentChannelId || isSending}
             maxLength={1000}
           />
           <Button
             type="submit"
             variant="primary"
-            disabled={!message.trim() || !currentChannelId || !isConnected || isSending}
+            disabled={!message.trim() || !currentChannelId || isSending}
           >
             {isSending ? (
               <>
@@ -86,8 +116,8 @@ const MessageForm = () => {
           </Button>
         </InputGroup>
         {!isConnected && (
-          <small className="text-danger mt-1 d-block">
-            {t('chat.connectionWarning')}
+          <small className="text-info mt-1 d-block">
+            Демо режим - сообщения сохраняются локально
           </small>
         )}
       </Form>

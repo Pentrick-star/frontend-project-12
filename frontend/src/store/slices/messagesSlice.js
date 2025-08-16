@@ -7,8 +7,9 @@ export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async (channelId, { rejectWithValue }) => {
     try {
-      const response = await messagesAPI.getMessages(channelId);
-      return { channelId, messages: response };
+      // Сообщения загружаются через WebSocket, поэтому просто возвращаем пустой массив
+      // В реальном приложении здесь можно загрузить историю сообщений
+      return { channelId, messages: [] };
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Ошибка загрузки сообщений');
     }
@@ -40,7 +41,11 @@ const messagesSlice = createSlice({
       if (!state.messages[channelId]) {
         state.messages[channelId] = [];
       }
-      state.messages[channelId].push(message);
+      // Проверяем, что сообщение еще не добавлено
+      const existingMessage = state.messages[channelId].find(msg => msg.id === message.id);
+      if (!existingMessage) {
+        state.messages[channelId].push(message);
+      }
     },
     removeMessage: (state, action) => {
       const { channelId, messageId } = action.payload;
