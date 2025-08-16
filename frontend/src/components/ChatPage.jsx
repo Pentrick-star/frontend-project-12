@@ -1,22 +1,29 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import ChannelsList from './ChannelsList';
 import MessagesList from './MessagesList';
 import MessageForm from './MessageForm';
 import Header from './Header';
 import socketService from '../services/socket';
+import { fetchChannels } from '../store/slices/channelsSlice';
+import { fetchMessages } from '../store/slices/messagesSlice';
 
 const ChatPage = ({ onLogout }) => {
+  const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
+      // Загружаем данные с сервера
+      dispatch(fetchChannels());
+      dispatch(fetchMessages());
+      
       // Подключаемся к WebSocket
       socketService.connect(token);
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (currentChannelId) {

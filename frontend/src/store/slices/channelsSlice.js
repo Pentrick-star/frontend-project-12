@@ -18,8 +18,8 @@ export const fetchChannels = createAsyncThunk(
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: {
-    channels: mockChannels, // Инициализируем с тестовыми данными
-    currentChannelId: mockChannels[0]?.id || null, // Устанавливаем первый канал как текущий
+    channels: [], // Начинаем с пустого массива
+    currentChannelId: null,
     loading: false,
     error: null,
   },

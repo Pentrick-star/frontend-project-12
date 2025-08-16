@@ -5,11 +5,11 @@ import { mockMessages } from '../../utils/testData';
 // Асинхронные действия
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
-  async (channelId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      // Сообщения загружаются через WebSocket, поэтому просто возвращаем пустой массив
-      // В реальном приложении здесь можно загрузить историю сообщений
-      return { channelId, messages: [] };
+      // В данном проекте сообщения загружаются через WebSocket
+      // Поэтому возвращаем пустой объект
+      return {};
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Ошибка загрузки сообщений');
     }
@@ -31,7 +31,7 @@ export const sendMessage = createAsyncThunk(
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: {
-    messages: mockMessages, // Инициализируем с тестовыми данными
+    messages: {}, // Начинаем с пустого объекта
     loading: false,
     error: null,
   },
@@ -68,8 +68,7 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false;
-        const { channelId, messages } = action.payload;
-        state.messages[channelId] = messages;
+        // Сообщения загружаются через WebSocket
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;
