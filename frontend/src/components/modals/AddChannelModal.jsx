@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addChannel } from '../../store/slices/channelsSlice';
 import { channelsAPI } from '../../services/api';
 import { toast } from 'react-toastify';
+import { filterProfanity } from '../../utils/profanityFilter';
 
 const AddChannelModal = ({ show, onHide }) => {
   const { t } = useTranslation();
@@ -21,7 +22,8 @@ const AddChannelModal = ({ show, onHide }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await channelsAPI.createChannel(values.name);
+      const filteredName = filterProfanity(values.name);
+      const response = await channelsAPI.createChannel(filteredName);
       dispatch(addChannel(response));
       toast.success(t('notifications.channelCreated'));
       resetForm();

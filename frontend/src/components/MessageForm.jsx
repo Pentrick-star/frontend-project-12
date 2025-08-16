@@ -5,6 +5,7 @@ import { Form, Button, InputGroup } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { addMessage } from '../store/slices/messagesSlice';
 import socketService from '../services/socket';
+import { filterProfanity } from '../utils/profanityFilter';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ const MessageForm = () => {
     setIsSending(true);
     
     try {
-      const messageText = message.trim();
+      const messageText = filterProfanity(message.trim());
       
       if (isConnected) {
         console.log('Trying to send via WebSocket');

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { renameChannel } from '../../store/slices/channelsSlice';
 import { channelsAPI } from '../../services/api';
 import { toast } from 'react-toastify';
+import { filterProfanity } from '../../utils/profanityFilter';
 
 const RenameChannelModal = ({ show, onHide, channelId }) => {
   const { t } = useTranslation();
@@ -23,7 +24,8 @@ const RenameChannelModal = ({ show, onHide, channelId }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await channelsAPI.renameChannel(channelId, values.name);
+      const filteredName = filterProfanity(values.name);
+      const response = await channelsAPI.renameChannel(channelId, filteredName);
       dispatch(renameChannel({ id: channelId, name: response.name }));
       toast.success(t('notifications.channelRenamed'));
       resetForm();
