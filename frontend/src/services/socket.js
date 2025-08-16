@@ -2,6 +2,7 @@ import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 import { store } from '../store';
 import { addMessage } from '../store/slices/messagesSlice';
+import { addChannel, removeChannel, renameChannel } from '../store/slices/channelsSlice';
 import { setConnectionStatus, setConnectionError } from '../store/slices/uiSlice';
 
 class SocketService {
@@ -69,17 +70,17 @@ class SocketService {
 
     this.socket.on('channelCreated', (channel) => {
       console.log('Channel created:', channel);
-      // Можно добавить обработку создания канала
+      store.dispatch(addChannel(channel));
     });
 
     this.socket.on('channelRemoved', (channelId) => {
       console.log('Channel removed:', channelId);
-      // Можно добавить обработку удаления канала
+      store.dispatch(removeChannel(channelId));
     });
 
     this.socket.on('channelRenamed', (channel) => {
       console.log('Channel renamed:', channel);
-      // Можно добавить обработку переименования канала
+      store.dispatch(renameChannel({ id: channel.id, name: channel.name }));
     });
   }
 

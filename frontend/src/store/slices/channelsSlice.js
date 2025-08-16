@@ -29,11 +29,15 @@ const channelsSlice = createSlice({
     },
     addChannel: (state, action) => {
       state.channels.push(action.payload);
+      // Перемещаем пользователя в новый канал
+      state.currentChannelId = action.payload.id;
     },
     removeChannel: (state, action) => {
-      state.channels = state.channels.filter(channel => channel.id !== action.payload);
-      if (state.currentChannelId === action.payload) {
-        state.currentChannelId = state.channels[0]?.id || null;
+      const removedChannelId = action.payload;
+      state.channels = state.channels.filter(channel => channel.id !== removedChannelId);
+      // Если удаляем текущий канал, переходим в General (id: 1)
+      if (state.currentChannelId === removedChannelId) {
+        state.currentChannelId = 1;
       }
     },
     renameChannel: (state, action) => {
