@@ -14,6 +14,45 @@ export const fetchChannels = createAsyncThunk(
   }
 );
 
+export const createChannel = createAsyncThunk(
+  'channels/createChannel',
+  async (channelData, { getState }) => {
+    const { token } = getState().auth || {};
+    const response = await axios.post('/api/v1/channels', channelData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
+);
+
+export const removeChannel = createAsyncThunk(
+  'channels/removeChannel',
+  async (channelId, { getState }) => {
+    const { token } = getState().auth || {};
+    await axios.delete(`/api/v1/channels/${channelId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return channelId;
+  }
+);
+
+export const renameChannel = createAsyncThunk(
+  'channels/renameChannel',
+  async ({ channelId, name }, { getState }) => {
+    const { token } = getState().auth || {};
+    const response = await axios.patch(`/api/v1/channels/${channelId}`, { name }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
+);
+
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: {
@@ -26,6 +65,27 @@ const channelsSlice = createSlice({
     setCurrentChannel: (state, action) => {
       state.currentChannelId = action.payload;
     },
+    addChannel: (state, action) => {
+      state.items.push(action.payload);
+      if (!state.currentChannelId) {
+        state.currentChannelId = action.payload.id;
+      }
+    },
+    removeChannelById: (state, action) => {
+      const removedId = action.payload;
+      state.items = state.items.filter(channel => channel.id !== removedId);
+      if (state.currentChannelId === removedId) {
+        const defaultChannel = state.items.find(channel => channel.name === 'general');
+        state.currentChannelId = defaultChannel ? defaultChannel.id : (state.items[0]?.id || null);
+      }
+    },
+    updateChannel: (state, action) => {
+      const { id, ...updates } = action.payload;
+      const channelIndex = state.items.findIndex(channel => channel.id === id);
+      if (channelIndex !== -1) {
+        state.items[channelIndex] = { ...state.items[channelIndex], ...updates };
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -37,15 +97,35 @@ const channelsSlice = createSlice({
         state.loading = false;
         state.items = action.payload;
         if (state.items.length > 0 && !state.currentChannelId) {
-          state.currentChannelId = state.items[0].id;
+          const generalChannel = state.items.find(channel => channel.name === 'general');
+          state.currentChannelId = generalChannel ? generalChannel.id : state.items[0].id;
         }
       })
       .addCase(fetchChannels.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(createChannel.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+        state.currentChannelId = action.payload.id;
+      })
+      .addCase(removeChannel.fulfilled, (state, action) => {
+        const removedId = action.payload;
+        state.items = state.items.filter(channel => channel.id !== removedId);
+        if (state.currentChannelId === removedId) {
+          const defaultChannel = state.items.find(channel => channel.name === 'general');
+          state.currentChannelId = defaultChannel ? defaultChannel.id : (state.items[0]?.id || null);
+        }
+      })
+      .addCase(renameChannel.fulfilled, (state, action) => {
+        const { id, ...updates } = action.payload;
+        const channelIndex = state.items.findIndex(channel => channel.id === id);
+        if (channelIndex !== -1) {
+          state.items[channelIndex] = { ...state.items[channelIndex], ...updates };
+        }
       });
   },
 });
 
-export const { setCurrentChannel } = channelsSlice.actions;
+export const { setCurrentChannel, addChannel, removeChannelById, updateChannel } = channelsSlice.actions;
 export default channelsSlice.reducer;

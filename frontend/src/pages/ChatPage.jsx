@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChannels, setCurrentChannel } from '../store/channelsSlice';
+import { fetchChannels } from '../store/channelsSlice';
 import { fetchMessages, addMessage } from '../store/messagesSlice';
+import ChannelsList from '../components/ChannelsList';
 import MessageForm from '../components/MessageForm';
 import socketService from '../services/socket';
 import { useAuth } from '../contexts/AuthContext';
@@ -31,10 +32,6 @@ const ChatPage = () => {
     }
   }, [token, dispatch]);
 
-  const handleChannelClick = (channelId) => {
-    dispatch(setCurrentChannel(channelId));
-  };
-
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => message.channelId === currentChannelId);
 
@@ -45,20 +42,7 @@ const ChatPage = () => {
   return (
     <div className="chat-page">
       <div className="chat-container">
-        <div className="channels-sidebar">
-          <h2>Каналы</h2>
-          <div className="channels-list">
-            {channels.map((channel) => (
-              <div
-                key={channel.id}
-                className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
-                onClick={() => handleChannelClick(channel.id)}
-              >
-                # {channel.name}
-              </div>
-            ))}
-          </div>
-        </div>
+        <ChannelsList />
         <div className="chat-main">
           <div className="chat-header">
             <h3>{currentChannel ? `# ${currentChannel.name}` : 'Выберите канал'}</h3>
