@@ -36,6 +36,13 @@ const ChatPage = () => {
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => message.channelId === currentChannelId);
+  
+  console.log('Debug info:', {
+    currentChannelId,
+    channels: channels.map(c => ({ id: c.id, name: c.name })),
+    messages: messages.map(m => ({ id: m.id, channelId: m.channelId, body: m.body })),
+    channelMessages: channelMessages.map(m => ({ id: m.id, body: m.body }))
+  });
 
   if (channelsLoading || messagesLoading) {
     return <div className="loading">{t('common.loading')}</div>;
