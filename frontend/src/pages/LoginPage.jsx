@@ -58,6 +58,7 @@ const LoginPage = () => {
                   id="username"
                   name="username"
                   className="form-control"
+                  data-testid="username-field"
                 />
                 <ErrorMessage name="username" component="div" className="error" />
               </div>
@@ -69,11 +70,12 @@ const LoginPage = () => {
                   id="password"
                   name="password"
                   className="form-control"
+                  data-testid="password-field"
                 />
                 <ErrorMessage name="password" component="div" className="error" />
               </div>
 
-              <button type="submit" disabled={isSubmitting} className="submit-btn">
+              <button type="submit" disabled={isSubmitting} className="submit-btn" data-testid="login-button">
                 {isSubmitting ? t('auth.loggingIn') : t('auth.loginButton')}
               </button>
             </Form>

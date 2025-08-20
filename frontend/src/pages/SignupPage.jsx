@@ -47,9 +47,9 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="signup-page">
+    <div className="signup-page" data-testid="signup-page">
       <div className="signup-container">
-        <h1>{t('auth.signup')}</h1>
+        <h1 data-testid="signup-title">{t('auth.signup')}</h1>
         {signupError && (
           <div className="signup-error">
             {signupError}
@@ -61,7 +61,7 @@ const SignupPage = () => {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className="signup-form">
+            <Form className="signup-form" data-testid="signup-form">
               <div className="form-group">
                 <label htmlFor="username">{t('auth.username')}</label>
                 <Field
@@ -69,6 +69,7 @@ const SignupPage = () => {
                   id="username"
                   name="username"
                   className="form-control"
+                  data-testid="username-field"
                 />
                 <ErrorMessage name="username" component="div" className="error" />
               </div>
@@ -80,6 +81,7 @@ const SignupPage = () => {
                   id="password"
                   name="password"
                   className="form-control"
+                  data-testid="password-field"
                 />
                 <ErrorMessage name="password" component="div" className="error" />
               </div>
@@ -91,11 +93,12 @@ const SignupPage = () => {
                   id="confirmPassword"
                   name="confirmPassword"
                   className="form-control"
+                  data-testid="confirm-password-field"
                 />
                 <ErrorMessage name="confirmPassword" component="div" className="error" />
               </div>
 
-              <button type="submit" disabled={isSubmitting} className="submit-btn">
+              <button type="submit" disabled={isSubmitting} className="submit-btn" data-testid="signup-button">
                 {isSubmitting ? t('auth.signingUp') : t('auth.signupButton')}
               </button>
             </Form>
