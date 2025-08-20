@@ -14,6 +14,19 @@ export const fetchMessages = createAsyncThunk(
   }
 );
 
+export const sendMessage = createAsyncThunk(
+  'messages/sendMessage',
+  async (messageData, { getState }) => {
+    const { token } = getState().auth || {};
+    const response = await axios.post('/api/v1/messages', messageData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
+);
+
 const messagesSlice = createSlice({
   name: 'messages',
   initialState: {
@@ -24,6 +37,9 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, action) => {
       state.items.push(action.payload);
+    },
+    clearMessages: (state) => {
+      state.items = [];
     },
   },
   extraReducers: (builder) => {
@@ -39,9 +55,12 @@ const messagesSlice = createSlice({
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        state.items.push(action.payload);
       });
   },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, clearMessages } = messagesSlice.actions;
 export default messagesSlice.reducer;
