@@ -311,6 +311,13 @@ body {
   border-radius: 4px;
 }
 
+.no-messages {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+}
+
 .chat-input {
   display: flex;
   padding: 1rem;

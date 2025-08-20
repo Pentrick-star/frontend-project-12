@@ -56,7 +56,8 @@
     "removeChannelWarning": "Это действие нельзя отменить.",
     "selectChannel": "Выберите канал",
     "messagePlaceholder": "Введите сообщение...",
-    "newMessage": "Новое сообщение"
+    "newMessage": "Новое сообщение",
+    "noMessages": "Нет сообщений"
   },
   "errors": {
     "notFound": "404",

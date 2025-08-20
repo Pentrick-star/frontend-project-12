@@ -40,8 +40,9 @@ const ChatPage = () => {
   console.log('Debug info:', {
     currentChannelId,
     channels: channels.map(c => ({ id: c.id, name: c.name })),
-    messages: messages.map(m => ({ id: m.id, channelId: m.channelId, body: m.body })),
-    channelMessages: channelMessages.map(m => ({ id: m.id, body: m.body }))
+    messages: messages.map(m => ({ id: m.id, channelId: m.channelId, body: m.body, username: m.username })),
+    channelMessages: channelMessages.map(m => ({ id: m.id, body: m.body, username: m.username })),
+    channelMessagesLength: channelMessages.length
   });
 
   if (channelsLoading || messagesLoading) {
@@ -57,11 +58,15 @@ const ChatPage = () => {
             <h3>{currentChannel ? `# ${currentChannel.name}` : t('chat.selectChannel')}</h3>
           </div>
           <div className="chat-messages">
-            {channelMessages.map((message) => (
-              <div key={message.id} className="message">
-                <strong>{message.username}:</strong> {message.body}
-              </div>
-            ))}
+            {channelMessages.length === 0 ? (
+              <div className="no-messages">{t('chat.noMessages')}</div>
+            ) : (
+              channelMessages.map((message) => (
+                <div key={message.id} className="message">
+                  <strong>{message.username || 'Unknown'}:</strong> {message.body}
+                </div>
+              ))
+            )}
           </div>
           <MessageForm />
         </div>
