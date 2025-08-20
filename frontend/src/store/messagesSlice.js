@@ -1,29 +1,40 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
-  async (_, { getState }) => {
-    const { token } = getState().auth || {};
-    const response = await axios.get('/api/v1/messages', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth || {};
+      const response = await axios.get('/api/v1/messages', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      toast.error('Ошибка загрузки данных');
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
-  async (messageData, { getState }) => {
-    const { token } = getState().auth || {};
-    const response = await axios.post('/api/v1/messages', messageData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+  async (messageData, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth || {};
+      const response = await axios.post('/api/v1/messages', messageData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      toast.error('Ошибка отправки сообщения');
+      return rejectWithValue(error.message);
+    }
   }
 );
 

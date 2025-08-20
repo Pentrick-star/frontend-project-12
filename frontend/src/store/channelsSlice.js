@@ -1,55 +1,79 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
-  async (_, { getState }) => {
-    const { token } = getState().auth || {};
-    const response = await axios.get('/api/v1/channels', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth || {};
+      const response = await axios.get('/api/v1/channels', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      toast.error('Ошибка загрузки данных');
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const createChannel = createAsyncThunk(
   'channels/createChannel',
-  async (channelData, { getState }) => {
-    const { token } = getState().auth || {};
-    const response = await axios.post('/api/v1/channels', channelData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+  async (channelData, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth || {};
+      const response = await axios.post('/api/v1/channels', channelData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success('Канал создан');
+      return response.data;
+    } catch (error) {
+      toast.error('Ошибка создания канала');
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async (channelId, { getState }) => {
-    const { token } = getState().auth || {};
-    await axios.delete(`/api/v1/channels/${channelId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return channelId;
+  async (channelId, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth || {};
+      await axios.delete(`/api/v1/channels/${channelId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success('Канал удалён');
+      return channelId;
+    } catch (error) {
+      toast.error('Ошибка удаления канала');
+      return rejectWithValue(error.message);
+    }
   }
 );
 
 export const renameChannel = createAsyncThunk(
   'channels/renameChannel',
-  async ({ channelId, name }, { getState }) => {
-    const { token } = getState().auth || {};
-    const response = await axios.patch(`/api/v1/channels/${channelId}`, { name }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+  async ({ channelId, name }, { getState, rejectWithValue }) => {
+    try {
+      const { token } = getState().auth || {};
+      const response = await axios.patch(`/api/v1/channels/${channelId}`, { name }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success('Канал переименован');
+      return response.data;
+    } catch (error) {
+      toast.error('Ошибка переименования канала');
+      return rejectWithValue(error.message);
+    }
   }
 );
 

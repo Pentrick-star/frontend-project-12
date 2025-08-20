@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { sendMessage } from '../store/messagesSlice';
+import { filterProfanity } from '../utils/profanityFilter';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -15,8 +16,9 @@ const MessageForm = () => {
     if (!message.trim() || !currentChannelId) return;
 
     try {
+      const filteredMessage = filterProfanity(message.trim());
       await dispatch(sendMessage({
-        body: message.trim(),
+        body: filteredMessage,
         channelId: currentChannelId,
       })).unwrap();
       setMessage('');

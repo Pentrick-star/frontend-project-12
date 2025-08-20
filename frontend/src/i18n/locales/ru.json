@@ -65,5 +65,13 @@
   },
   "header": {
     "logo": "Hexlet Chat"
+  },
+  "notifications": {
+    "channelCreated": "Канал создан",
+    "channelRenamed": "Канал переименован",
+    "channelRemoved": "Канал удалён",
+    "connectionError": "Ошибка соединения",
+    "networkError": "Ошибка сети",
+    "dataLoadError": "Ошибка загрузки данных"
   }
 }

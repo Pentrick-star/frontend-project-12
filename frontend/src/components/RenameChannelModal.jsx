@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { renameChannel } from '../store/channelsSlice';
+import { filterProfanity } from '../utils/profanityFilter';
 
 const RenameChannelModal = ({ isOpen, onClose, channel }) => {
   const { t } = useTranslation();
@@ -25,7 +26,8 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      await dispatch(renameChannel({ channelId: channel.id, name: values.name })).unwrap();
+      const filteredName = filterProfanity(values.name);
+      await dispatch(renameChannel({ channelId: channel.id, name: filteredName })).unwrap();
       resetForm();
       onClose();
     } catch (error) {
