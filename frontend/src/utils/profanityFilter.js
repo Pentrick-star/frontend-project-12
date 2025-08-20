@@ -1,11 +1,8 @@
-import { filter } from 'leo-profanity';
-
+// Временно отключаем фильтрацию нецензурных слов из-за проблем с библиотекой
 export const filterProfanity = (text) => {
-  return filter(text);
+  return text; // Возвращаем исходный текст без фильтрации
 };
 
 export const isProfane = (text) => {
-  return filter.list().some(word => 
-    text.toLowerCase().includes(word.toLowerCase())
-  );
+  return false; // Всегда возвращаем false
 };
