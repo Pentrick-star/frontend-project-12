@@ -77,6 +77,9 @@ const LoginPage = () => {
             </Form>
           )}
         </Formik>
+        <div className="login-link">
+          Нет аккаунта? <Link to="/signup">Зарегистрироваться</Link>
+        </div>
       </div>
     </div>
   );

@@ -4,8 +4,10 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import Header from './components/Header';
 import ChatPage from './pages/ChatPage';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import NotFoundPage from './pages/NotFoundPage';
 import './App.css';
 
@@ -15,6 +17,7 @@ function App() {
       <AuthProvider>
         <Router>
           <div className="App">
+            <Header />
             <Routes>
               <Route 
                 path="/" 
@@ -25,6 +28,7 @@ function App() {
                 } 
               />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
