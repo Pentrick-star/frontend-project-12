@@ -1,24 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchChannels, setCurrentChannel } from '../store/channelsSlice';
+import { fetchMessages } from '../store/messagesSlice';
 
 const ChatPage = () => {
+  const dispatch = useDispatch();
+  const { items: channels, currentChannelId, loading: channelsLoading } = useSelector((state) => state.channels);
+  const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages);
+
+  useEffect(() => {
+    dispatch(fetchChannels());
+    dispatch(fetchMessages());
+  }, [dispatch]);
+
+  const handleChannelClick = (channelId) => {
+    dispatch(setCurrentChannel(channelId));
+  };
+
+  if (channelsLoading || messagesLoading) {
+    return <div className="loading">Загрузка...</div>;
+  }
+
   return (
     <div className="chat-page">
       <div className="chat-container">
         <div className="channels-sidebar">
           <h2>Каналы</h2>
           <div className="channels-list">
-            <div className="channel-item"># general</div>
-            <div className="channel-item"># random</div>
+            {channels.map((channel) => (
+              <div
+                key={channel.id}
+                className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
+                onClick={() => handleChannelClick(channel.id)}
+              >
+                # {channel.name}
+              </div>
+            ))}
           </div>
         </div>
         <div className="chat-main">
           <div className="chat-messages">
-            <div className="message">
-              <strong>admin:</strong> Привет всем!
-            </div>
-            <div className="message">
-              <strong>user:</strong> Привет!
-            </div>
+            {messages.map((message) => (
+              <div key={message.id} className="message">
+                <strong>{message.username}:</strong> {message.body}
+              </div>
+            ))}
           </div>
           <div className="chat-input">
             <input type="text" placeholder="Введите сообщение..." />
