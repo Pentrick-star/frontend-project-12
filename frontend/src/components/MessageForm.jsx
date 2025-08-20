@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { sendMessage } from '../store/messagesSlice';
 
 const MessageForm = () => {
+  const { t } = useTranslation();
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
@@ -37,11 +39,11 @@ const MessageForm = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder="Введите сообщение..."
+        placeholder={t('chat.messagePlaceholder')}
         disabled={loading}
       />
       <button type="submit" disabled={loading || !message.trim()}>
-        {loading ? 'Отправка...' : 'Отправить'}
+        {loading ? t('common.sending') : t('common.send')}
       </button>
     </form>
   );

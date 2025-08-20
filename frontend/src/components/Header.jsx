@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 
 const Header = () => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -15,13 +17,13 @@ const Header = () => {
     <header className="app-header">
       <div className="header-container">
         <Link to="/" className="header-logo">
-          Hexlet Chat
+          {t('header.logo')}
         </Link>
         {user && (
           <div className="header-user">
             <span className="username">{user.username}</span>
             <button onClick={handleLogout} className="logout-btn">
-              Выйти
+              {t('common.logout')}
             </button>
           </div>
         )}

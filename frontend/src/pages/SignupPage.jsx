@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 
 const SignupPage = () => {
+  const { t } = useTranslation();
   const [signupError, setSignupError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const validationSchema = Yup.object({
     username: Yup.string()
-      .min(3, 'Минимум 3 символа')
-      .max(20, 'Максимум 20 символов')
-      .required('Имя пользователя обязательно'),
+      .min(3, t('auth.usernameMin'))
+      .max(20, t('auth.usernameMax'))
+      .required(t('auth.usernameRequired')),
     password: Yup.string()
-      .min(6, 'Минимум 6 символов')
-      .required('Пароль обязателен'),
+      .min(6, t('auth.passwordMin'))
+      .required(t('auth.passwordRequired')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-      .required('Подтверждение пароля обязательно'),
+      .oneOf([Yup.ref('password'), null], t('auth.passwordsMustMatch'))
+      .required(t('auth.confirmPasswordRequired')),
   });
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
@@ -35,9 +37,9 @@ const SignupPage = () => {
       navigate('/');
     } catch (error) {
       if (error.response?.status === 409) {
-        setSignupError('Пользователь с таким именем уже существует');
+        setSignupError(t('auth.userExists'));
       } else {
-        setSignupError('Ошибка при регистрации. Попробуйте еще раз.');
+        setSignupError(t('auth.signupError'));
       }
     } finally {
       setSubmitting(false);
@@ -47,7 +49,7 @@ const SignupPage = () => {
   return (
     <div className="signup-page">
       <div className="signup-container">
-        <h1>Регистрация</h1>
+        <h1>{t('auth.signup')}</h1>
         {signupError && (
           <div className="signup-error">
             {signupError}
@@ -61,7 +63,7 @@ const SignupPage = () => {
           {({ isSubmitting }) => (
             <Form className="signup-form">
               <div className="form-group">
-                <label htmlFor="username">Имя пользователя</label>
+                <label htmlFor="username">{t('auth.username')}</label>
                 <Field
                   type="text"
                   id="username"
@@ -72,7 +74,7 @@ const SignupPage = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="password">Пароль</label>
+                <label htmlFor="password">{t('auth.password')}</label>
                 <Field
                   type="password"
                   id="password"
@@ -83,7 +85,7 @@ const SignupPage = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="confirmPassword">Подтверждение пароля</label>
+                <label htmlFor="confirmPassword">{t('auth.confirmPassword')}</label>
                 <Field
                   type="password"
                   id="confirmPassword"
@@ -94,13 +96,13 @@ const SignupPage = () => {
               </div>
 
               <button type="submit" disabled={isSubmitting} className="submit-btn">
-                {isSubmitting ? 'Регистрация...' : 'Зарегистрироваться'}
+                {isSubmitting ? t('auth.signingUp') : t('auth.signupButton')}
               </button>
             </Form>
           )}
         </Formik>
         <div className="signup-link">
-          Уже есть аккаунт? <Link to="/login">Войти</Link>
+          {t('auth.hasAccount')} <Link to="/login">{t('auth.loginLink')}</Link>
         </div>
       </div>
     </div>

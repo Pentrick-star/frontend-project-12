@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../store/channelsSlice';
 import AddChannelModal from './AddChannelModal';
 import RenameChannelModal from './RenameChannelModal';
 import RemoveChannelModal from './RemoveChannelModal';
 
 const ChannelsList = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { items: channels, currentChannelId } = useSelector((state) => state.channels);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -43,11 +45,11 @@ const ChannelsList = () => {
   return (
     <div className="channels-sidebar">
       <div className="channels-header">
-        <h2>Каналы</h2>
+        <h2>{t('chat.channels')}</h2>
         <button 
           className="add-channel-btn"
           onClick={() => setShowAddModal(true)}
-          title="Добавить канал"
+          title={t('chat.addChannel')}
         >
           +
         </button>
@@ -70,11 +72,11 @@ const ChannelsList = () => {
               {showDropdown === channel.id && (
                 <div className="channel-dropdown">
                   <button onClick={() => handleRename(channel)}>
-                    Переименовать
+                    {t('common.rename')}
                   </button>
                   {isRemovable(channel) && (
                     <button onClick={() => handleRemove(channel)}>
-                      Удалить
+                      {t('common.remove')}
                     </button>
                   )}
                 </div>

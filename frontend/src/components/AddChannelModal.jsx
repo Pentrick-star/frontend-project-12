@@ -1,20 +1,22 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { createChannel } from '../store/channelsSlice';
 
 const AddChannelModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels.items);
   const loading = useSelector((state) => state.channels.loading);
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      .min(3, 'Минимум 3 символа')
-      .max(20, 'Максимум 20 символов')
-      .required('Обязательное поле')
-      .test('unique', 'Канал с таким именем уже существует', function(value) {
+      .min(3, t('chat.channelNameMin'))
+      .max(20, t('chat.channelNameMax'))
+      .required(t('chat.channelNameRequired'))
+      .test('unique', t('chat.channelExists'), function(value) {
         if (!value) return true;
         return !channels.some(channel => 
           channel.name.toLowerCase() === value.toLowerCase()
@@ -40,7 +42,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>Добавить канал</h3>
+          <h3>{t('chat.addChannelTitle')}</h3>
           <button className="modal-close" onClick={onClose}>&times;</button>
         </div>
         <Formik
@@ -51,7 +53,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
           {({ isSubmitting }) => (
             <Form className="modal-form">
               <div className="form-group">
-                <label htmlFor="channelName">Имя канала</label>
+                <label htmlFor="channelName">{t('chat.channelName')}</label>
                 <Field
                   type="text"
                   id="channelName"
@@ -63,10 +65,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               </div>
               <div className="modal-actions">
                 <button type="button" onClick={onClose} className="btn-secondary">
-                  Отмена
+                  {t('common.cancel')}
                 </button>
                 <button type="submit" disabled={isSubmitting} className="btn-primary">
-                  {isSubmitting ? 'Создание...' : 'Создать'}
+                  {isSubmitting ? t('common.creating') : t('common.create')}
                 </button>
               </div>
             </Form>

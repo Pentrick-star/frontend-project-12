@@ -1,0 +1,69 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "create": "Создать",
+    "edit": "Редактировать",
+    "rename": "Переименовать",
+    "remove": "Удалить",
+    "send": "Отправить",
+    "sending": "Отправка...",
+    "creating": "Создание...",
+    "saving": "Сохранение...",
+    "logout": "Выйти",
+    "back": "Вернуться на главную"
+  },
+  "auth": {
+    "login": "Вход в чат",
+    "signup": "Регистрация",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "confirmPassword": "Подтверждение пароля",
+    "loginButton": "Войти",
+    "signupButton": "Зарегистрироваться",
+    "loggingIn": "Вход...",
+    "signingUp": "Регистрация...",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?",
+    "signupLink": "Зарегистрироваться",
+    "loginLink": "Войти",
+    "usernameRequired": "Имя пользователя обязательно",
+    "passwordRequired": "Пароль обязателен",
+    "confirmPasswordRequired": "Подтверждение пароля обязательно",
+    "usernameMin": "Минимум 3 символа",
+    "usernameMax": "Максимум 20 символов",
+    "passwordMin": "Минимум 6 символов",
+    "passwordsMustMatch": "Пароли должны совпадать",
+    "invalidCredentials": "Неверное имя пользователя или пароль",
+    "userExists": "Пользователь с таким именем уже существует",
+    "loginError": "Ошибка при входе. Попробуйте еще раз.",
+    "signupError": "Ошибка при регистрации. Попробуйте еще раз."
+  },
+  "chat": {
+    "channels": "Каналы",
+    "addChannel": "Добавить канал",
+    "channelName": "Имя канала",
+    "channelNameRequired": "Обязательное поле",
+    "channelNameMin": "Минимум 3 символа",
+    "channelNameMax": "Максимум 20 символов",
+    "channelExists": "Канал с таким именем уже существует",
+    "addChannelTitle": "Добавить канал",
+    "renameChannelTitle": "Переименовать канал",
+    "removeChannelTitle": "Удалить канал",
+    "removeChannelConfirm": "Вы уверены, что хотите удалить канал",
+    "removeChannelWarning": "Это действие нельзя отменить.",
+    "selectChannel": "Выберите канал",
+    "messagePlaceholder": "Введите сообщение...",
+    "newMessage": "Новое сообщение"
+  },
+  "errors": {
+    "notFound": "404",
+    "notFoundTitle": "Страница не найдена",
+    "notFoundMessage": "Запрашиваемая страница не существует."
+  },
+  "header": {
+    "logo": "Hexlet Chat"
+  }
+}

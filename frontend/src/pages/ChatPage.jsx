@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { fetchChannels } from '../store/channelsSlice';
 import { fetchMessages, addMessage } from '../store/messagesSlice';
 import ChannelsList from '../components/ChannelsList';
@@ -8,6 +9,7 @@ import socketService from '../services/socket';
 import { useAuth } from '../contexts/AuthContext';
 
 const ChatPage = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { token } = useAuth();
   const { items: channels, currentChannelId, loading: channelsLoading } = useSelector((state) => state.channels);
@@ -36,7 +38,7 @@ const ChatPage = () => {
   const channelMessages = messages.filter(message => message.channelId === currentChannelId);
 
   if (channelsLoading || messagesLoading) {
-    return <div className="loading">Загрузка...</div>;
+    return <div className="loading">{t('common.loading')}</div>;
   }
 
   return (
@@ -45,7 +47,7 @@ const ChatPage = () => {
         <ChannelsList />
         <div className="chat-main">
           <div className="chat-header">
-            <h3>{currentChannel ? `# ${currentChannel.name}` : 'Выберите канал'}</h3>
+            <h3>{currentChannel ? `# ${currentChannel.name}` : t('chat.selectChannel')}</h3>
           </div>
           <div className="chat-messages">
             {channelMessages.map((message) => (
