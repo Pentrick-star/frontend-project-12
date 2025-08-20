@@ -6,7 +6,7 @@ class SocketService {
   }
 
   connect(token) {
-    this.socket = io('/', {
+    this.socket = io('http://localhost:5001', {
       auth: {
         token,
       },
@@ -34,7 +34,10 @@ class SocketService {
 
   onNewMessage(callback) {
     if (this.socket) {
-      this.socket.on('newMessage', callback);
+      this.socket.on('newMessage', (message) => {
+        console.log('Received new message:', message);
+        callback(message);
+      });
     }
   }
 
