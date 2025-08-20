@@ -1,17 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import api from '../services/api';
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async (_, { getState, rejectWithValue }) => {
     try {
       const { token } = getState().auth || {};
-      const response = await axios.get('/api/v1/messages', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get('/messages');
       return response.data;
     } catch (error) {
       toast.error('Ошибка загрузки данных');
@@ -25,11 +21,7 @@ export const sendMessage = createAsyncThunk(
   async (messageData, { getState, rejectWithValue }) => {
     try {
       const { token } = getState().auth || {};
-      const response = await axios.post('/api/v1/messages', messageData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.post('/messages', messageData);
       return response.data;
     } catch (error) {
       toast.error('Ошибка отправки сообщения');

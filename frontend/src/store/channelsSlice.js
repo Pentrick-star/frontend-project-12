@@ -1,17 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import api from '../services/api';
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async (_, { getState, rejectWithValue }) => {
     try {
       const { token } = getState().auth || {};
-      const response = await axios.get('/api/v1/channels', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get('/channels');
       return response.data;
     } catch (error) {
       toast.error('Ошибка загрузки данных');
@@ -25,11 +21,7 @@ export const createChannel = createAsyncThunk(
   async (channelData, { getState, rejectWithValue }) => {
     try {
       const { token } = getState().auth || {};
-      const response = await axios.post('/api/v1/channels', channelData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.post('/channels', channelData);
       toast.success('Канал создан');
       return response.data;
     } catch (error) {
@@ -44,11 +36,7 @@ export const removeChannel = createAsyncThunk(
   async (channelId, { getState, rejectWithValue }) => {
     try {
       const { token } = getState().auth || {};
-      await axios.delete(`/api/v1/channels/${channelId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await api.delete(`/channels/${channelId}`);
       toast.success('Канал удалён');
       return channelId;
     } catch (error) {
@@ -63,11 +51,7 @@ export const renameChannel = createAsyncThunk(
   async ({ channelId, name }, { getState, rejectWithValue }) => {
     try {
       const { token } = getState().auth || {};
-      const response = await axios.patch(`/api/v1/channels/${channelId}`, { name }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.patch(`/channels/${channelId}`, { name });
       toast.success('Канал переименован');
       return response.data;
     } catch (error) {

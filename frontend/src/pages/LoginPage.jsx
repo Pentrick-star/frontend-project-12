@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import axios from 'axios';
+import api from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
@@ -20,7 +20,7 @@ const LoginPage = () => {
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       setAuthError('');
-      const response = await axios.post('/api/v1/login', values);
+      const response = await api.post('/login', values);
       const { token } = response.data;
       login(token);
       navigate('/');
