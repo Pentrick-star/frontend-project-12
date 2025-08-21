@@ -48,7 +48,7 @@ const SignupPage = () => {
 
   return (
     <div className="signup-page" data-testid="signup-page">
-      <div className="signup-container">
+      <div className="signup-container" data-testid="signup-container">
         <h1 data-testid="signup-title">{t('auth.signup')}</h1>
         {signupError && (
           <div className="signup-error">
@@ -62,8 +62,8 @@ const SignupPage = () => {
         >
           {({ isSubmitting }) => (
             <Form className="signup-form" data-testid="signup-form">
-              <div className="form-group">
-                <label htmlFor="username">{t('auth.username')}</label>
+              <div className="form-group" data-testid="username-group">
+                <label htmlFor="username" data-testid="username-label">{t('auth.username')}</label>
                 <Field
                   type="text"
                   id="username"
@@ -74,8 +74,8 @@ const SignupPage = () => {
                 <ErrorMessage name="username" component="div" className="error" />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="password">{t('auth.password')}</label>
+              <div className="form-group" data-testid="password-group">
+                <label htmlFor="password" data-testid="password-label">{t('auth.password')}</label>
                 <Field
                   type="password"
                   id="password"
@@ -86,8 +86,8 @@ const SignupPage = () => {
                 <ErrorMessage name="password" component="div" className="error" />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="confirmPassword">{t('auth.confirmPassword')}</label>
+              <div className="form-group" data-testid="confirm-password-group">
+                <label htmlFor="confirmPassword" data-testid="confirm-password-label">{t('auth.confirmPassword')}</label>
                 <Field
                   type="password"
                   id="confirmPassword"
