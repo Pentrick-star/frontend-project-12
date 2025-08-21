@@ -4,9 +4,8 @@ import api from '../services/api';
 
 export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const { token } = getState().auth || {};
       const response = await api.get('/channels');
       return response.data;
     } catch (error) {
@@ -18,9 +17,8 @@ export const fetchChannels = createAsyncThunk(
 
 export const createChannel = createAsyncThunk(
   'channels/createChannel',
-  async (channelData, { getState, rejectWithValue }) => {
+  async (channelData, { rejectWithValue }) => {
     try {
-      const { token } = getState().auth || {};
       const response = await api.post('/channels', channelData);
       toast.success('Канал создан');
       return response.data;
@@ -33,9 +31,8 @@ export const createChannel = createAsyncThunk(
 
 export const removeChannel = createAsyncThunk(
   'channels/removeChannel',
-  async (channelId, { getState, rejectWithValue }) => {
+  async (channelId, { rejectWithValue }) => {
     try {
-      const { token } = getState().auth || {};
       await api.delete(`/channels/${channelId}`);
       toast.success('Канал удалён');
       return channelId;
@@ -48,9 +45,8 @@ export const removeChannel = createAsyncThunk(
 
 export const renameChannel = createAsyncThunk(
   'channels/renameChannel',
-  async ({ channelId, name }, { getState, rejectWithValue }) => {
+  async ({ channelId, name }, { rejectWithValue }) => {
     try {
-      const { token } = getState().auth || {};
       const response = await api.patch(`/channels/${channelId}`, { name });
       toast.success('Канал переименован');
       return response.data;

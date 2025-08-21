@@ -6,7 +6,7 @@ import { fetchMessages, addMessage } from '../store/messagesSlice';
 import ChannelsList from '../components/ChannelsList';
 import MessageForm from '../components/MessageForm';
 import socketService from '../services/socket';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 
 

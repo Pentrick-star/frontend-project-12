@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import api from '../services/api';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 const SignupPage = () => {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ const SignupPage = () => {
       .required(t('auth.confirmPasswordRequired')),
   });
 
-  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setSignupError('');
       const response = await api.post('/signup', {

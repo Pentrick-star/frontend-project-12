@@ -4,9 +4,8 @@ import api from '../services/api';
 
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const { token } = getState().auth || {};
       const response = await api.get('/messages');
       return response.data;
     } catch (error) {
@@ -18,9 +17,8 @@ export const fetchMessages = createAsyncThunk(
 
 export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
-  async (messageData, { getState, rejectWithValue }) => {
+  async (messageData, { rejectWithValue }) => {
     try {
-      const { token } = getState().auth || {};
       const response = await api.post('/messages', messageData);
       return response.data;
     } catch (error) {

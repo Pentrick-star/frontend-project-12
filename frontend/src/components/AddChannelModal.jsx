@@ -10,7 +10,6 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels.items);
-  const loading = useSelector((state) => state.channels.loading);
 
   const validationSchema = Yup.object({
     name: Yup.string()
