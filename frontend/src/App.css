@@ -127,6 +127,7 @@ body {
   box-sizing: border-box;
   visibility: visible !important;
   opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .form-control:focus {
@@ -164,6 +165,7 @@ body {
   margin-top: 1rem;
   visibility: visible !important;
   opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .submit-btn:hover {
@@ -201,6 +203,7 @@ body {
   z-index: 1;
   visibility: visible !important;
   opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .signup-container {
