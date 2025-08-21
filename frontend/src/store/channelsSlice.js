@@ -71,7 +71,6 @@ const channelsSlice = createSlice({
   },
   reducers: {
     setCurrentChannel: (state, action) => {
-      console.log('Setting current channel:', action.payload);
       state.currentChannelId = action.payload;
     },
     addChannel: (state, action) => {
@@ -105,11 +104,9 @@ const channelsSlice = createSlice({
       .addCase(fetchChannels.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
-        console.log('Channels loaded:', action.payload);
         if (state.items.length > 0 && !state.currentChannelId) {
           const generalChannel = state.items.find(channel => channel.name === 'general');
           state.currentChannelId = generalChannel ? generalChannel.id : state.items[0].id;
-          console.log('Set default channel:', state.currentChannelId);
         }
       })
       .addCase(fetchChannels.rejected, (state, action) => {

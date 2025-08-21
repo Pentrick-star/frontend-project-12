@@ -8,6 +8,8 @@ import MessageForm from '../components/MessageForm';
 import socketService from '../services/socket';
 import { useAuth } from '../contexts/AuthContext';
 
+
+
 const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -36,14 +38,8 @@ const ChatPage = () => {
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => message.channelId === currentChannelId);
-  
-  console.log('Debug info:', {
-    currentChannelId,
-    channels: channels.map(c => ({ id: c.id, name: c.name })),
-    messages: messages.map(m => ({ id: m.id, channelId: m.channelId, body: m.body, username: m.username })),
-    channelMessages: channelMessages.map(m => ({ id: m.id, body: m.body, username: m.username })),
-    channelMessagesLength: channelMessages.length
-  });
+
+
 
   if (channelsLoading || messagesLoading) {
     return <div className="loading">{t('common.loading')}</div>;
@@ -57,13 +53,24 @@ const ChatPage = () => {
           <div className="chat-header">
             <h3>{currentChannel ? `# ${currentChannel.name}` : t('chat.selectChannel')}</h3>
           </div>
-          <div className="chat-messages">
+          <div 
+            className="chat-messages"
+            style={{
+              color: '#333 !important',
+              backgroundColor: 'white !important'
+            }}
+          >
             {channelMessages.length === 0 ? (
               <div className="no-messages">{t('chat.noMessages')}</div>
             ) : (
               channelMessages.map((message) => (
-                <div key={message.id} className="message">
-                  <strong>{message.username || 'Unknown'}:</strong> {message.body}
+                <div 
+                  key={message.id} 
+                  className="message"
+                  style={{ backgroundColor: 'white', color: 'black' }}
+                >
+                  <strong style={{ color: 'black' }}>{message.username || 'Unknown'}:</strong> 
+                  <span style={{ color: 'black' }}>{message.body}</span>
                 </div>
               ))
             )}

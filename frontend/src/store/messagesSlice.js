@@ -39,7 +39,6 @@ const messagesSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      console.log('Adding message to state:', action.payload);
       state.items.push(action.payload);
     },
     clearMessages: (state) => {
@@ -61,7 +60,6 @@ const messagesSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        console.log('Message sent successfully:', action.payload);
         state.items.push(action.payload);
       });
   },

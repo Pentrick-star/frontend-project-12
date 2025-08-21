@@ -11,14 +11,15 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [user, setUser] = useState(null);
+  const [token, setTokenState] = useState(localStorage.getItem('token'));
+  const [user, setUserState] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
       // Здесь можно добавить проверку токена на сервере
-      setUser({ username: 'admin' }); // Временно устанавливаем пользователя
+      const userData = { username: 'admin' }; // Временно устанавливаем пользователя
+      setUserState(userData);
     }
     setLoading(false);
   }, [token]);
@@ -26,14 +27,15 @@ export const AuthProvider = ({ children }) => {
   const login = (newToken) => {
     console.log('Login with token:', newToken);
     localStorage.setItem('token', newToken);
-    setToken(newToken);
-    setUser({ username: 'admin' }); // Временно устанавливаем пользователя
+    setTokenState(newToken);
+    const userData = { username: 'admin' }; // Временно устанавливаем пользователя
+    setUserState(userData);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    setToken(null);
-    setUser(null);
+    setTokenState(null);
+    setUserState(null);
   };
 
   const value = {
