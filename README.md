@@ -22,6 +22,6 @@ cd frontend && npm run dev
 
 ### Локальные серверы
 
-- **Frontend (разработка)**: [http://localhost:5173](http://localhost:5173)
-- **Frontend (продакшн)**: [http://localhost:5001](http://localhost:5001)
+- **Frontend (разработка)**: [http://localhost:5173](http://localhost:5173) - **НОВАЯ ВЕРСИЯ С ИСПРАВЛЕННЫМИ ФОРМАМИ**
+- **Frontend (продакшн)**: [http://localhost:5001](http://localhost:5001) - **ОБНОВЛЕННАЯ ВЕРСИЯ**
 - **Backend API**: [http://localhost:5001](http://localhost:5001)
