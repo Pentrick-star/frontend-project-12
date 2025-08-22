@@ -28,17 +28,14 @@ const SignupPage = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setSignupError('');
-      console.log('Attempting signup with:', values.username);
       const response = await api.post('/signup', {
         username: values.username,
         password: values.password,
       });
-      console.log('Signup successful:', response.data);
       const { token } = response.data;
       login(token);
       navigate('/');
     } catch (error) {
-      console.error('Signup error:', error.response?.status, error.message);
       if (error.response?.status === 409) {
         setSignupError(t('auth.userExists'));
       } else {
