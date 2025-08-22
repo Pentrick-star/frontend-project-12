@@ -56,7 +56,7 @@ const SignupPage = () => {
                 <img src="https://frontend-chat-ru.hexlet.app/assets/avatar-DIE1AEpS.jpg" alt="Signup illustration" className="img-fluid" />
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <div className="w-100">
+                <div className="text-center">
                   <h2 className="text-center mb-4" data-testid="signup-title">{t('auth.signup')}</h2>
                   {signupError && (
                     <div className="alert alert-danger" role="alert">
