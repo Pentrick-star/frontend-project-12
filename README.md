@@ -4,7 +4,7 @@
 
 ### Chat Application
 
-React-приложение для обмена сообщениями в реальном времени.
+React-приложение для обмена сообщений в реальном времени.
 
 ### Установка и запуск
 
@@ -18,3 +18,8 @@ make start
 ```bash
 cd frontend && npm run dev
 ```
+
+### Локальные серверы
+
+- **Frontend (разработка)**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:5001](http://localhost:5001)
