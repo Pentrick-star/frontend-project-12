@@ -1,6 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Pentrick-star/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Pentrick-star/frontend-project-12/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/Pentrick-star/frontend-project-12)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Pentrick-star_frontend-project-122&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Pentrick-star_frontend-project-122)
 
 ### Chat Application
 
