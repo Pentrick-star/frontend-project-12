@@ -22,6 +22,16 @@ cd frontend && npm run dev
 
 ### Локальные серверы
 
-- **Frontend (разработка)**: [http://localhost:5173](http://localhost:5173) - **НОВАЯ ВЕРСИЯ С ИСПРАВЛЕННЫМИ ФОРМАМИ**
-- **Frontend (продакшн)**: [http://localhost:5001](http://localhost:5001) - **ОБНОВЛЕННАЯ ВЕРСИЯ**
-- **Backend API**: [http://localhost:5001](http://localhost:5001)
+- **Frontend (разработка)**: [http://localhost:5173](http://localhost:5173)
+
+### Запуск серверов
+
+1. **Запуск backend сервера** (в отдельном терминале):
+```bash
+npx @hexlet/chat-server
+```
+
+2. **Запуск frontend сервера** (в отдельном терминале):
+```bash
+cd frontend && npm run dev
+```
