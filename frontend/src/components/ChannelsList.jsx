@@ -43,48 +43,70 @@ const ChannelsList = () => {
   };
 
   return (
-    <div className="channels-sidebar">
-      <div className="channels-header">
-        <h2>{t('chat.channels')}</h2>
+    <div className="d-flex flex-column h-100">
+      <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2">
+        <span>{t('chat.channels')}</span>
         <button 
-          className="add-channel-btn"
+          type="button"
+          className="p-0 text-primary btn btn-group-vertical"
           onClick={() => setShowAddModal(true)}
           title={t('chat.addChannel')}
         >
-          +
+          <i className="bi bi-plus-lg"></i>
+          <span className="visually-hidden">{t('chat.addChannel')}</span>
         </button>
       </div>
-      <div className="channels-list">
+      <ul className="nav flex-column nav-pills nav-fill px-2">
         {channels.map((channel) => (
-          <div
-            key={channel.id}
-            className={`channel-item ${channel.id === currentChannelId ? 'active' : ''}`}
-            onClick={() => handleChannelClick(channel.id)}
-          >
-            <span className="channel-name"># {channel.name}</span>
-            <div className="channel-actions">
+          <li key={channel.id} className="nav-item w-100">
+            <div className="d-flex justify-content-between align-items-start w-100">
               <button
-                className="channel-dropdown-btn"
-                onClick={(e) => handleDropdownToggle(channel.id, e)}
+                type="button"
+                className={`w-100 rounded-0 text-start text-truncate btn ${
+                  channel.id === currentChannelId ? 'btn-primary' : ''
+                }`}
+                onClick={() => handleChannelClick(channel.id)}
               >
-                ⋮
+                <span className="me-1">#</span>
+                {channel.name}
               </button>
-              {showDropdown === channel.id && (
-                <div className="channel-dropdown">
-                  <button onClick={() => handleRename(channel)}>
-                    {t('common.rename')}
-                  </button>
-                  {isRemovable(channel) && (
-                    <button onClick={() => handleRemove(channel)}>
-                      {t('common.remove')}
-                    </button>
-                  )}
-                </div>
-              )}
+              <div className="dropdown flex-shrink-0">
+                <button
+                  type="button"
+                  className="btn btn-sm text-muted p-0 dropdown-toggle"
+                  onClick={(e) => handleDropdownToggle(channel.id, e)}
+                >
+                  <span className="visually-hidden">{t('common.edit')}</span>
+                </button>
+                {showDropdown === channel.id && (
+                  <ul className="dropdown-menu">
+                    <li>
+                      <button 
+                        type="button" 
+                        className="dropdown-item"
+                        onClick={() => handleRename(channel)}
+                      >
+                        {t('common.rename')}
+                      </button>
+                    </li>
+                    {isRemovable(channel) && (
+                      <li>
+                        <button 
+                          type="button" 
+                          className="dropdown-item text-danger"
+                          onClick={() => handleRemove(channel)}
+                        >
+                          {t('common.remove')}
+                        </button>
+                      </li>
+                    )}
+                  </ul>
+                )}
+              </div>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
       <AddChannelModal
         isOpen={showAddModal}

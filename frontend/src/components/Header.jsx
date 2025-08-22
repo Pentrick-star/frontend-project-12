@@ -14,21 +14,21 @@ const Header = () => {
   };
 
   return (
-    <header className="app-header">
-      <div className="header-container">
-        <Link to="/" className="header-logo">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div className="container-fluid">
+        <Link to="/" className="navbar-brand">
           {t('header.logo')}
         </Link>
         {user && (
-          <div className="header-user">
-            <span className="username">{user.username}</span>
-            <button onClick={handleLogout} className="logout-btn">
+          <div className="d-flex align-items-center">
+            <span className="navbar-text me-3">{user.username}</span>
+            <button onClick={handleLogout} className="btn btn-outline-light">
               {t('common.logout')}
             </button>
           </div>
         )}
       </div>
-    </header>
+    </nav>
   );
 };
 

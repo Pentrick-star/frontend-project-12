@@ -38,18 +38,24 @@ const MessageForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="chat-input">
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder={t('chat.messagePlaceholder')}
-        disabled={loading}
-      />
-      <button type="submit" disabled={loading || !message.trim()}>
-        {loading ? t('common.sending') : t('common.send')}
-      </button>
+    <form onSubmit={handleSubmit} className="py-3 border rounded-3">
+      <div className="input-group">
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder={t('chat.messagePlaceholder')}
+          disabled={loading}
+          className="border-0 p-0 ps-2 form-control"
+          name="body"
+          aria-label={t('chat.newMessage')}
+        />
+        <button type="submit" disabled={loading || !message.trim()} className="btn btn-group-vertical">
+          <i className="bi bi-arrow-up-circle"></i>
+          <span className="visually-hidden">{t('common.send')}</span>
+        </button>
+      </div>
     </form>
   );
 };

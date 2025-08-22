@@ -9,7 +9,9 @@ export const fetchChannels = createAsyncThunk(
       const response = await api.get('/channels');
       return response.data;
     } catch (error) {
-      toast.error('Ошибка загрузки данных');
+      if (error.response?.status !== 401) {
+        toast.error('Ошибка загрузки данных');
+      }
       return rejectWithValue(error.message);
     }
   }

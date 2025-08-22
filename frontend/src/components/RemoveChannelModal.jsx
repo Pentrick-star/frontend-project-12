@@ -19,23 +19,25 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
   if (!isOpen || !channel) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h3>{t('chat.removeChannelTitle')}</h3>
-          <button className="modal-close" onClick={onClose}>&times;</button>
-        </div>
-        <div className="modal-body">
-          <p>{t('chat.removeChannelConfirm')} <strong>#{channel.name}</strong>?</p>
-          <p>{t('chat.removeChannelWarning')}</p>
-        </div>
-        <div className="modal-actions">
-          <button type="button" onClick={onClose} className="btn-secondary">
-            {t('common.cancel')}
-          </button>
-          <button type="button" onClick={handleRemove} className="btn-danger">
-            {t('common.delete')}
-          </button>
+    <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <div className="modal-title h5">{t('chat.removeChannelTitle')}</div>
+            <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
+          </div>
+          <div className="modal-body">
+            <p>{t('chat.removeChannelConfirm')} <strong>#{channel.name}</strong>?</p>
+            <p>{t('chat.removeChannelWarning')}</p>
+          </div>
+          <div className="modal-footer">
+            <button type="button" onClick={onClose} className="btn btn-secondary">
+              {t('common.cancel')}
+            </button>
+            <button type="button" onClick={handleRemove} className="btn btn-danger">
+              {t('common.delete')}
+            </button>
+          </div>
         </div>
       </div>
     </div>

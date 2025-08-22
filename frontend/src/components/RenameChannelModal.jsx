@@ -40,41 +40,45 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
   if (!isOpen || !channel) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h3>{t('chat.renameChannelTitle')}</h3>
-          <button className="modal-close" onClick={onClose}>&times;</button>
+    <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <div className="modal-title h5">{t('chat.renameChannelTitle')}</div>
+            <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
+          </div>
+          <Formik
+            initialValues={{ name: channel.name }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label htmlFor="channelName" className="form-label">{t('chat.channelName')}</label>
+                    <Field
+                      type="text"
+                      id="channelName"
+                      name="name"
+                      className="form-control"
+                      autoFocus
+                    />
+                    <ErrorMessage name="name" component="div" className="text-danger small" />
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" onClick={onClose} className="btn btn-secondary">
+                    {t('common.cancel')}
+                  </button>
+                  <button type="submit" disabled={isSubmitting} className="btn btn-primary">
+                    {isSubmitting ? t('common.saving') : t('common.save')}
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
-        <Formik
-          initialValues={{ name: channel.name }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ isSubmitting }) => (
-            <Form className="modal-form">
-              <div className="form-group">
-                <label htmlFor="channelName">{t('chat.channelName')}</label>
-                <Field
-                  type="text"
-                  id="channelName"
-                  name="name"
-                  className="form-control"
-                  autoFocus
-                />
-                <ErrorMessage name="name" component="div" className="error" />
-              </div>
-              <div className="modal-actions">
-                <button type="button" onClick={onClose} className="btn-secondary">
-                  {t('common.cancel')}
-                </button>
-                <button type="submit" disabled={isSubmitting} className="btn-primary">
-                  {isSubmitting ? t('common.saving') : t('common.save')}
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
       </div>
     </div>
   );

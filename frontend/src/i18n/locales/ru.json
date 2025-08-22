@@ -16,9 +16,9 @@
     "back": "Вернуться на главную"
   },
   "auth": {
-    "login": "Вход в чат",
+    "login": "Войти",
     "signup": "Регистрация",
-    "username": "Имя пользователя",
+    "username": "Ваш ник",
     "password": "Пароль",
     "confirmPassword": "Подтверждение пароля",
     "loginButton": "Войти",
@@ -27,7 +27,7 @@
     "signingUp": "Регистрация...",
     "noAccount": "Нет аккаунта?",
     "hasAccount": "Уже есть аккаунт?",
-    "signupLink": "Зарегистрироваться",
+    "signupLink": "Регистрация",
     "loginLink": "Войти",
     "usernameRequired": "Имя пользователя обязательно",
     "passwordRequired": "Пароль обязателен",
@@ -57,7 +57,7 @@
     "selectChannel": "Выберите канал",
     "messagePlaceholder": "Введите сообщение...",
     "newMessage": "Новое сообщение",
-    "noMessages": "Нет сообщений"
+    "noMessages": "0 сообщений"
   },
   "errors": {
     "notFound": "404",
