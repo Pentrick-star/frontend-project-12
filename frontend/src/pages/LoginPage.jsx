@@ -25,8 +25,11 @@ const LoginPage = () => {
       login(token);
       navigate('/');
     } catch (error) {
+      console.log('Login error:', error.response?.status, error.message);
       if (error.response?.status === 401) {
-        setAuthError(t('loginPage.error'));
+        const errorText = t('loginPage.error');
+        console.log('Setting auth error:', errorText);
+        setAuthError(errorText);
       } else {
         setAuthError(t('networkError'));
       }
