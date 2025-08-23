@@ -6,8 +6,9 @@ class SocketService {
   }
 
   connect(token) {
-    // Сервер чата всегда на localhost:5001
-    const wsUrl = 'http://localhost:5001';
+    // В тестовой среде используем текущий хост
+    const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+    const wsUrl = isTest ? window.location.origin : 'http://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
     

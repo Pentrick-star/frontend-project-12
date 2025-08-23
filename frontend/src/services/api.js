@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5001/api/v1',
+  baseURL: typeof process !== 'undefined' && process.env.NODE_ENV === 'test' 
+    ? '/api/v1' 
+    : 'http://localhost:5001/api/v1',
   withCredentials: true,
   timeout: 10000,
 });
