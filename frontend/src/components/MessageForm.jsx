@@ -18,13 +18,16 @@ const MessageForm = () => {
     e.preventDefault();
     if (!message.trim() || !currentChannelId) return;
 
+    console.log('Sending message:', message.trim(), 'to channel:', currentChannelId);
+
     try {
       const filteredMessage = filterProfanity(message.trim());
-      await dispatch(sendMessage({
+      const result = await dispatch(sendMessage({
         body: filteredMessage,
         channelId: currentChannelId,
         username: user?.username || 'Unknown',
       })).unwrap();
+      console.log('Message sent successfully:', result);
       setMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);

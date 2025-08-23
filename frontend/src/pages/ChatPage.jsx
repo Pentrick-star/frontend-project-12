@@ -35,7 +35,10 @@ const ChatPage = () => {
   }, [token, dispatch]);
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
-  const channelMessages = messages.filter(message => message.channelId === currentChannelId);
+  const channelMessages = messages.filter(message => {
+    console.log('Filtering message:', message, 'currentChannelId:', currentChannelId);
+    return message.channelId === currentChannelId;
+  });
 
   if (channelsLoading || messagesLoading) {
     return (
