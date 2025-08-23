@@ -38,6 +38,16 @@ const ChatPage = () => {
     }
   }, [token, dispatch]);
 
+  // Добавляем обработку ошибок для API запросов
+  useEffect(() => {
+    try {
+      dispatch(fetchChannels());
+      dispatch(fetchMessages());
+    } catch (error) {
+      console.log('Failed to fetch initial data:', error);
+    }
+  }, [dispatch]);
+
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => {
     return message.channelId === currentChannelId;

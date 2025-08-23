@@ -17,16 +17,20 @@ class SocketService {
     
     console.log('Connecting to WebSocket:', wsUrl);
     
-    this.socket = io(wsUrl, {
-      auth: {
-        token,
-      },
-      transports: ['websocket', 'polling'],
-      upgrade: true,
-      rememberUpgrade: true,
-      forceNew: true,
-      timeout: 5000, // Уменьшаем таймаут
-    });
+    try {
+      this.socket = io(wsUrl, {
+        auth: {
+          token,
+        },
+        transports: ['websocket', 'polling'],
+        upgrade: true,
+        rememberUpgrade: true,
+        forceNew: true,
+        timeout: 5000, // Уменьшаем таймаут
+      });
+    } catch (error) {
+      console.log('WebSocket connection failed:', error);
+    }
 
     this.socket.on('connect', () => {
       console.log('Connected to server');
