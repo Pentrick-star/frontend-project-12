@@ -6,14 +6,7 @@ class SocketService {
   }
 
   connect(token) {
-    // В тестовой среде отключаем WebSocket
-    const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
-    if (isTest) {
-      console.log('WebSocket disabled in test environment');
-      return;
-    }
-    
-    // В разработке используем localhost:5001
+    // WebSocket обязателен для проекта Hexlet
     const wsUrl = 'http://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
