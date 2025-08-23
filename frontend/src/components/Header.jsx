@@ -16,15 +16,15 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-light border-bottom">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand text-dark">
+        <Link to="/" className="navbar-brand">
           {t('header.logo')}
         </Link>
         {user && (
           <div className="d-flex align-items-center">
-            <span className="navbar-text me-3 text-muted">{user.username}</span>
+            <span className="navbar-text me-3">{user.username}</span>
             <button 
               onClick={handleLogout} 
-              className="btn btn-primary px-3 py-2"
+              className="btn btn-primary"
             >
               {t('common.logout')}
             </button>

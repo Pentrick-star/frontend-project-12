@@ -47,9 +47,6 @@ const MessageForm = () => {
         placeholder={t('chat.messagePlaceholder')}
         disabled={loading}
         className="form-control"
-        style={{ 
-          fontSize: '0.9rem'
-        }}
         name="body"
         aria-label={t('chat.newMessage')}
       />

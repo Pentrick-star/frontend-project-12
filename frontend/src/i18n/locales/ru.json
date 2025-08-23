@@ -18,9 +18,9 @@
   "auth": {
     "login": "Войти",
     "signup": "Регистрация",
-    "username": "Ваш ник",
+    "username": "Имя пользователя",
     "password": "Пароль",
-    "confirmPassword": "Подтверждение пароля",
+    "confirmPassword": "Подтвердите пароль",
     "loginButton": "Войти",
     "signupButton": "Зарегистрироваться",
     "loggingIn": "Вход...",
@@ -36,7 +36,7 @@
     "usernameMax": "От 3 до 20 символов", 
     "passwordMin": "Не менее 6 символов",
     "passwordsMustMatch": "Пароли должны совпадать",
-    "invalidCredentials": "Неверное имя пользователя или пароль",
+    "invalidCredentials": "Неверные имя пользователя или пароль",
     "userExists": "Такой пользователь уже существует",
     "loginError": "Ошибка при входе. Попробуйте еще раз.",
     "signupError": "Ошибка при регистрации. Попробуйте еще раз."

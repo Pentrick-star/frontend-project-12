@@ -48,28 +48,15 @@ const ChannelsList = () => {
 
   return (
     <div className="d-flex flex-column h-100">
-      <div className="d-flex justify-content-between align-items-center p-3 border-bottom" style={{ backgroundColor: '#f8f9fa' }}>
-        <span style={{ color: '#333333', fontWeight: 'bold', fontSize: '1rem' }}>{t('chat.channels')}</span>
+      <div className="d-flex justify-content-between align-items-center p-3 border-bottom bg-light">
+        <span className="fw-bold">{t('chat.channels')}</span>
         <button 
           type="button"
-          className="btn p-0 d-flex align-items-center justify-content-center"
-          style={{ 
-            color: '#007bff',
-            backgroundColor: 'transparent',
-            border: 'none',
-            fontSize: '1.1rem',
-            width: '28px',
-            height: '28px',
-            borderRadius: '50%',
-            marginLeft: '8px',
-            marginRight: '2px',
-            lineHeight: '1',
-            transition: 'background 0.2s'
-          }}
+          className="btn btn-outline-primary btn-sm"
           onClick={() => setShowAddModal(true)}
           title={t('chat.addChannel')}
         >
-          <span style={{ fontWeight: 'bold', fontSize: '1.3rem', marginTop: '-2px' }}>+</span>
+          +
           <span className="visually-hidden">{t('chat.addChannel')}</span>
         </button>
       </div>
@@ -78,64 +65,17 @@ const ChannelsList = () => {
           <div key={channel.id} className="d-flex justify-content-between align-items-center px-3 py-2">
             <button
               type="button"
-              className="btn text-start flex-grow-1"
-              style={{
-                backgroundColor: channel.id === currentChannelId ? '#6c757d' : 'transparent',
-                color: channel.id === currentChannelId ? '#ffffff' : '#333333',
-                border: 'none',
-                padding: '0.5rem 0.75rem',
-                fontSize: '0.9rem',
-                fontWeight: channel.id === currentChannelId ? 'bold' : 'normal',
-                borderRadius: '6px',
-                transition: 'background 0.2s, color 0.2s'
-              }}
+              className={`btn text-start flex-grow-1 ${
+                channel.id === currentChannelId 
+                  ? 'btn-secondary text-white' 
+                  : 'btn-outline-light text-dark'
+              }`}
               onClick={() => handleChannelClick(channel.id)}
             >
               <span className="me-1">#</span>
               {channel.name}
             </button>
-            {/* Показывать меню только для не-стандартных каналов и только если не активный */}
-            {!isStandardChannel(channel) && channel.id !== currentChannelId && (
-              <div className="dropdown">
-                <button
-                  type="button"
-                  className="btn btn-sm dropdown-toggle"
-                  style={{ 
-                    color: '#6c757d',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    padding: '0.25rem'
-                  }}
-                  onClick={(e) => handleDropdownToggle(channel.id, e)}
-                >
-                  <span className="visually-hidden">{t('common.edit')}</span>
-                </button>
-                {showDropdown === channel.id && (
-                  <ul className="dropdown-menu">
-                    <li>
-                      <button 
-                        type="button" 
-                        className="dropdown-item"
-                        onClick={() => handleRename(channel)}
-                      >
-                        {t('common.rename')}
-                      </button>
-                    </li>
-                    {isRemovable(channel) && (
-                      <li>
-                        <button 
-                          type="button" 
-                          className="dropdown-item text-danger"
-                          onClick={() => handleRemove(channel)}
-                        >
-                          {t('common.remove')}
-                        </button>
-                      </li>
-                    )}
-                  </ul>
-                )}
-              </div>
-            )}
+
           </div>
         ))}
       </div>
