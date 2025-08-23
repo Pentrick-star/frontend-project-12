@@ -6,18 +6,6 @@ class SocketService {
   }
 
   connect(token) {
-    // В тестовой среде отключаем WebSocket
-    if (process.env.NODE_ENV === 'test') {
-      console.log('WebSocket disabled in test environment');
-      return;
-    }
-    
-    // В продакшене отключаем WebSocket
-    if (process.env.NODE_ENV === 'production') {
-      console.log('WebSocket disabled in production');
-      return;
-    }
-    
     // Сервер чата всегда на localhost:5001
     const wsUrl = 'http://localhost:5001';
     
@@ -32,7 +20,7 @@ class SocketService {
         upgrade: true,
         rememberUpgrade: true,
         forceNew: true,
-        timeout: 5000, // Уменьшаем таймаут
+        timeout: 10000, // Увеличиваем таймаут
       });
     } catch (error) {
       console.log('WebSocket connection failed:', error);
