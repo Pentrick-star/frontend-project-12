@@ -7,7 +7,7 @@ import ChannelsList from '../components/ChannelsList';
 import MessageForm from '../components/MessageForm';
 import socketService from '../services/socket';
 import { useAuth } from '../hooks/useAuth';
-import { pluralizeMessages } from '../utils/pluralize';
+
 
 const ChatPage = () => {
   const { t } = useTranslation();
@@ -60,14 +60,14 @@ const ChatPage = () => {
           <div className="p-3 border-bottom bg-light">
             <div>
               <b>
-                {currentChannel ? `# ${currentChannel.name}` : t('chat.selectChannel')}
+                {currentChannel ? `# ${currentChannel.name}` : 'Выберите канал'}
               </b>
             </div>
-            {currentChannel && (
-              <div className="text-muted small">
-                {channelMessages.length} {pluralizeMessages(channelMessages.length)}
-              </div>
-            )}
+                          {currentChannel && (
+                <div className="text-muted small">
+                  {channelMessages.length} {t('messages_many')}
+                </div>
+              )}
           </div>
           <div className="flex-grow-1 overflow-auto p-3" id="messages-box">
             {channelMessages.length === 0 ? (

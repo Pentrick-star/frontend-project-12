@@ -13,8 +13,8 @@ const LoginPage = () => {
   const { login } = useAuth();
 
   const validationSchema = Yup.object({
-    username: Yup.string().required(t('auth.usernameRequired')),
-    password: Yup.string().required(t('auth.passwordRequired')),
+    username: Yup.string().required(t('signupPage.required')),
+    password: Yup.string().required(t('signupPage.required')),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -26,9 +26,9 @@ const LoginPage = () => {
       navigate('/');
     } catch (error) {
       if (error.response?.status === 401) {
-        setAuthError(t('auth.invalidCredentials'));
+        setAuthError(t('loginPage.error'));
       } else {
-        setAuthError(t('auth.loginError'));
+        setAuthError(t('networkError'));
       }
     } finally {
       setSubmitting(false);
@@ -46,7 +46,7 @@ const LoginPage = () => {
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <div className="text-center">
-                  <h2 className="text-center mb-4">{t('auth.login')}</h2>
+                  <h2 className="text-center mb-4">{t('loginPage.title')}</h2>
                   {authError && (
                     <div className="alert alert-danger" role="alert">
                       {authError}
@@ -60,7 +60,7 @@ const LoginPage = () => {
                     {({ isSubmitting, values }) => (
                       <Form>
                         <div className="mb-3">
-                          <label htmlFor="username" className="form-label">{t('auth.username')}</label>
+                          <label htmlFor="username" className="form-label">{t('loginPage.usernamePlaceholder')}</label>
                           <Field
                             type="text"
                             id="username"
@@ -72,7 +72,7 @@ const LoginPage = () => {
                         </div>
 
                         <div className="mb-4">
-                          <label htmlFor="password" className="form-label">{t('auth.password')}</label>
+                          <label htmlFor="password" className="form-label">{t('loginPage.passwordPlaceholder')}</label>
                           <Field
                             type="password"
                             id="password"
@@ -89,13 +89,13 @@ const LoginPage = () => {
                           className="w-100 btn btn-primary"
                           data-testid="login-button"
                         >
-                          {isSubmitting ? t('auth.loggingIn') : t('auth.loginButton')}
+                          {t('loginPage.loginBtn')}
                         </button>
                       </Form>
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span>{t('auth.noAccount')}</span> <Link to="/signup">{t('auth.signupLink')}</Link>
+                    <span>{t('loginPage.noAcc')}</span> <Link to="/signup">{t('loginPage.signupLink')}</Link>
                   </div>
                 </div>
               </div>

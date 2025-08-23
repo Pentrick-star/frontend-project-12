@@ -44,11 +44,11 @@ const MessageForm = () => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder={t('chat.messagePlaceholder')}
+        placeholder={t('messagePlaceholder')}
         disabled={loading}
         className="form-control"
         name="body"
-        aria-label={t('chat.newMessage')}
+        aria-label={t('messagePlaceholder')}
       />
       <button 
         type="submit" 
@@ -56,7 +56,7 @@ const MessageForm = () => {
         className="btn btn-outline-secondary"
       >
         →
-        <span className="visually-hidden">{t('common.send')}</span>
+        <span className="visually-hidden">{t('messageBtnText')}</span>
       </button>
     </form>
   );

@@ -17,7 +17,7 @@ const Header = () => {
     <nav className="navbar navbar-expand-lg bg-light border-bottom">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          {t('header.logo')}
+          {t('title')}
         </Link>
         {user && (
           <div className="d-flex align-items-center">
@@ -26,7 +26,7 @@ const Header = () => {
               onClick={handleLogout} 
               className="btn btn-primary"
             >
-              {t('common.logout')}
+              {t('logoutBtn')}
             </button>
           </div>
         )}

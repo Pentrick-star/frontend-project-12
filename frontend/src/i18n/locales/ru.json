@@ -1,78 +1,71 @@
 {
-  "common": {
-    "loading": "Загрузка...",
-    "cancel": "Отмена",
-    "save": "Сохранить",
+  "title": "Hexlet Chat",
+  "networkError": "Ошибка соединения",
+  "channelsTitle": "Каналы",
+  "logoutBtn": "Выйти",
+  "messages_one": "сообщение",
+  "messages_few": "сообщения",
+  "messages_many": "сообщений",
+  "messages_other": "сообщение",
+  "messagePlaceholder": "Введите сообщение...",
+  "messageBtnText": "Отправить",
+  "modals": {
+    "titles": {
+      "addingChannel": "Добавить канал",
+      "deletingChannel": "Удалить канал",
+      "renamingChannel": "Переименовать канал"
+    },
+    "successMessage": {
+      "addingChannel": "Канал создан",
+      "deletingChannel": "Канал удалён",
+      "renamingChannel": "Канал переименован"
+    },
+    "addLabel": "Имя канала",
+    "addBtns": {
+      "cancel": "Отменить",
+      "submit": "Отправить"
+    },
+    "addErrors": {
+      "required": "Обязательное поле",
+      "min": "От 3 до 20 символов",
+      "max": "От 3 до 20 символов",
+      "repeats": "Должно быть уникальным"
+    },
+    "deleteQuestion": "Уверены?",
+    "deleteBtns": {
+      "cancel": "Отменить",
+      "delete": "Удалить"
+    },
+    "renameBtns": {
+      "cancel": "Отменить",
+      "submit": "Отправить"
+    }
+  },
+  "loginPage": {
+    "title": "Войти",
+    "imgAlt": "Войти",
+    "usernamePlaceholder": "Ваш ник",
+    "passwordPlaceholder": "Пароль",
+    "error": "Неверные имя пользователя или пароль",
+    "loginBtn": "Войти",
+    "noAcc": "Нет аккаунта?",
+    "signupLink": "Регистрация"
+  },
+  "signupPage": {
+    "title": "Регистрация",
+    "imgAlt": "Регистрация",
+    "usernamePlaceholder": "От 3 до 20 символов",
+    "usernameLabel": "Имя пользователя",
+    "passwordPlaceholder": "Не менее 6 символов",
+    "passwordLabel": "Пароль",
+    "confirmPasswordPlaceholder": "Пароли должны совпадать",
+    "confirmPasswordLabel": "Подтвердите пароль",
+    "required": "Обязательное поле",
+    "signupBtn": "Зарегистрироваться",
+    "signupError": "Такой пользователь уже существует"
+  },
+  "manageChannelsBtns": {
     "delete": "Удалить",
-    "create": "Создать",
-    "edit": "Редактировать",
-    "rename": "Переименовать",
-    "remove": "Удалить",
-    "send": "Отправить",
-    "sending": "Отправка...",
-    "creating": "Создание...",
-    "saving": "Сохранение...",
-    "logout": "Выйти",
-    "back": "Вернуться на главную"
-  },
-  "auth": {
-    "login": "Войти",
-    "signup": "Регистрация",
-    "username": "Ваш ник",
-    "password": "Пароль",
-    "confirmPassword": "Подтвердите пароль",
-    "loginButton": "Войти",
-    "signupButton": "Зарегистрироваться",
-    "loggingIn": "Вход...",
-    "signingUp": "Регистрация...",
-    "noAccount": "Нет аккаунта?",
-    "hasAccount": "Уже есть аккаунт?",
-    "signupLink": "Регистрация",
-    "loginLink": "Войти",
-    "usernameRequired": "Имя пользователя обязательно",
-    "passwordRequired": "Пароль обязателен",
-    "confirmPasswordRequired": "Подтверждение пароля обязательно",
-    "usernameMin": "От 3 до 20 символов",
-    "usernameMax": "От 3 до 20 символов", 
-    "passwordMin": "Не менее 6 символов",
-    "passwordsMustMatch": "Пароли должны совпадать",
-    "invalidCredentials": "Неверные имя пользователя или пароль",
-    "userExists": "Такой пользователь уже существует",
-    "loginError": "Ошибка при входе. Попробуйте еще раз.",
-    "signupError": "Ошибка при регистрации. Попробуйте еще раз."
-  },
-  "chat": {
-    "channels": "Каналы",
-    "addChannel": "Добавить канал",
-    "channelName": "Имя канала",
-    "channelNameRequired": "Обязательное поле",
-    "channelNameMin": "Минимум 3 символа",
-    "channelNameMax": "Максимум 20 символов",
-    "channelExists": "Канал с таким именем уже существует",
-    "addChannelTitle": "Добавить канал",
-    "renameChannelTitle": "Переименовать канал",
-    "removeChannelTitle": "Удалить канал",
-    "removeChannelConfirm": "Вы уверены, что хотите удалить канал",
-    "removeChannelWarning": "Это действие нельзя отменить.",
-    "selectChannel": "Выберите канал",
-    "messagePlaceholder": "Введите сообщение...",
-    "newMessage": "Новое сообщение",
-    "noMessages": "сообщений"
-  },
-  "errors": {
-    "notFound": "404",
-    "notFoundTitle": "Страница не найдена",
-    "notFoundMessage": "Запрашиваемая страница не существует."
-  },
-  "header": {
-    "logo": "Hexlet Chat"
-  },
-  "notifications": {
-    "channelCreated": "Канал создан",
-    "channelRenamed": "Канал переименован",
-    "channelRemoved": "Канал удалён",
-    "connectionError": "Ошибка соединения",
-    "networkError": "Ошибка сети",
-    "dataLoadError": "Ошибка загрузки данных"
+    "rename": "Переименовать"
   }
 }

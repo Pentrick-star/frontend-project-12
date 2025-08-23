@@ -49,15 +49,15 @@ const ChannelsList = () => {
   return (
     <div className="d-flex flex-column h-100">
       <div className="d-flex justify-content-between align-items-center p-3 border-bottom bg-light">
-        <span className="fw-bold">{t('chat.channels')}</span>
+        <span className="fw-bold">{t('channelsTitle')}</span>
         <button 
           type="button"
           className="btn btn-outline-primary btn-sm"
           onClick={() => setShowAddModal(true)}
-          title={t('chat.addChannel')}
+          title={t('modals.titles.addingChannel')}
         >
           +
-          <span className="visually-hidden">{t('chat.addChannel')}</span>
+          <span className="visually-hidden">{t('modals.titles.addingChannel')}</span>
         </button>
       </div>
       <div className="flex-grow-1 overflow-auto">
