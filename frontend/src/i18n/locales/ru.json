@@ -18,7 +18,7 @@
   "auth": {
     "login": "Войти",
     "signup": "Регистрация",
-    "username": "Имя пользователя",
+    "username": "Ваш ник",
     "password": "Пароль",
     "confirmPassword": "Подтвердите пароль",
     "loginButton": "Войти",
