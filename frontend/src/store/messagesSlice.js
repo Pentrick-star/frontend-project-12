@@ -19,13 +19,8 @@ export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
   async (messageData, { rejectWithValue }) => {
     try {
-      // Отправляем сообщение через API
+      // Отправляем сообщение только через API
       const response = await api.post('/messages', messageData);
-      
-      // Также отправляем через WebSocket для real-time обновлений
-      const socketService = (await import('../services/socket')).default;
-      socketService.emit('newMessage', messageData);
-      
       return response.data;
     } catch (error) {
       console.error('sendMessage error:', error);

@@ -6,9 +6,15 @@ class SocketService {
   }
 
   connect(token) {
-    // В тестовой среде используем текущий хост
+    // В тестовой среде отключаем WebSocket
     const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
-    const wsUrl = isTest ? window.location.origin : 'http://localhost:5001';
+    if (isTest) {
+      console.log('WebSocket disabled in test environment');
+      return;
+    }
+    
+    // В разработке используем localhost:5001
+    const wsUrl = 'http://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
     
