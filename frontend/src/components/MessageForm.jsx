@@ -38,7 +38,7 @@ const MessageForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="input-group">
+    <form onSubmit={handleSubmit} className="input-group" style={{ minHeight: '50px' }}>
       <input
         type="text"
         value={message}
@@ -49,11 +49,13 @@ const MessageForm = () => {
         className="form-control"
         name="body"
         aria-label={t('messagePlaceholder')}
+        style={{ border: '1px solid #ced4da' }}
       />
       <button 
         type="submit" 
         disabled={loading || !message.trim()} 
         className="btn btn-outline-secondary"
+        style={{ border: '1px solid #ced4da' }}
       >
         →
         <span className="visually-hidden">{t('messageBtnText')}</span>

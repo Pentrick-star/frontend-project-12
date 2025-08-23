@@ -23,15 +23,12 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }}>
           <div className="modal-header">
-            <div className="modal-title h5" style={{ color: '#333333' }}>{t('chat.removeChannelTitle')}</div>
+            <div className="modal-title h5" style={{ color: '#333333' }}>{t('modals.titles.deletingChannel')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </div>
           <div className="modal-body">
             <p style={{ color: '#333333' }}>
-              {t('chat.removeChannelConfirm')} <b>{channel.name}</b>?
-            </p>
-            <p style={{ color: '#6c757d' }}>
-              {t('chat.removeChannelWarning')}
+              {t('modals.deleteQuestion')} <b>{channel.name}</b>?
             </p>
           </div>
           <div className="modal-footer">
@@ -41,7 +38,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
               className="btn btn-secondary"
               style={{ backgroundColor: '#6c757d', borderColor: '#6c757d', color: '#ffffff' }}
             >
-              {t('common.cancel')}
+              {t('modals.deleteBtns.cancel')}
             </button>
             <button 
               type="button" 
@@ -53,7 +50,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
                 color: '#ffffff'
               }}
             >
-              {t('common.remove')}
+              {t('modals.deleteBtns.delete')}
             </button>
           </div>
         </div>

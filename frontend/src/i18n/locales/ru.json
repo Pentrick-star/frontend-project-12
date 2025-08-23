@@ -6,7 +6,7 @@
   "messages_one": "сообщение",
   "messages_few": "сообщения",
   "messages_many": "сообщений",
-  "messages_other": "сообщений",
+  "messages_other": "сообщение",
   "messagePlaceholder": "Введите сообщение...",
   "messageBtnText": "Отправить",
   "modals": {

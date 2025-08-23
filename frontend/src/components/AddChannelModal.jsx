@@ -13,10 +13,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      .min(3, t('chat.channelNameMin'))
-      .max(20, t('chat.channelNameMax'))
-      .required(t('chat.channelNameRequired'))
-      .test('unique', t('chat.channelExists'), function(value) {
+      .min(3, t('modals.addErrors.min'))
+      .max(20, t('modals.addErrors.max'))
+      .required(t('modals.addErrors.required'))
+      .test('unique', t('modals.addErrors.repeats'), function(value) {
         if (!value) return true;
         return !channels.some(channel => 
           channel.name.toLowerCase() === value.toLowerCase()
@@ -44,7 +44,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }}>
           <div className="modal-header">
-            <div className="modal-title h5" style={{ color: '#333333' }}>{t('chat.addChannelTitle')}</div>
+            <div className="modal-title h5" style={{ color: '#333333' }}>{t('modals.titles.addingChannel')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </div>
           <Formik
@@ -56,7 +56,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               <Form>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="channelName" className="form-label" style={{ color: '#333333' }}>{t('chat.channelName')}</label>
+                    <label htmlFor="channelName" className="form-label" style={{ color: '#333333' }}>{t('modals.addLabel')}</label>
                     <Field
                       type="text"
                       id="channelName"
@@ -75,7 +75,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                     className="btn btn-secondary"
                     style={{ backgroundColor: '#6c757d', borderColor: '#6c757d', color: '#ffffff' }}
                   >
-                    {t('common.cancel')}
+                    {t('modals.addBtns.cancel')}
                   </button>
                   <button 
                     type="submit" 
@@ -87,7 +87,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                       color: '#ffffff'
                     }}
                   >
-                    {isSubmitting ? t('common.creating') : t('common.create')}
+                    {isSubmitting ? 'Создание...' : t('modals.addBtns.submit')}
                   </button>
                 </div>
               </Form>

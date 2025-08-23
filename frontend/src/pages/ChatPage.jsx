@@ -8,7 +8,6 @@ import MessageForm from '../components/MessageForm';
 import socketService from '../services/socket';
 import { useAuth } from '../hooks/useAuth';
 
-
 const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -63,11 +62,11 @@ const ChatPage = () => {
                 {currentChannel ? `# ${currentChannel.name}` : 'Выберите канал'}
               </b>
             </div>
-                          {currentChannel && (
-                <div className="text-muted small">
-                  {channelMessages.length} {t('messages_many')}
-                </div>
-              )}
+            {currentChannel && (
+              <div className="text-muted small">
+                {channelMessages.length} {t('messages_many')}
+              </div>
+            )}
           </div>
           <div className="flex-grow-1 overflow-auto p-3" id="messages-box">
             {channelMessages.length === 0 ? (
@@ -82,7 +81,7 @@ const ChatPage = () => {
               ))
             )}
           </div>
-          <div className="p-3 border-top">
+          <div className="p-3 border-top bg-white">
             <MessageForm />
           </div>
         </div>
