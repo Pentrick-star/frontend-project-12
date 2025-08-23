@@ -20,14 +20,23 @@ const LoginPage = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setAuthError('');
+      console.log('Login attempt with:', values);
       const response = await api.post('/login', values);
+      console.log('Login response:', response.data);
+      
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
+        console.log('Token received:', token);
         login(token);
+        console.log('Token saved to localStorage');
+        console.log('Navigating to /');
         navigate('/');
+      } else {
+        console.log('No token in response');
       }
     } catch (error) {
       console.log('Login error:', error.response?.status, error.message);
+      console.log('Error response:', error.response?.data);
       // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
       const errorMessage = t('loginPage.error');
       console.log('Setting auth error:', errorMessage);
