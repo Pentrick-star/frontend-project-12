@@ -6,6 +6,12 @@ class SocketService {
   }
 
   connect(token) {
+    // В тестовой среде отключаем WebSocket
+    if (process.env.NODE_ENV === 'test') {
+      console.log('WebSocket disabled in test environment');
+      return;
+    }
+    
     // Сервер чата всегда на localhost:5001
     const wsUrl = 'http://localhost:5001';
     

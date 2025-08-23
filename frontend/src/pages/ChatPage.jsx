@@ -22,15 +22,19 @@ const ChatPage = () => {
 
   useEffect(() => {
     if (token) {
-      socketService.connect(token);
+      try {
+        socketService.connect(token);
 
-      socketService.onNewMessage((newMessage) => {
-        dispatch(addMessage(newMessage));
-      });
+        socketService.onNewMessage((newMessage) => {
+          dispatch(addMessage(newMessage));
+        });
 
-      return () => {
-        socketService.disconnect();
-      };
+        return () => {
+          socketService.disconnect();
+        };
+      } catch (error) {
+        console.log('WebSocket connection failed, continuing without real-time updates');
+      }
     }
   }, [token, dispatch]);
 
