@@ -1,4 +1,5 @@
 import axios from 'axios';
+import rollbar from '../utils/rollbar';
 
 const api = axios.create({
   baseURL: '/api/v1',
@@ -16,6 +17,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    rollbar.error('API Request Error', error);
     return Promise.reject(error);
   }
 );
@@ -26,6 +28,15 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    // Логируем ошибки в Rollbar
+    rollbar.error('API Response Error', {
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      url: error.config?.url,
+      method: error.config?.method,
+      data: error.response?.data,
+    });
+
     // Редирект на логин только если мы не на странице логина или регистрации
     if (error.response?.status === 401 && 
         !window.location.pathname.includes('/login') && 

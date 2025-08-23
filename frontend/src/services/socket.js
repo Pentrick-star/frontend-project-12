@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client';
+import rollbar from '../utils/rollbar';
 
 class SocketService {
   constructor() {
@@ -24,6 +25,7 @@ class SocketService {
         timeout: 10000,
       });
     } catch (error) {
+      rollbar.error('WebSocket Connection Error', error);
       console.log('WebSocket connection failed:', error);
     }
 
@@ -36,6 +38,7 @@ class SocketService {
     });
 
     this.socket.on('connect_error', (error) => {
+      rollbar.error('WebSocket Connection Error', error);
       console.error('Connection error:', error);
     });
   }
@@ -76,7 +79,11 @@ class SocketService {
 
   emit(event, data) {
     if (this.socket) {
-      this.socket.emit(event, data);
+      try {
+        this.socket.emit(event, data);
+      } catch (error) {
+        rollbar.error('WebSocket Emit Error', { event, data, error });
+      }
     }
   }
 }

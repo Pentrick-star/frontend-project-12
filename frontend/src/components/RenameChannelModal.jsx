@@ -97,7 +97,7 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
                     disabled={isSubmitting} 
                     className="btn btn-primary"
                   >
-                    {isSubmitting ? 'Сохранение...' : t('modals.renameBtns.submit')}
+                    {isSubmitting ? t('loading.saving') : t('modals.renameBtns.submit')}
                   </button>
                 </div>
                           </Form>

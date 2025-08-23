@@ -82,7 +82,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                     disabled={isSubmitting} 
                     className="btn btn-primary"
                   >
-                    {isSubmitting ? 'Создание...' : t('modals.addBtns.submit')}
+                    {isSubmitting ? t('loading.creating') : t('modals.addBtns.submit')}
                   </button>
                 </div>
               </Form>

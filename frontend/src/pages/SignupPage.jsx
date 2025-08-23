@@ -119,7 +119,7 @@ const SignupPage = () => {
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span>Уже есть аккаунт?</span> <Link to="/login">Войти</Link>
+                    <span>{t('signupPage.hasAcc')}</span> <Link to="/login">{t('signupPage.loginLink')}</Link>
                   </div>
                 </div>
               </div>

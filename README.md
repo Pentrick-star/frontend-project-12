@@ -37,6 +37,16 @@ npx @hexlet/chat-server
 cd frontend && npm run dev
 ```
 
+### Настройка Rollbar
+
+1. Создайте аккаунт на [Rollbar](https://rollbar.com/)
+2. Создайте новый проект типа "Frontend"
+3. Скопируйте Access Token
+4. Создайте файл `.env` в папке `frontend/`:
+```bash
+VITE_ROLLBAR_ACCESS_TOKEN=your-rollbar-access-token-here
+```
+
 ### Деплой на Render
 
 1. Подключите репозиторий к Render
@@ -44,6 +54,15 @@ cd frontend && npm run dev
 3. Укажите:
    - **Build Command**: `cd frontend && npm install && npm run build`
    - **Publish Directory**: `frontend/dist`
-4. Добавьте переменную окружения:
+4. Добавьте переменные окружения:
    - **NODE_ENV**: `production`
+   - **VITE_ROLLBAR_ACCESS_TOKEN**: ваш токен Rollbar
+
+### Мониторинг ошибок
+
+Приложение настроено для автоматического отслеживания ошибок через Rollbar:
+- Ошибки React компонентов
+- Ошибки API запросов
+- Ошибки WebSocket соединений
+- Необработанные исключения
 

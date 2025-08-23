@@ -9,6 +9,11 @@
   "messages_other": "сообщение",
   "messagePlaceholder": "Введите сообщение...",
   "messageBtnText": "Отправить",
+  "loading": {
+    "creating": "Создание...",
+    "saving": "Сохранение...",
+    "deleting": "Удаление..."
+  },
   "modals": {
     "titles": {
       "addingChannel": "Добавить канал",
@@ -62,7 +67,9 @@
     "confirmPasswordLabel": "Подтвердите пароль",
     "required": "Обязательное поле",
     "signupBtn": "Зарегистрироваться",
-    "signupError": "Такой пользователь уже существует"
+    "signupError": "Такой пользователь уже существует",
+    "hasAcc": "Уже есть аккаунт?",
+    "loginLink": "Войти"
   },
   "manageChannelsBtns": {
     "delete": "Удалить",

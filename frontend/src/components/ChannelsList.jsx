@@ -125,7 +125,7 @@ const ChannelsList = () => {
                       backgroundColor: '#f8f9fa'
                     }}
                   >
-                    Переименовать
+                    {t('manageChannelsBtns.rename')}
                   </div>
                 </li>
                 {isRemovable(channel) && (
@@ -144,7 +144,7 @@ const ChannelsList = () => {
                         color: '#dc3545'
                       }}
                     >
-                      Удалить
+                      {t('manageChannelsBtns.delete')}
                     </div>
                   </li>
                 )}

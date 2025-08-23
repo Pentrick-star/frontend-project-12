@@ -66,7 +66,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
               disabled={isRemoving}
               className="btn btn-danger"
             >
-              {isRemoving ? 'Удаление...' : t('modals.deleteBtns.delete')}
+              {isRemoving ? t('loading.deleting') : t('modals.deleteBtns.delete')}
             </button>
           </div>
           </div>
