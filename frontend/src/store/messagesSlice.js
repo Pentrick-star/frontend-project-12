@@ -20,7 +20,6 @@ export const sendMessage = createAsyncThunk(
   async (messageData, { rejectWithValue }) => {
     try {
       // Отправляем сообщение только через API
-      // WebSocket обновления придут автоматически от сервера
       const response = await api.post('/messages', messageData);
       return response.data;
     } catch (error) {

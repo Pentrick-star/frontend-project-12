@@ -12,6 +12,12 @@ class SocketService {
       return;
     }
     
+    // В продакшене отключаем WebSocket
+    if (process.env.NODE_ENV === 'production') {
+      console.log('WebSocket disabled in production');
+      return;
+    }
+    
     // Сервер чата всегда на localhost:5001
     const wsUrl = 'http://localhost:5001';
     
