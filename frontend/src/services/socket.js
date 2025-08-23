@@ -6,12 +6,8 @@ class SocketService {
   }
 
   connect(token) {
-    // В разработке и тестах сервер чата всегда на localhost:5001
-    // В продакшене используем текущий домен
-    const isProduction = process.env.NODE_ENV === 'production';
-    const wsUrl = isProduction 
-      ? `${window.location.protocol}//${window.location.host}` 
-      : 'http://localhost:5001';
+    // Сервер чата всегда на localhost:5001
+    const wsUrl = 'http://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
     
@@ -23,6 +19,7 @@ class SocketService {
       upgrade: true,
       rememberUpgrade: true,
       forceNew: true,
+      timeout: 5000, // Уменьшаем таймаут
     });
 
     this.socket.on('connect', () => {
