@@ -21,21 +21,39 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
   return (
     <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+        <div className="modal-content" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }}>
           <div className="modal-header">
-            <div className="modal-title h5">{t('chat.removeChannelTitle')}</div>
+            <div className="modal-title h5" style={{ color: '#333333' }}>{t('chat.removeChannelTitle')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </div>
           <div className="modal-body">
-            <p>{t('chat.removeChannelConfirm')} <strong>#{channel.name}</strong>?</p>
-            <p>{t('chat.removeChannelWarning')}</p>
+            <p style={{ color: '#333333' }}>
+              {t('chat.removeChannelConfirm')} <b>{channel.name}</b>?
+            </p>
+            <p style={{ color: '#6c757d' }}>
+              {t('chat.removeChannelWarning')}
+            </p>
           </div>
           <div className="modal-footer">
-            <button type="button" onClick={onClose} className="btn btn-secondary">
+            <button 
+              type="button" 
+              onClick={onClose} 
+              className="btn btn-secondary"
+              style={{ backgroundColor: '#6c757d', borderColor: '#6c757d', color: '#ffffff' }}
+            >
               {t('common.cancel')}
             </button>
-            <button type="button" onClick={handleRemove} className="btn btn-danger">
-              {t('common.delete')}
+            <button 
+              type="button" 
+              onClick={handleRemove} 
+              className="btn"
+              style={{ 
+                backgroundColor: '#dc3545', 
+                borderColor: '#dc3545',
+                color: '#ffffff'
+              }}
+            >
+              {t('common.remove')}
             </button>
           </div>
         </div>

@@ -42,9 +42,9 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   return (
     <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+        <div className="modal-content" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }}>
           <div className="modal-header">
-            <div className="modal-title h5">{t('chat.addChannelTitle')}</div>
+            <div className="modal-title h5" style={{ color: '#333333' }}>{t('chat.addChannelTitle')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </div>
           <Formik
@@ -56,22 +56,37 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               <Form>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="channelName" className="form-label">{t('chat.channelName')}</label>
+                    <label htmlFor="channelName" className="form-label" style={{ color: '#333333' }}>{t('chat.channelName')}</label>
                     <Field
                       type="text"
                       id="channelName"
                       name="name"
                       className="form-control"
+                      style={{ borderColor: '#ced4da' }}
                       autoFocus
                     />
                     <ErrorMessage name="name" component="div" className="text-danger small" />
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" onClick={onClose} className="btn btn-secondary">
+                  <button 
+                    type="button" 
+                    onClick={onClose} 
+                    className="btn btn-secondary"
+                    style={{ backgroundColor: '#6c757d', borderColor: '#6c757d', color: '#ffffff' }}
+                  >
                     {t('common.cancel')}
                   </button>
-                  <button type="submit" disabled={isSubmitting} className="btn btn-primary">
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting} 
+                    className="btn"
+                    style={{ 
+                      backgroundColor: '#007bff', 
+                      borderColor: '#007bff',
+                      color: '#ffffff'
+                    }}
+                  >
                     {isSubmitting ? t('common.creating') : t('common.create')}
                   </button>
                 </div>

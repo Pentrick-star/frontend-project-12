@@ -42,13 +42,18 @@ const ChannelsList = () => {
     return channel.name !== 'general' && channel.name !== 'random';
   };
 
+  const isStandardChannel = (channel) => {
+    return channel.name === 'general' || channel.name === 'random';
+  };
+
   return (
     <div className="d-flex flex-column h-100">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2">
-        <span>{t('chat.channels')}</span>
+        <span style={{ color: '#333333' }}>{t('chat.channels')}</span>
         <button 
           type="button"
-          className="p-0 text-primary btn btn-group-vertical"
+          className="p-0 btn btn-group-vertical"
+          style={{ color: '#007bff' }}
           onClick={() => setShowAddModal(true)}
           title={t('chat.addChannel')}
         >
@@ -63,46 +68,54 @@ const ChannelsList = () => {
               <button
                 type="button"
                 className={`w-100 rounded-0 text-start text-truncate btn ${
-                  channel.id === currentChannelId ? 'btn-primary' : ''
+                  channel.id === currentChannelId ? '' : ''
                 }`}
+                style={{
+                  backgroundColor: channel.id === currentChannelId ? '#007bff' : 'transparent',
+                  color: channel.id === currentChannelId ? '#ffffff' : '#333333',
+                  border: 'none'
+                }}
                 onClick={() => handleChannelClick(channel.id)}
               >
                 <span className="me-1">#</span>
                 {channel.name}
               </button>
-              <div className="dropdown flex-shrink-0">
-                <button
-                  type="button"
-                  className="btn btn-sm text-muted p-0 dropdown-toggle"
-                  onClick={(e) => handleDropdownToggle(channel.id, e)}
-                >
-                  <span className="visually-hidden">{t('common.edit')}</span>
-                </button>
-                {showDropdown === channel.id && (
-                  <ul className="dropdown-menu">
-                    <li>
-                      <button 
-                        type="button" 
-                        className="dropdown-item"
-                        onClick={() => handleRename(channel)}
-                      >
-                        {t('common.rename')}
-                      </button>
-                    </li>
-                    {isRemovable(channel) && (
+              {!isStandardChannel(channel) && (
+                <div className="dropdown flex-shrink-0">
+                  <button
+                    type="button"
+                    className="btn btn-sm p-0 dropdown-toggle"
+                    style={{ color: '#6c757d' }}
+                    onClick={(e) => handleDropdownToggle(channel.id, e)}
+                  >
+                    <span className="visually-hidden">{t('common.edit')}</span>
+                  </button>
+                  {showDropdown === channel.id && (
+                    <ul className="dropdown-menu">
                       <li>
                         <button 
                           type="button" 
-                          className="dropdown-item text-danger"
-                          onClick={() => handleRemove(channel)}
+                          className="dropdown-item"
+                          onClick={() => handleRename(channel)}
                         >
-                          {t('common.remove')}
+                          {t('common.rename')}
                         </button>
                       </li>
-                    )}
-                  </ul>
-                )}
-              </div>
+                      {isRemovable(channel) && (
+                        <li>
+                          <button 
+                            type="button" 
+                            className="dropdown-item text-danger"
+                            onClick={() => handleRemove(channel)}
+                          >
+                            {t('common.remove')}
+                          </button>
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                </div>
+              )}
             </div>
           </li>
         ))}

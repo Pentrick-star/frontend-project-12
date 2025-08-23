@@ -38,7 +38,7 @@ const MessageForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="py-3 border rounded-3">
+    <form onSubmit={handleSubmit} className="py-3 border rounded-3" style={{ backgroundColor: '#f8f9fa', borderColor: '#007bff' }}>
       <div className="input-group">
         <input
           type="text"
@@ -48,10 +48,20 @@ const MessageForm = () => {
           placeholder={t('chat.messagePlaceholder')}
           disabled={loading}
           className="border-0 p-0 ps-2 form-control"
+          style={{ backgroundColor: 'transparent' }}
           name="body"
           aria-label={t('chat.newMessage')}
         />
-        <button type="submit" disabled={loading || !message.trim()} className="btn btn-group-vertical">
+        <button 
+          type="submit" 
+          disabled={loading || !message.trim()} 
+          className="btn btn-group-vertical"
+          style={{ 
+            backgroundColor: '#f8f9fa', 
+            borderColor: '#007bff',
+            color: '#6c757d'
+          }}
+        >
           <i className="bi bi-arrow-up-circle"></i>
           <span className="visually-hidden">{t('common.send')}</span>
         </button>
