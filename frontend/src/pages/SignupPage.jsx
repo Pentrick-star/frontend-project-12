@@ -9,21 +9,21 @@ import { useAuth } from '../hooks/useAuth';
 const SignupPage = () => {
   const { t } = useTranslation();
   const [signupError, setSignupError] = useState('');
-  const [focusedField, setFocusedField] = useState('');
+
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const validationSchema = Yup.object({
     username: Yup.string()
-      .min(3, t('auth.usernameMin'))
-      .max(20, t('auth.usernameMax'))
-      .required(t('auth.usernameRequired')),
+      .min(3, t('signupPage.usernamePlaceholder'))
+      .max(20, t('signupPage.usernamePlaceholder'))
+      .required(t('signupPage.required')),
     password: Yup.string()
-      .min(6, t('auth.passwordMin'))
-      .required(t('auth.passwordRequired')),
+      .min(6, t('signupPage.passwordPlaceholder'))
+      .required(t('signupPage.required')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], t('auth.passwordsMustMatch'))
-      .required(t('auth.confirmPasswordRequired')),
+      .oneOf([Yup.ref('password'), null], t('signupPage.confirmPasswordPlaceholder'))
+      .required(t('signupPage.required')),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -38,9 +38,9 @@ const SignupPage = () => {
       navigate('/');
     } catch (error) {
       if (error.response?.status === 409) {
-        setSignupError(t('auth.userExists'));
+        setSignupError(t('signupPage.signupError'));
       } else {
-        setSignupError(t('auth.signupError'));
+        setSignupError(t('networkError'));
       }
     } finally {
       setSubmitting(false);
@@ -48,17 +48,17 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="container-fluid h-100" style={{ backgroundColor: '#f5f7fa' }} data-testid="signup-page">
+    <div className="container-fluid h-100" data-testid="signup-page">
       <div className="row justify-content-center align-items-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
-          <div className="card shadow-sm" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }} data-testid="signup-container">
+          <div className="card shadow-sm" data-testid="signup-container">
             <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src="https://frontend-chat-ru.hexlet.app/assets/avatar-DIE1AEpS.jpg" alt="Signup illustration" className="img-fluid" />
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <div className="text-center" style={{ width: '100%', maxWidth: '300px' }}>
-                  <h2 className="text-center mb-4" style={{ color: '#333333' }} data-testid="signup-title">{t('auth.signup')}</h2>
+                <div className="text-center">
+                  <h2 className="text-center mb-4" data-testid="signup-title">{t('signupPage.title')}</h2>
                   {signupError && (
                     <div className="alert alert-danger" role="alert">
                       {signupError}
@@ -71,129 +71,55 @@ const SignupPage = () => {
                   >
                     {({ isSubmitting, values }) => (
                       <Form data-testid="signup-form">
-                        <div className="mb-3 position-relative" data-testid="username-group">
+                        <div className="mb-3" data-testid="username-group">
+                          <label htmlFor="username" className="form-label">{t('signupPage.usernameLabel')}</label>
                           <Field
                             type="text"
                             id="username"
                             name="username"
                             className="form-control"
-                            style={{ 
-                              borderColor: '#ced4da',
-                              paddingTop: '1.625rem',
-                              paddingBottom: '0.375rem',
-                              height: 'auto'
-                            }}
-                            onFocus={() => setFocusedField('username')}
-                            onBlur={() => setFocusedField('')}
                             data-testid="username-field"
                           />
-                          <label 
-                            htmlFor="username" 
-                            className="position-absolute"
-                            style={{ 
-                              left: '0.75rem',
-                              top: (values.username || focusedField === 'username') ? '0.125rem' : '0.75rem',
-                              fontSize: (values.username || focusedField === 'username') ? '0.75rem' : '1rem',
-                              color: (values.username || focusedField === 'username') ? '#6c757d' : '#333333',
-                              transition: 'all 0.15s ease-in-out',
-                              pointerEvents: 'none',
-                              lineHeight: '1.5'
-                            }}
-                            data-testid="username-label"
-                          >
-                            Имя пользователя
-                          </label>
                           <ErrorMessage name="username" component="div" className="text-danger small" />
                         </div>
 
-                        <div className="mb-3 position-relative" data-testid="password-group">
+                        <div className="mb-3" data-testid="password-group">
+                          <label htmlFor="password" className="form-label">{t('signupPage.passwordLabel')}</label>
                           <Field
                             type="password"
                             id="password"
                             name="password"
                             className="form-control"
-                            style={{ 
-                              borderColor: '#ced4da',
-                              paddingTop: '1.625rem',
-                              paddingBottom: '0.375rem',
-                              height: 'auto'
-                            }}
-                            onFocus={() => setFocusedField('password')}
-                            onBlur={() => setFocusedField('')}
                             data-testid="password-field"
                           />
-                          <label 
-                            htmlFor="password" 
-                            className="position-absolute"
-                            style={{ 
-                              left: '0.75rem',
-                              top: (values.password || focusedField === 'password') ? '0.125rem' : '0.75rem',
-                              fontSize: (values.password || focusedField === 'password') ? '0.75rem' : '1rem',
-                              color: (values.password || focusedField === 'password') ? '#6c757d' : '#333333',
-                              transition: 'all 0.15s ease-in-out',
-                              pointerEvents: 'none',
-                              lineHeight: '1.5'
-                            }}
-                            data-testid="password-label"
-                          >
-                            Пароль
-                          </label>
                           <ErrorMessage name="password" component="div" className="text-danger small" />
                         </div>
 
-                        <div className="mb-4 position-relative" data-testid="confirm-password-group">
+                        <div className="mb-4" data-testid="confirm-password-group">
+                          <label htmlFor="confirmPassword" className="form-label">{t('signupPage.confirmPasswordLabel')}</label>
                           <Field
                             type="password"
                             id="confirmPassword"
                             name="confirmPassword"
                             className="form-control"
-                            style={{ 
-                              borderColor: '#ced4da',
-                              paddingTop: '1.625rem',
-                              paddingBottom: '0.375rem',
-                              height: 'auto'
-                            }}
-                            onFocus={() => setFocusedField('confirmPassword')}
-                            onBlur={() => setFocusedField('')}
                             data-testid="confirm-password-field"
                           />
-                          <label 
-                            htmlFor="confirmPassword" 
-                            className="position-absolute"
-                            style={{ 
-                              left: '0.75rem',
-                              top: (values.confirmPassword || focusedField === 'confirmPassword') ? '0.125rem' : '0.75rem',
-                              fontSize: (values.confirmPassword || focusedField === 'confirmPassword') ? '0.75rem' : '1rem',
-                              color: (values.confirmPassword || focusedField === 'confirmPassword') ? '#6c757d' : '#333333',
-                              transition: 'all 0.15s ease-in-out',
-                              pointerEvents: 'none',
-                              lineHeight: '1.5'
-                            }}
-                            data-testid="confirm-password-label"
-                          >
-                            Подтвердите пароль
-                          </label>
                           <ErrorMessage name="confirmPassword" component="div" className="text-danger small" />
                         </div>
 
                         <button 
                           type="submit" 
                           disabled={isSubmitting} 
-                          className="w-100 btn" 
-                          style={{ 
-                            backgroundColor: '#007bff', 
-                            borderColor: '#007bff',
-                            color: '#ffffff'
-                          }}
+                          className="w-100 btn btn-primary"
                           data-testid="signup-button"
                         >
-                          {isSubmitting ? t('auth.signingUp') : t('auth.signupButton')}
+                          {t('signupPage.signupBtn')}
                         </button>
                       </Form>
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span style={{ color: '#333333' }}>{t('auth.hasAccount')}</span> <Link to="/login" style={{ color: '#007bff', textDecoration: 'underline' }}>{t('auth.loginLink')}</Link>
+                    <span>Уже есть аккаунт?</span> <Link to="/login">Войти</Link>
                   </div>
                 </div>
               </div>
