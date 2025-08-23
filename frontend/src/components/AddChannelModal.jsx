@@ -40,10 +40,11 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-      <div className="modal-backdrop fade show"></div>
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+    <>
+      <div className="modal-backdrop fade show" onClick={onClose} style={{ zIndex: 1040 }}></div>
+      <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
           <div className="modal-header">
             <div className="modal-title h5">{t('modals.titles.addingChannel')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
@@ -87,9 +88,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               </Form>
             )}
           </Formik>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

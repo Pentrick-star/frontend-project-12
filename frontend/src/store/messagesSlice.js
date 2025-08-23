@@ -19,16 +19,14 @@ export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
   async (messageData, { rejectWithValue }) => {
     try {
-      // Отправляем сообщение через WebSocket
+      // Отправляем сообщение через API
+      const response = await api.post('/messages', messageData);
+      
+      // Также отправляем через WebSocket для real-time обновлений
       const socketService = (await import('../services/socket')).default;
       socketService.emit('newMessage', messageData);
       
-      // Возвращаем сообщение для оптимистичного обновления
-      return {
-        id: Date.now(), // временный ID
-        ...messageData,
-        createdAt: new Date().toISOString(),
-      };
+      return response.data;
     } catch (error) {
       toast.error('Ошибка отправки сообщения');
       return rejectWithValue(error.message);
