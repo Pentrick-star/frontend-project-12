@@ -26,13 +26,8 @@ const LoginPage = () => {
       navigate('/');
     } catch (error) {
       console.log('Login error:', error.response?.status, error.message);
-      if (error.response?.status === 401) {
-        const errorText = t('loginPage.error');
-        console.log('Setting auth error:', errorText);
-        setAuthError(errorText);
-      } else {
-        setAuthError(t('networkError'));
-      }
+      // Показываем ошибку для любого неуспешного статуса
+      setAuthError(t('loginPage.error'));
     } finally {
       setSubmitting(false);
     }
@@ -60,7 +55,7 @@ const LoginPage = () => {
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                   >
-                    {({ isSubmitting, values }) => (
+                    {({ isSubmitting }) => (
                       <Form>
                         <div className="mb-3">
                           <label htmlFor="username" className="form-label">{t('loginPage.usernamePlaceholder')}</label>
