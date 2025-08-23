@@ -21,13 +21,17 @@ const LoginPage = () => {
     try {
       setAuthError('');
       const response = await api.post('/login', values);
-      const { token } = response.data;
-      login(token);
-      navigate('/');
+      if (response.status === 200 && response.data.token) {
+        const { token } = response.data;
+        login(token);
+        navigate('/');
+      }
     } catch (error) {
       console.log('Login error:', error.response?.status, error.message);
-      // Показываем ошибку для любого неуспешного статуса
-      setAuthError(t('loginPage.error'));
+      // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
+      const errorMessage = t('loginPage.error');
+      console.log('Setting auth error:', errorMessage);
+      setAuthError(errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -46,7 +50,7 @@ const LoginPage = () => {
                 <div className="text-center">
                   <h2 className="text-center mb-4">{t('loginPage.title')}</h2>
                   {authError && (
-                    <div className="alert alert-danger" role="alert">
+                    <div className="alert alert-danger" role="alert" data-testid="login-error">
                       {authError}
                     </div>
                   )}
