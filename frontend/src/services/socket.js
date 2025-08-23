@@ -6,15 +6,9 @@ class SocketService {
   }
 
   connect(token) {
-    // В тестовой среде отключаем WebSocket
+    // В тестовой среде используем текущий хост
     const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
-    if (isTest) {
-      console.log('WebSocket disabled in test environment');
-      return;
-    }
-    
-    // В разработке используем localhost:5001
-    const wsUrl = 'http://localhost:5001';
+    const wsUrl = isTest ? window.location.origin : 'http://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
     
@@ -27,7 +21,7 @@ class SocketService {
         upgrade: true,
         rememberUpgrade: true,
         forceNew: true,
-        timeout: 10000, // Увеличиваем таймаут
+        timeout: 10000,
       });
     } catch (error) {
       console.log('WebSocket connection failed:', error);
