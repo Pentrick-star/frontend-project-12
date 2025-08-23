@@ -48,14 +48,14 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="container-fluid h-100" style={{ backgroundColor: '#f5f7fa' }}>
+    <div className="container mt-5 mb-5 shadow" style={{ backgroundColor: '#ffffff', minHeight: '80vh' }}>
       <div className="row h-100 g-0">
-        <div className="col-4 col-md-2">
+        <div className="col-3">
           <div className="h-100 border-end" style={{ backgroundColor: '#ffffff' }}>
             <ChannelsList />
           </div>
         </div>
-        <div className="col h-100 d-flex flex-column">
+        <div className="col-9 h-100 d-flex flex-column">
           <div className="p-3 border-bottom" style={{ backgroundColor: '#f8f9fa' }}>
             <div>
               <b style={{ color: '#333333' }}>
@@ -81,7 +81,7 @@ const ChatPage = () => {
               ))
             )}
           </div>
-          <div className="p-3" style={{ backgroundColor: '#ffffff' }}>
+          <div className="p-3" style={{ backgroundColor: '#ffffff', borderTop: '1px solid #dee2e6' }}>
             <MessageForm />
           </div>
         </div>

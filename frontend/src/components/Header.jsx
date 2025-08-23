@@ -15,7 +15,7 @@ const Header = () => {
 
   return (
     <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#f5f7fa', borderBottom: '1px solid #dee2e6' }}>
-      <div className="container-fluid">
+      <div className="container-fluid px-4">
         <Link to="/" className="navbar-brand" style={{ color: '#333333' }}>
           {t('header.logo')}
         </Link>

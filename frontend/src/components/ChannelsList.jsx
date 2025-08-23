@@ -74,12 +74,11 @@ const ChannelsList = () => {
               type="button"
               className="btn text-start flex-grow-1"
               style={{
-                backgroundColor: channel.id === currentChannelId ? '#007bff' : 'transparent',
+                backgroundColor: channel.id === currentChannelId ? '#6c757d' : 'transparent',
                 color: channel.id === currentChannelId ? '#ffffff' : '#333333',
                 border: 'none',
                 padding: '0.5rem 0.75rem',
-                fontSize: '0.9rem',
-                borderRadius: '0.375rem'
+                fontSize: '0.9rem'
               }}
               onClick={() => handleChannelClick(channel.id)}
             >

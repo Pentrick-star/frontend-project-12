@@ -38,7 +38,7 @@ const MessageForm = () => {
   };
 
   return (
-    <div className="d-flex align-items-center border rounded-pill p-2" style={{ backgroundColor: '#ffffff', borderColor: '#80bdff', borderWidth: '2px' }}>
+    <form onSubmit={handleSubmit} className="input-group">
       <input
         type="text"
         value={message}
@@ -46,12 +46,9 @@ const MessageForm = () => {
         onKeyPress={handleKeyPress}
         placeholder={t('chat.messagePlaceholder')}
         disabled={loading}
-        className="flex-grow-1 border-0 px-3"
+        className="form-control"
         style={{ 
-          backgroundColor: 'transparent',
-          fontSize: '0.9rem',
-          outline: 'none',
-          color: '#333333'
+          fontSize: '0.9rem'
         }}
         name="body"
         aria-label={t('chat.newMessage')}
@@ -59,32 +56,14 @@ const MessageForm = () => {
       <button 
         type="submit" 
         disabled={loading || !message.trim()} 
-        className="btn p-0 d-flex align-items-center justify-content-center"
-        style={{ 
-          backgroundColor: 'transparent',
-          border: 'none',
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%'
-        }}
+        className="btn btn-outline-secondary"
       >
-        <svg 
-          width="20" 
-          height="20" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          style={{ 
-            color: message.trim() ? '#007bff' : '#6c757d' 
-          }}
-        >
-          <path 
-            d="M2 21L23 12L2 3V10L17 12L2 14V21Z" 
-            fill="currentColor"
-          />
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M15.854 7.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708L14.293 8.5H1.5a.5.5 0 0 1 0-1h12.793L8.146 1.354a.5.5 0 1 1 .708-.708l7 7z"/>
         </svg>
         <span className="visually-hidden">{t('common.send')}</span>
       </button>
-    </div>
+    </form>
   );
 };
 
