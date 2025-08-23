@@ -18,7 +18,7 @@ function App() {
     <Provider store={store}>
       <AuthProvider>
         <Router>
-          <div className="App">
+          <div className="d-flex flex-column h-100">
             <Header />
             <Routes>
               <Route 

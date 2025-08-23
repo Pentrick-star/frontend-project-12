@@ -49,21 +49,27 @@ const ChannelsList = () => {
   return (
     <div className="d-flex flex-column h-100">
       <div className="d-flex justify-content-between align-items-center p-3 border-bottom" style={{ backgroundColor: '#f8f9fa' }}>
-        <span style={{ color: '#333333', fontWeight: 'bold' }}>{t('chat.channels')}</span>
+        <span style={{ color: '#333333', fontWeight: 'bold', fontSize: '1rem' }}>{t('chat.channels')}</span>
         <button 
           type="button"
-          className="btn"
+          className="btn p-0 d-flex align-items-center justify-content-center"
           style={{ 
             color: '#007bff',
             backgroundColor: 'transparent',
             border: 'none',
-            fontSize: '1.2rem',
-            padding: '0.25rem'
+            fontSize: '1.1rem',
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            marginLeft: '8px',
+            marginRight: '2px',
+            lineHeight: '1',
+            transition: 'background 0.2s'
           }}
           onClick={() => setShowAddModal(true)}
           title={t('chat.addChannel')}
         >
-          +
+          <span style={{ fontWeight: 'bold', fontSize: '1.3rem', marginTop: '-2px' }}>+</span>
           <span className="visually-hidden">{t('chat.addChannel')}</span>
         </button>
       </div>
@@ -78,14 +84,18 @@ const ChannelsList = () => {
                 color: channel.id === currentChannelId ? '#ffffff' : '#333333',
                 border: 'none',
                 padding: '0.5rem 0.75rem',
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                fontWeight: channel.id === currentChannelId ? 'bold' : 'normal',
+                borderRadius: '6px',
+                transition: 'background 0.2s, color 0.2s'
               }}
               onClick={() => handleChannelClick(channel.id)}
             >
               <span className="me-1">#</span>
               {channel.name}
             </button>
-            {!isStandardChannel(channel) && (
+            {/* Показывать меню только для не-стандартных каналов и только если не активный */}
+            {!isStandardChannel(channel) && channel.id !== currentChannelId && (
               <div className="dropdown">
                 <button
                   type="button"

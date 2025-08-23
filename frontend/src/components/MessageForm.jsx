@@ -58,9 +58,7 @@ const MessageForm = () => {
         disabled={loading || !message.trim()} 
         className="btn btn-outline-secondary"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M15.854 7.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708L14.293 8.5H1.5a.5.5 0 0 1 0-1h12.793L8.146 1.354a.5.5 0 1 1 .708-.708l7 7z"/>
-        </svg>
+        →
         <span className="visually-hidden">{t('common.send')}</span>
       </button>
     </form>
