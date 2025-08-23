@@ -28,10 +28,8 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = (newToken) => {
-    console.log('AuthContextProvider.login called with token:', newToken);
     localStorage.setItem('token', newToken);
     setTokenState(newToken);
-    console.log('Token saved to localStorage and state');
   };
 
   const logout = () => {
