@@ -23,6 +23,7 @@ cd frontend && npm run dev
 ### Локальные серверы
 
 - **Frontend (разработка)**: [http://localhost:5173](http://localhost:5173)
+- **Backend сервер**: [http://localhost:5001](http://localhost:5001)
 
 ### Запуск серверов
 
@@ -35,3 +36,21 @@ npx @hexlet/chat-server
 ```bash
 cd frontend && npm run dev
 ```
+
+### Деплой на Render
+
+1. Подключите репозиторий к Render
+2. Создайте новый **Static Site**
+3. Укажите:
+   - **Build Command**: `cd frontend && npm install && npm run build`
+   - **Publish Directory**: `frontend/dist`
+4. Добавьте переменную окружения:
+   - **NODE_ENV**: `production`
+
+### Исправленные проблемы
+
+- ✅ Авторизация и сохранение токена в localStorage
+- ✅ Навигация после успешного логина
+- ✅ WebSocket соединение с сервером чата
+- ✅ Устранение дублирования сообщений
+- ✅ Устойчивость к ошибкам WebSocket
