@@ -41,10 +41,11 @@ const AddChannelModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
+      <div className="modal-backdrop fade show"></div>
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }}>
+        <div className="modal-content">
           <div className="modal-header">
-            <div className="modal-title h5" style={{ color: '#333333' }}>{t('modals.titles.addingChannel')}</div>
+            <div className="modal-title h5">{t('modals.titles.addingChannel')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </div>
           <Formik
@@ -56,13 +57,12 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               <Form>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="channelName" className="form-label" style={{ color: '#333333' }}>{t('modals.addLabel')}</label>
+                    <label htmlFor="channelName" className="form-label">{t('modals.addLabel')}</label>
                     <Field
                       type="text"
                       id="channelName"
                       name="name"
                       className="form-control"
-                      style={{ borderColor: '#ced4da' }}
                       autoFocus
                     />
                     <ErrorMessage name="name" component="div" className="text-danger small" />
@@ -73,19 +73,13 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                     type="button" 
                     onClick={onClose} 
                     className="btn btn-secondary"
-                    style={{ backgroundColor: '#6c757d', borderColor: '#6c757d', color: '#ffffff' }}
                   >
                     {t('modals.addBtns.cancel')}
                   </button>
                   <button 
                     type="submit" 
                     disabled={isSubmitting} 
-                    className="btn"
-                    style={{ 
-                      backgroundColor: '#007bff', 
-                      borderColor: '#007bff',
-                      color: '#ffffff'
-                    }}
+                    className="btn btn-primary"
                   >
                     {isSubmitting ? 'Создание...' : t('modals.addBtns.submit')}
                   </button>

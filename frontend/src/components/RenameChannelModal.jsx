@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,8 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels.items);
+  
+
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -27,7 +29,7 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const filteredName = filterProfanity(values.name);
-      await dispatch(renameChannel({ id: channel.id, name: filteredName })).unwrap();
+      await dispatch(renameChannel({ channelId: channel.id, name: filteredName })).unwrap();
       resetForm();
       onClose();
     } catch (error) {
@@ -37,14 +39,29 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
     }
   };
 
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, onClose]);
+
   if (!isOpen || !channel) return null;
 
   return (
-    <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }}>
+    <>
+      <div className="modal-backdrop fade show" onClick={onClose} style={{ zIndex: 1040 }}></div>
+      <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
           <div className="modal-header">
-            <div className="modal-title h5" style={{ color: '#333333' }}>{t('modals.titles.renamingChannel')}</div>
+            <div className="modal-title h5">{t('modals.titles.renamingChannel')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </div>
           <Formik
@@ -56,13 +73,12 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
               <Form>
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="channelName" className="form-label" style={{ color: '#333333' }}>{t('modals.addLabel')}</label>
+                    <label htmlFor="channelName" className="form-label">{t('modals.addLabel')}</label>
                     <Field
                       type="text"
                       id="channelName"
                       name="name"
                       className="form-control"
-                      style={{ borderColor: '#ced4da' }}
                       autoFocus
                     />
                     <ErrorMessage name="name" component="div" className="text-danger small" />
@@ -73,29 +89,24 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
                     type="button" 
                     onClick={onClose} 
                     className="btn btn-secondary"
-                    style={{ backgroundColor: '#6c757d', borderColor: '#6c757d', color: '#ffffff' }}
                   >
                     {t('modals.renameBtns.cancel')}
                   </button>
                   <button 
                     type="submit" 
                     disabled={isSubmitting} 
-                    className="btn"
-                    style={{ 
-                      backgroundColor: '#007bff', 
-                      borderColor: '#007bff',
-                      color: '#ffffff'
-                    }}
+                    className="btn btn-primary"
                   >
                     {isSubmitting ? 'Сохранение...' : t('modals.renameBtns.submit')}
                   </button>
                 </div>
-              </Form>
-            )}
-          </Formik>
+                          </Form>
+          )}
+        </Formik>
         </div>
       </div>
     </div>
+  </>
   );
 };
 

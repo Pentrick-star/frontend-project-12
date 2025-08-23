@@ -13,15 +13,6 @@
   height: 100vh !important;
 }
 
-.row.h-100 {
-  height: 100% !important;
-}
-
-.col-8.col-md-9.d-flex.flex-column.h-100 {
-  height: 100% !important;
-  min-height: 0;
-}
-
 /* Стили для чата */
 .chat-messages {
   flex: 1;
@@ -58,24 +49,60 @@
 
 /* Стили для dropdown */
 .dropdown-menu {
-  z-index: 1060;
-  background-color: #ffffff;
-  border: 1px solid #dee2e6;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  z-index: 1060 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #dee2e6 !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  display: block !important;
+  position: absolute !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0.5rem 0 !important;
+}
+
+.dropdown-menu.show {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .dropdown-item {
-  color: #333333;
+  color: #333333 !important;
+  cursor: pointer !important;
+  padding: 0.5rem 1rem !important;
+  border: none !important;
+  background: none !important;
+  width: 100% !important;
+  text-align: left !important;
+  display: block !important;
+  text-decoration: none !important;
+  line-height: 1.5 !important;
+  white-space: nowrap !important;
 }
 
 .dropdown-item:hover {
-  background-color: #f8f9fa;
-  color: #333333;
+  background-color: #f8f9fa !important;
+  color: #333333 !important;
+}
+
+.dropdown-item.text-danger {
+  color: #dc3545 !important;
 }
 
 .dropdown-item.text-danger:hover {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+}
+
+/* Стили для кнопки dropdown */
+.dropdown .btn {
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+}
+
+.dropdown .btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* Стили для кнопок */

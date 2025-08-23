@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { sendMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 import { useAuth } from '../hooks/useAuth';
+import socketService from '../services/socket';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -38,7 +39,7 @@ const MessageForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="input-group" style={{ minHeight: '50px' }}>
+    <form onSubmit={handleSubmit} className="input-group">
       <input
         type="text"
         value={message}
@@ -49,13 +50,11 @@ const MessageForm = () => {
         className="form-control"
         name="body"
         aria-label={t('messagePlaceholder')}
-        style={{ border: '1px solid #ced4da' }}
       />
       <button 
         type="submit" 
         disabled={loading || !message.trim()} 
         className="btn btn-outline-secondary"
-        style={{ border: '1px solid #ced4da' }}
       >
         →
         <span className="visually-hidden">{t('messageBtnText')}</span>

@@ -111,6 +111,7 @@ const channelsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+
       .addCase(createChannel.fulfilled, (state, action) => {
         state.items.push(action.payload);
         state.currentChannelId = action.payload.id;

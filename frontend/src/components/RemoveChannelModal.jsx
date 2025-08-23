@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { removeChannel } from '../store/channelsSlice';
@@ -6,28 +6,49 @@ import { removeChannel } from '../store/channelsSlice';
 const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [isRemoving, setIsRemoving] = useState(false);
+  
+
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, onClose]);
 
   const handleRemove = async () => {
     try {
+      setIsRemoving(true);
       await dispatch(removeChannel(channel.id)).unwrap();
       onClose();
     } catch (error) {
       console.error('Failed to remove channel:', error);
+    } finally {
+      setIsRemoving(false);
     }
   };
 
   if (!isOpen || !channel) return null;
 
   return (
-    <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content" style={{ backgroundColor: '#ffffff', border: '1px solid #dee2e6' }}>
+    <>
+      <div className="modal-backdrop fade show" onClick={onClose} style={{ zIndex: 1040 }}></div>
+      <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
           <div className="modal-header">
-            <div className="modal-title h5" style={{ color: '#333333' }}>{t('modals.titles.deletingChannel')}</div>
+            <div className="modal-title h5">{t('modals.titles.deletingChannel')}</div>
             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
           </div>
           <div className="modal-body">
-            <p style={{ color: '#333333' }}>
+            <p>
               {t('modals.deleteQuestion')} <b>{channel.name}</b>?
             </p>
           </div>
@@ -36,26 +57,22 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
               type="button" 
               onClick={onClose} 
               className="btn btn-secondary"
-              style={{ backgroundColor: '#6c757d', borderColor: '#6c757d', color: '#ffffff' }}
             >
               {t('modals.deleteBtns.cancel')}
             </button>
             <button 
               type="button" 
               onClick={handleRemove} 
-              className="btn"
-              style={{ 
-                backgroundColor: '#dc3545', 
-                borderColor: '#dc3545',
-                color: '#ffffff'
-              }}
+              disabled={isRemoving}
+              className="btn btn-danger"
             >
-              {t('modals.deleteBtns.delete')}
+              {isRemoving ? 'Удаление...' : t('modals.deleteBtns.delete')}
             </button>
+          </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

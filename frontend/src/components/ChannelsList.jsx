@@ -16,9 +16,13 @@ const ChannelsList = () => {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [showDropdown, setShowDropdown] = useState(null);
   const dropdownRef = useRef(null);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Не закрываем dropdown, если клик был по элементу в dropdown
+      if (event.target.closest('.dropdown-item')) {
+        return;
+      }
+      
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(null);
       }
@@ -98,34 +102,50 @@ const ChannelsList = () => {
             {showDropdown === channel.id && (
               <ul className="dropdown-menu show" style={{ 
                 position: 'absolute', 
-                left: '0', 
+                right: '0', 
                 top: '100%', 
-                zIndex: 1000, 
-                width: '100%', 
-                marginTop: '0',
+                minWidth: '120px',
+                zIndex: 1060,
+                backgroundColor: '#ffffff',
                 border: '1px solid #dee2e6',
-                borderRadius: '0.375rem',
-                boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15)',
-                backgroundColor: '#fff'
+                borderRadius: '4px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
               }}>
                 <li>
-                  <button 
-                    type="button" 
+                  <div 
                     className="dropdown-item"
-                    onClick={() => handleRename(channel)}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleRename(channel);
+                    }}
+                    style={{ 
+                      cursor: 'pointer',
+                      padding: '8px 16px',
+                      backgroundColor: '#f8f9fa'
+                    }}
                   >
-                    {t('manageChannelsBtns.rename')}
-                  </button>
+                    Переименовать
+                  </div>
                 </li>
                 {isRemovable(channel) && (
                   <li>
-                    <button 
-                      type="button" 
+                    <div 
                       className="dropdown-item text-danger"
-                      onClick={() => handleRemove(channel)}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleRemove(channel);
+                      }}
+                      style={{ 
+                        cursor: 'pointer',
+                        padding: '8px 16px',
+                        backgroundColor: '#f8f9fa',
+                        color: '#dc3545'
+                      }}
                     >
-                      {t('manageChannelsBtns.delete')}
-                    </button>
+                      Удалить
+                    </div>
                   </li>
                 )}
               </ul>
@@ -139,17 +159,21 @@ const ChannelsList = () => {
         onClose={() => setShowAddModal(false)}
       />
 
-      <RenameChannelModal
-        isOpen={showRenameModal}
-        onClose={() => setShowRenameModal(false)}
-        channel={selectedChannel}
-      />
+      {showRenameModal && (
+        <RenameChannelModal
+          isOpen={showRenameModal}
+          onClose={() => setShowRenameModal(false)}
+          channel={selectedChannel}
+        />
+      )}
 
-      <RemoveChannelModal
-        isOpen={showRemoveModal}
-        onClose={() => setShowRemoveModal(false)}
-        channel={selectedChannel}
-      />
+      {showRemoveModal && (
+        <RemoveChannelModal
+          isOpen={showRemoveModal}
+          onClose={() => setShowRemoveModal(false)}
+          channel={selectedChannel}
+        />
+      )}
     </div>
   );
 };
