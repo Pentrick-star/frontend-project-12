@@ -9,6 +9,7 @@ import { useAuth } from '../hooks/useAuth';
 const LoginPage = () => {
   const { t } = useTranslation();
   const [authError, setAuthError] = useState('');
+  const [focusedField, setFocusedField] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -71,6 +72,8 @@ const LoginPage = () => {
                               paddingBottom: '0.375rem',
                               height: 'auto'
                             }}
+                            onFocus={() => setFocusedField('username')}
+                            onBlur={() => setFocusedField('')}
                             data-testid="username-field"
                           />
                           <label 
@@ -78,12 +81,11 @@ const LoginPage = () => {
                             className="position-absolute"
                             style={{ 
                               left: '0.75rem',
-                              top: values.username ? '0.125rem' : '0.75rem',
-                              fontSize: values.username ? '0.75rem' : '1rem',
-                              color: values.username ? '#6c757d' : '#333333',
+                              top: (values.username || focusedField === 'username') ? '0.125rem' : '0.75rem',
+                              fontSize: (values.username || focusedField === 'username') ? '0.75rem' : '1rem',
+                              color: (values.username || focusedField === 'username') ? '#6c757d' : '#333333',
                               transition: 'all 0.15s ease-in-out',
                               pointerEvents: 'none',
-                              transform: values.username ? 'translateY(0)' : 'translateY(0)',
                               lineHeight: '1.5'
                             }}
                           >
@@ -104,6 +106,8 @@ const LoginPage = () => {
                               paddingBottom: '0.375rem',
                               height: 'auto'
                             }}
+                            onFocus={() => setFocusedField('password')}
+                            onBlur={() => setFocusedField('')}
                             data-testid="password-field"
                           />
                           <label 
@@ -111,12 +115,11 @@ const LoginPage = () => {
                             className="position-absolute"
                             style={{ 
                               left: '0.75rem',
-                              top: values.password ? '0.125rem' : '0.75rem',
-                              fontSize: values.password ? '0.75rem' : '1rem',
-                              color: values.password ? '#6c757d' : '#333333',
+                              top: (values.password || focusedField === 'password') ? '0.125rem' : '0.75rem',
+                              fontSize: (values.password || focusedField === 'password') ? '0.75rem' : '1rem',
+                              color: (values.password || focusedField === 'password') ? '#6c757d' : '#333333',
                               transition: 'all 0.15s ease-in-out',
                               pointerEvents: 'none',
-                              transform: values.password ? 'translateY(0)' : 'translateY(0)',
                               lineHeight: '1.5'
                             }}
                           >

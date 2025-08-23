@@ -49,24 +49,28 @@ const ChatPage = () => {
 
   return (
     <div className="container-fluid h-100" style={{ backgroundColor: '#f5f7fa' }}>
-      <div className="row h-100">
-        <div className="col-4 col-md-2 border-end px-0" style={{ backgroundColor: '#f8f9fa' }}>
-          <ChannelsList />
-        </div>
-        <div className="col h-100 d-flex flex-column" style={{ backgroundColor: '#ffffff' }}>
-          <div className="mb-4 p-3 shadow-sm small" style={{ backgroundColor: '#f8f9fa' }}>
-            <p className="m-0">
-              <b style={{ color: '#333333' }}>{currentChannel ? `# ${currentChannel.name}` : t('chat.selectChannel')}</b>
-              {currentChannel && (
-                <span style={{ color: '#6c757d' }} className="ms-2">
-                  {channelMessages.length} {t('chat.noMessages')}
-                </span>
-              )}
-            </p>
+      <div className="row h-100 g-0">
+        <div className="col-4 col-md-2">
+          <div className="h-100 border-end" style={{ backgroundColor: '#ffffff' }}>
+            <ChannelsList />
           </div>
-          <div className="chat-messages overflow-auto px-5" id="messages-box">
+        </div>
+        <div className="col h-100 d-flex flex-column">
+          <div className="p-3 border-bottom" style={{ backgroundColor: '#f8f9fa' }}>
+            <div>
+              <b style={{ color: '#333333' }}>
+                {currentChannel ? `# ${currentChannel.name}` : t('chat.selectChannel')}
+              </b>
+            </div>
+            {currentChannel && (
+              <div style={{ color: '#6c757d', fontSize: '0.875rem' }}>
+                {channelMessages.length} {t('chat.noMessages')}
+              </div>
+            )}
+          </div>
+          <div className="flex-grow-1 overflow-auto px-4 py-3" id="messages-box" style={{ backgroundColor: '#ffffff' }}>
             {channelMessages.length === 0 ? (
-              <div className="text-center" style={{ color: '#6c757d' }}></div>
+              <div></div>
             ) : (
               channelMessages.map((message) => (
                 <div key={message.id} className="text-break mb-2">
@@ -77,7 +81,7 @@ const ChatPage = () => {
               ))
             )}
           </div>
-          <div className="mt-auto px-5 py-3">
+          <div className="p-3" style={{ backgroundColor: '#ffffff' }}>
             <MessageForm />
           </div>
         </div>

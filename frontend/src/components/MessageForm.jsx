@@ -38,35 +38,53 @@ const MessageForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="py-3 border rounded-3" style={{ backgroundColor: '#f8f9fa', borderColor: '#007bff' }}>
-      <div className="input-group">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder={t('chat.messagePlaceholder')}
-          disabled={loading}
-          className="border-0 p-0 ps-2 form-control"
-          style={{ backgroundColor: 'transparent' }}
-          name="body"
-          aria-label={t('chat.newMessage')}
-        />
-        <button 
-          type="submit" 
-          disabled={loading || !message.trim()} 
-          className="btn btn-group-vertical"
+    <div className="d-flex align-items-center border rounded-pill p-2" style={{ backgroundColor: '#ffffff', borderColor: '#80bdff', borderWidth: '2px' }}>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder={t('chat.messagePlaceholder')}
+        disabled={loading}
+        className="flex-grow-1 border-0 px-3"
+        style={{ 
+          backgroundColor: 'transparent',
+          fontSize: '0.9rem',
+          outline: 'none',
+          color: '#333333'
+        }}
+        name="body"
+        aria-label={t('chat.newMessage')}
+      />
+      <button 
+        type="submit" 
+        disabled={loading || !message.trim()} 
+        className="btn p-0 d-flex align-items-center justify-content-center"
+        style={{ 
+          backgroundColor: 'transparent',
+          border: 'none',
+          width: '32px',
+          height: '32px',
+          borderRadius: '50%'
+        }}
+      >
+        <svg 
+          width="20" 
+          height="20" 
+          viewBox="0 0 24 24" 
+          fill="none" 
           style={{ 
-            backgroundColor: '#f8f9fa', 
-            borderColor: '#007bff',
-            color: '#6c757d'
+            color: message.trim() ? '#007bff' : '#6c757d' 
           }}
         >
-          <i className="bi bi-arrow-up-circle"></i>
-          <span className="visually-hidden">{t('common.send')}</span>
-        </button>
-      </div>
-    </form>
+          <path 
+            d="M2 21L23 12L2 3V10L17 12L2 14V21Z" 
+            fill="currentColor"
+          />
+        </svg>
+        <span className="visually-hidden">{t('common.send')}</span>
+      </button>
+    </div>
   );
 };
 

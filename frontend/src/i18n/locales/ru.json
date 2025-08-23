@@ -57,7 +57,7 @@
     "selectChannel": "Выберите канал",
     "messagePlaceholder": "Введите сообщение...",
     "newMessage": "Новое сообщение",
-    "noMessages": "0 сообщений"
+    "noMessages": "сообщений"
   },
   "errors": {
     "notFound": "404",
