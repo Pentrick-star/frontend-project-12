@@ -19,11 +19,8 @@ export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
   async (messageData, { rejectWithValue }) => {
     try {
-      console.log('sendMessage called with:', messageData);
-      
       // Отправляем сообщение через API
       const response = await api.post('/messages', messageData);
-      console.log('API response:', response.data);
       
       // Также отправляем через WebSocket для real-time обновлений
       const socketService = (await import('../services/socket')).default;
@@ -47,7 +44,17 @@ const messagesSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      state.items.push(action.payload);
+      // Проверяем, нет ли уже такого сообщения
+      const existingMessage = state.items.find(
+        msg => msg.id === action.payload.id || 
+        (msg.body === action.payload.body && 
+         msg.channelId === action.payload.channelId && 
+         msg.username === action.payload.username)
+      );
+      
+      if (!existingMessage) {
+        state.items.push(action.payload);
+      }
     },
     clearMessages: (state) => {
       state.items = [];

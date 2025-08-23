@@ -6,7 +6,15 @@ class SocketService {
   }
 
   connect(token) {
-    this.socket = io('http://localhost:5001', {
+    // Используем текущий хост и порт для WebSocket соединения
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const host = window.location.hostname;
+    const port = window.location.port || (window.location.protocol === 'https:' ? '443' : '80');
+    const wsUrl = `${protocol}//${host}:${port}`;
+    
+    console.log('Connecting to WebSocket:', wsUrl);
+    
+    this.socket = io(wsUrl, {
       auth: {
         token,
       },

@@ -36,7 +36,6 @@ const ChatPage = () => {
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => {
-    console.log('Filtering message:', message, 'currentChannelId:', currentChannelId);
     return message.channelId === currentChannelId;
   });
 
