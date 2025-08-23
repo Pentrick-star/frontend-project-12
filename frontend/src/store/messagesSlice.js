@@ -19,13 +19,9 @@ export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
   async (messageData, { rejectWithValue }) => {
     try {
-      // Отправляем сообщение через API
+      // Отправляем сообщение только через API
+      // WebSocket обновления придут автоматически от сервера
       const response = await api.post('/messages', messageData);
-      
-      // Также отправляем через WebSocket для real-time обновлений
-      const socketService = (await import('../services/socket')).default;
-      socketService.emit('newMessage', messageData);
-      
       return response.data;
     } catch (error) {
       console.error('sendMessage error:', error);
@@ -75,7 +71,14 @@ const messagesSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        state.items.push(action.payload);
+        // Проверяем, нет ли уже такого сообщения
+        const existingMessage = state.items.find(
+          msg => msg.id === action.payload.id
+        );
+        
+        if (!existingMessage) {
+          state.items.push(action.payload);
+        }
       });
   },
 });

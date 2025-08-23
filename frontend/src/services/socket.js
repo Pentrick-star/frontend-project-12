@@ -6,11 +6,12 @@ class SocketService {
   }
 
   connect(token) {
-    // Используем текущий хост и порт для WebSocket соединения
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = window.location.hostname;
-    const port = window.location.port || (window.location.protocol === 'https:' ? '443' : '80');
-    const wsUrl = `${protocol}//${host}:${port}`;
+    // В разработке и тестах сервер чата всегда на localhost:5001
+    // В продакшене используем текущий домен
+    const isProduction = process.env.NODE_ENV === 'production';
+    const wsUrl = isProduction 
+      ? `${window.location.protocol}//${window.location.host}` 
+      : 'http://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
     
@@ -21,6 +22,7 @@ class SocketService {
       transports: ['websocket', 'polling'],
       upgrade: true,
       rememberUpgrade: true,
+      forceNew: true,
     });
 
     this.socket.on('connect', () => {
