@@ -33,9 +33,20 @@ const SignupPage = () => {
         username: values.username,
         password: values.password,
       });
-      const { token } = response.data;
-      login(token);
-      navigate('/');
+      
+      // После успешной регистрации сразу входим
+      if (response.status === 201 || response.status === 200) {
+        const loginResponse = await api.post('/login', {
+          username: values.username,
+          password: values.password,
+        });
+        
+        if (loginResponse.data.token) {
+          const { token } = loginResponse.data;
+          login(token);
+          navigate('/');
+        }
+      }
     } catch (error) {
       if (error.response?.status === 409) {
         setSignupError(t('signupPage.signupError'));
@@ -69,7 +80,7 @@ const SignupPage = () => {
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                   >
-                    {({ isSubmitting, values }) => (
+                    {({ isSubmitting }) => (
                       <Form data-testid="signup-form">
                         <div className="mb-3" data-testid="username-group">
                           <label htmlFor="username" className="form-label">{t('signupPage.usernameLabel')}</label>

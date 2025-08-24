@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
           // Если токен недействителен, удаляем его
           localStorage.removeItem('token');
           setTokenState(null);
+          setUserState(null);
         })
         .finally(() => {
           setLoading(false);
@@ -30,6 +31,9 @@ export const AuthProvider = ({ children }) => {
   const login = (newToken) => {
     localStorage.setItem('token', newToken);
     setTokenState(newToken);
+    // Устанавливаем временного пользователя на основе токена
+    // Позже /auth/me обновит данные
+    setUserState({ username: 'User' });
   };
 
   const logout = () => {
