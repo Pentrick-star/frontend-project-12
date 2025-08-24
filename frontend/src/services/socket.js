@@ -8,7 +8,7 @@ class SocketService {
   connect(token) {
     // В тестовой среде используем текущий хост
     const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
-    const wsUrl = isTest ? window.location.origin : 'http://localhost:5001';
+    const wsUrl = isTest ? window.location.origin : 'ws://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
     console.log('Current socket state:', this.socket ? 'exists' : 'null');
@@ -28,7 +28,7 @@ class SocketService {
         reconnectionDelay: 1000,
       });
       
-      // Добавляем обработчик для проверки подключения
+      // Добавляем обработчики для проверки подключения
       this.socket.on('connect', () => {
         console.log('WebSocket connected successfully');
       });
@@ -40,25 +40,13 @@ class SocketService {
       this.socket.on('disconnect', (reason) => {
         console.log('WebSocket disconnected:', reason);
       });
+
+      this.socket.on('error', (error) => {
+        console.error('Socket error:', error);
+      });
     } catch (error) {
       console.log('WebSocket connection failed:', error);
     }
-
-    this.socket.on('connect', () => {
-      console.log('Connected to server');
-    });
-
-    this.socket.on('disconnect', (reason) => {
-      console.log('Disconnected from server:', reason);
-    });
-
-    this.socket.on('connect_error', (error) => {
-      console.error('Connection error:', error);
-    });
-
-    this.socket.on('error', (error) => {
-      console.error('Socket error:', error);
-    });
   }
 
   disconnect() {
