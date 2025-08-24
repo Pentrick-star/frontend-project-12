@@ -16,6 +16,8 @@ const ChannelsList = () => {
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [showDropdown, setShowDropdown] = useState(null);
   const dropdownRef = useRef(null);
+
+  console.log('ChannelsList rendering, showAddModal:', showAddModal);
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Не закрываем dropdown, если клик был по элементу в dropdown
@@ -66,10 +68,14 @@ const ChannelsList = () => {
         <span>{t('channelsTitle')}</span>
         <button 
           type="button"
-          className="p-0 text-primary btn btn-group-vertical"
-          onClick={() => setShowAddModal(true)}
+          className="p-0 text-primary btn btn-group-vertical add-channel"
+          onClick={() => {
+            console.log('Add channel button clicked, setting showAddModal to true');
+            setShowAddModal(true);
+          }}
           title={t('modals.titles.addingChannel')}
           data-testid="add-channel-button"
+          aria-label={t('modals.titles.addingChannel')}
         >
           <i className="bi bi-plus-lg"></i>
           <span className="visually-hidden">{t('modals.titles.addingChannel')}</span>

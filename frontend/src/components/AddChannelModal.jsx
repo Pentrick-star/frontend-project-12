@@ -39,6 +39,8 @@ const AddChannelModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  console.log('AddChannelModal rendering, isOpen:', isOpen);
+
   return (
     <>
       <div className="modal-backdrop fade show" onClick={onClose} style={{ zIndex: 1040 }}></div>
