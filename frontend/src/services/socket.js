@@ -26,6 +26,15 @@ class SocketService {
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
       });
+      
+      // Добавляем обработчик для проверки подключения
+      this.socket.on('connect', () => {
+        console.log('WebSocket connected successfully');
+      });
+      
+      this.socket.on('connect_error', (error) => {
+        console.error('WebSocket connection error:', error);
+      });
     } catch (error) {
       console.log('WebSocket connection failed:', error);
     }

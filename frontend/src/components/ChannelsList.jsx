@@ -9,7 +9,7 @@ import RemoveChannelModal from './RemoveChannelModal';
 const ChannelsList = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { items: channels, currentChannelId } = useSelector((state) => state.channels);
+  const { items: channels, currentChannelId, loading } = useSelector((state) => state.channels);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
@@ -17,7 +17,7 @@ const ChannelsList = () => {
   const [showDropdown, setShowDropdown] = useState(null);
   const dropdownRef = useRef(null);
 
-  console.log('ChannelsList rendering, showAddModal:', showAddModal, 'channels count:', channels.length);
+  console.log('ChannelsList rendering, showAddModal:', showAddModal, 'channels count:', channels.length, 'loading:', loading);
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Не закрываем dropdown, если клик был по элементу в dropdown

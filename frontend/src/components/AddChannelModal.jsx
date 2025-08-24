@@ -28,25 +28,15 @@ const AddChannelModal = ({ isOpen, onClose }) => {
     try {
       console.log('Submitting channel creation with name:', values.name);
       const filteredName = filterProfanity(values.name);
-      
-      // Добавляем таймаут для всей операции
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Operation timeout')), 15000); // 15 секунд
-      });
-      
-      const result = await Promise.race([
-        dispatch(createChannel({ name: filteredName })).unwrap(),
-        timeoutPromise
-      ]);
-      
+      const result = await dispatch(createChannel({ name: filteredName })).unwrap();
       console.log('Channel created successfully:', result);
       resetForm();
-      onClose();
+      // Добавляем небольшую задержку перед закрытием модального окна
+      setTimeout(() => {
+        onClose();
+      }, 100);
     } catch (error) {
       console.error('Failed to create channel:', error);
-      if (error.message === 'Operation timeout') {
-        console.error('Channel creation timed out');
-      }
       // Не закрываем модальное окно при ошибке
     } finally {
       setSubmitting(false);

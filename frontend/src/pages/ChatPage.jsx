@@ -69,17 +69,8 @@ const ChatPage = () => {
   useEffect(() => {
     try {
       console.log('Fetching initial channels and messages');
-      // Добавляем таймаут для API запросов
-      const timeoutId = setTimeout(() => {
-        console.log('API requests timed out');
-      }, 10000);
-      
-      Promise.all([
-        dispatch(fetchChannels()),
-        dispatch(fetchMessages())
-      ]).finally(() => {
-        clearTimeout(timeoutId);
-      });
+      dispatch(fetchChannels());
+      dispatch(fetchMessages());
     } catch (error) {
       console.log('Failed to fetch initial data:', error);
     }
