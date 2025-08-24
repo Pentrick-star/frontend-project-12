@@ -21,10 +21,13 @@ export const createChannel = createAsyncThunk(
   'channels/createChannel',
   async (channelData, { rejectWithValue }) => {
     try {
+      console.log('Creating channel with data:', channelData);
       const response = await api.post('/channels', channelData);
+      console.log('Channel creation response:', response.data);
       toast.success('Канал создан');
       return response.data;
     } catch (error) {
+      console.error('Channel creation error:', error.response?.status, error.response?.data);
       toast.error('Ошибка создания канала');
       return rejectWithValue(error.message);
     }
@@ -112,10 +115,13 @@ const channelsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(createChannel.fulfilled, (state, action) => {
+        console.log('Channel creation fulfilled, adding to state:', action.payload);
         state.items.push(action.payload);
         state.currentChannelId = action.payload.id;
+        console.log('Updated channels state:', state.items);
       })
       .addCase(createChannel.rejected, (state, action) => {
+        console.error('Channel creation rejected:', action.error);
         state.loading = false;
         state.error = action.error.message;
       })

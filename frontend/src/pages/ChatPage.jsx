@@ -33,7 +33,14 @@ const ChatPage = () => {
 
         socketService.onNewChannel((newChannel) => {
           console.log('Received new channel via WebSocket:', newChannel);
-          dispatch(addChannel(newChannel));
+          // Проверяем, нет ли уже такого канала в списке
+          const existingChannel = channels.find(ch => ch.id === newChannel.id);
+          if (!existingChannel) {
+            console.log('Adding new channel from WebSocket to state');
+            dispatch(addChannel(newChannel));
+          } else {
+            console.log('Channel already exists in state, skipping WebSocket update');
+          }
         });
 
         socketService.onRemoveChannel((channelId) => {
