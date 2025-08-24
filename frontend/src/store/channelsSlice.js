@@ -22,12 +22,25 @@ export const createChannel = createAsyncThunk(
   async (channelData, { rejectWithValue }) => {
     try {
       console.log('Creating channel with data:', channelData);
-      const response = await api.post('/channels', channelData);
+      
+      // Добавляем таймаут для запроса
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 секунд таймаут
+      
+      const response = await api.post('/channels', channelData, {
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
       console.log('Channel creation response:', response.data);
       toast.success('Канал создан');
       return response.data;
     } catch (error) {
       console.error('Channel creation error:', error.response?.status, error.response?.data);
+      if (error.name === 'AbortError') {
+        toast.error('Таймаут создания канала');
+        return rejectWithValue('Request timeout');
+      }
       toast.error('Ошибка создания канала');
       return rejectWithValue(error.message);
     }

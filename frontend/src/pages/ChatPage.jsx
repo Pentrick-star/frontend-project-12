@@ -63,14 +63,23 @@ const ChatPage = () => {
     } else {
       console.log('No token available for WebSocket connection');
     }
-  }, [token, dispatch]);
+  }, [token, dispatch, channels]);
 
   // Добавляем обработку ошибок для API запросов
   useEffect(() => {
     try {
       console.log('Fetching initial channels and messages');
-      dispatch(fetchChannels());
-      dispatch(fetchMessages());
+      // Добавляем таймаут для API запросов
+      const timeoutId = setTimeout(() => {
+        console.log('API requests timed out');
+      }, 10000);
+      
+      Promise.all([
+        dispatch(fetchChannels()),
+        dispatch(fetchMessages())
+      ]).finally(() => {
+        clearTimeout(timeoutId);
+      });
     } catch (error) {
       console.log('Failed to fetch initial data:', error);
     }
