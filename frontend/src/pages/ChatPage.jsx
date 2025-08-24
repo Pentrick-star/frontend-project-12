@@ -73,14 +73,19 @@ const ChatPage = () => {
 
   // Добавляем обработку ошибок для API запросов
   useEffect(() => {
+    if (!token) {
+      console.log('No token available, skipping data fetch');
+      return;
+    }
+    
     try {
-      console.log('Fetching initial channels and messages');
+      console.log('Fetching initial channels and messages with token');
       dispatch(fetchChannels());
       dispatch(fetchMessages());
     } catch (error) {
       console.log('Failed to fetch initial data:', error);
     }
-  }, [dispatch]);
+  }, [token, dispatch]);
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => {

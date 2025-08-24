@@ -6,9 +6,12 @@ export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async (_, { rejectWithValue }) => {
     try {
+      console.log('Fetching channels from API');
       const response = await api.get('/channels');
+      console.log('Channels API response:', response.data);
       return response.data;
     } catch (error) {
+      console.error('FetchChannels error:', error.response?.status, error.response?.data);
       if (error.response?.status !== 401) {
         toast.error('Ошибка загрузки данных');
       }
@@ -112,12 +115,17 @@ const channelsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
+        console.log('FetchChannels fulfilled, received channels:', action.payload);
         state.loading = false;
         state.items = action.payload;
+        console.log('Updated channels state:', state.items);
+        console.log('Current currentChannelId before update:', state.currentChannelId);
         if (state.items.length > 0 && !state.currentChannelId) {
           const generalChannel = state.items.find(channel => channel.name === 'general');
           state.currentChannelId = generalChannel ? generalChannel.id : state.items[0].id;
+          console.log('Set currentChannelId to:', state.currentChannelId);
         }
+        console.log('Final currentChannelId:', state.currentChannelId);
       })
       .addCase(fetchChannels.rejected, (state, action) => {
         state.loading = false;
