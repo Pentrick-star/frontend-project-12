@@ -70,8 +70,9 @@ const ChannelsList = () => {
           type="button"
           className="p-0 text-primary btn btn-group-vertical add-channel"
           onClick={() => {
-            console.log('Add channel button clicked, setting showAddModal to true');
+            console.log('Add channel button clicked, current showAddModal:', showAddModal);
             setShowAddModal(true);
+            console.log('Set showAddModal to true');
           }}
           title={t('modals.titles.addingChannel')}
           data-testid="add-channel-button"
@@ -167,8 +168,9 @@ const ChannelsList = () => {
       <AddChannelModal
         isOpen={showAddModal}
         onClose={() => {
-          console.log('Closing add channel modal');
+          console.log('Closing add channel modal, current showAddModal:', showAddModal);
           setShowAddModal(false);
+          console.log('Set showAddModal to false');
         }}
       />
 

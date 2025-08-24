@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +40,24 @@ const AddChannelModal = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        console.log('Escape key pressed, closing modal');
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, onClose]);
+
+  if (!isOpen) {
+    console.log('AddChannelModal not rendering, isOpen:', isOpen);
+    return null;
+  }
 
   console.log('AddChannelModal rendering, isOpen:', isOpen);
 
@@ -54,7 +71,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
         }} 
         style={{ zIndex: 1040 }}
       ></div>
-      <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1" data-testid="add-channel-modal">
+      <div className="modal fade show" style={{ display: 'block', zIndex: 1050, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }} tabIndex="-1" data-testid="add-channel-modal">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
           <div className="modal-header">
@@ -75,7 +92,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
             onSubmit={handleSubmit}
           >
             {({ isSubmitting }) => (
-              <Form data-testid="add-channel-form">
+              <Form data-testid="add-channel-form" onSubmit={handleSubmit}>
                 <div className="modal-body">
                   <div className="mb-3">
                     <label htmlFor="channelName" className="form-label">{t('modals.addLabel')}</label>
@@ -86,6 +103,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                       className="form-control"
                       autoFocus
                       data-testid="channel-name-input"
+                      placeholder={t('modals.addLabel')}
                     />
                     <ErrorMessage name="name" component="div" className="text-danger small" />
                   </div>
