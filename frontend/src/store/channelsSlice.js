@@ -111,10 +111,13 @@ const channelsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-
       .addCase(createChannel.fulfilled, (state, action) => {
         state.items.push(action.payload);
         state.currentChannelId = action.payload.id;
+      })
+      .addCase(createChannel.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(removeChannel.fulfilled, (state, action) => {
         const removedId = action.payload;
@@ -124,12 +127,20 @@ const channelsSlice = createSlice({
           state.currentChannelId = defaultChannel ? defaultChannel.id : (state.items[0]?.id || null);
         }
       })
+      .addCase(removeChannel.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(renameChannel.fulfilled, (state, action) => {
         const { id, ...updates } = action.payload;
         const channelIndex = state.items.findIndex(channel => channel.id === id);
         if (channelIndex !== -1) {
           state.items[channelIndex] = { ...state.items[channelIndex], ...updates };
         }
+      })
+      .addCase(renameChannel.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });

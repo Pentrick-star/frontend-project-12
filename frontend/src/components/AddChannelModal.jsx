@@ -26,12 +26,15 @@ const AddChannelModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
+      console.log('Submitting channel creation with name:', values.name);
       const filteredName = filterProfanity(values.name);
-      await dispatch(createChannel({ name: filteredName })).unwrap();
+      const result = await dispatch(createChannel({ name: filteredName })).unwrap();
+      console.log('Channel created successfully:', result);
       resetForm();
       onClose();
     } catch (error) {
       console.error('Failed to create channel:', error);
+      // Не закрываем модальное окно при ошибке
     } finally {
       setSubmitting(false);
     }
@@ -43,13 +46,28 @@ const AddChannelModal = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div className="modal-backdrop fade show" onClick={onClose} style={{ zIndex: 1040 }}></div>
+      <div 
+        className="modal-backdrop fade show" 
+        onClick={() => {
+          console.log('Modal backdrop clicked');
+          onClose();
+        }} 
+        style={{ zIndex: 1040 }}
+      ></div>
       <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1" data-testid="add-channel-modal">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
           <div className="modal-header">
             <div className="modal-title h5">{t('modals.titles.addingChannel')}</div>
-            <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
+            <button 
+              type="button" 
+              className="btn-close" 
+              onClick={() => {
+                console.log('Modal close button clicked');
+                onClose();
+              }} 
+              aria-label="Close"
+            ></button>
           </div>
           <Formik
             initialValues={{ name: '' }}
@@ -75,7 +93,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                 <div className="modal-footer">
                   <button 
                     type="button" 
-                    onClick={onClose} 
+                    onClick={() => {
+                      console.log('Cancel button clicked');
+                      onClose();
+                    }} 
                     className="btn btn-secondary"
                     data-testid="cancel-button"
                   >

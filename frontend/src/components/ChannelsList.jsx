@@ -76,10 +76,13 @@ const ChannelsList = () => {
           title={t('modals.titles.addingChannel')}
           data-testid="add-channel-button"
           aria-label={t('modals.titles.addingChannel')}
+          role="button"
+          name="add-channel"
         >
           <i className="bi bi-plus-lg"></i>
           <span className="visually-hidden">{t('modals.titles.addingChannel')}</span>
         </button>
+
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
         {channels.map((channel) => (
@@ -163,7 +166,10 @@ const ChannelsList = () => {
 
       <AddChannelModal
         isOpen={showAddModal}
-        onClose={() => setShowAddModal(false)}
+        onClose={() => {
+          console.log('Closing add channel modal');
+          setShowAddModal(false);
+        }}
       />
 
       {showRenameModal && (

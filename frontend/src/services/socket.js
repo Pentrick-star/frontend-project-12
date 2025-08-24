@@ -22,6 +22,9 @@ class SocketService {
         rememberUpgrade: true,
         forceNew: true,
         timeout: 10000,
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
       });
     } catch (error) {
       console.log('WebSocket connection failed:', error);
@@ -31,12 +34,16 @@ class SocketService {
       console.log('Connected to server');
     });
 
-    this.socket.on('disconnect', () => {
-      console.log('Disconnected from server');
+    this.socket.on('disconnect', (reason) => {
+      console.log('Disconnected from server:', reason);
     });
 
     this.socket.on('connect_error', (error) => {
       console.error('Connection error:', error);
+    });
+
+    this.socket.on('error', (error) => {
+      console.error('Socket error:', error);
     });
   }
 

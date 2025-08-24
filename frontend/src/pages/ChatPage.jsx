@@ -26,18 +26,22 @@ const ChatPage = () => {
         socketService.connect(token);
 
         socketService.onNewMessage((newMessage) => {
+          console.log('Received new message via WebSocket:', newMessage);
           dispatch(addMessage(newMessage));
         });
 
         socketService.onNewChannel((newChannel) => {
+          console.log('Received new channel via WebSocket:', newChannel);
           dispatch(addChannel(newChannel));
         });
 
         socketService.onRemoveChannel((channelId) => {
+          console.log('Received remove channel via WebSocket:', channelId);
           dispatch(removeChannelById(channelId));
         });
 
         socketService.onRenameChannel((updatedChannel) => {
+          console.log('Received rename channel via WebSocket:', updatedChannel);
           dispatch(updateChannel(updatedChannel));
         });
 
@@ -45,7 +49,7 @@ const ChatPage = () => {
           socketService.disconnect();
         };
       } catch (error) {
-        console.log('WebSocket connection failed, continuing without real-time updates');
+        console.log('WebSocket connection failed, continuing without real-time updates:', error);
       }
     }
   }, [token, dispatch]);
