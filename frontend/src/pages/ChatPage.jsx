@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { fetchChannels, fetchMessages, addChannel, removeChannelById, updateChannel } from '../store/channelsSlice';
-import { addMessage } from '../store/messagesSlice';
+import { fetchChannels, addChannel, removeChannelById, updateChannel } from '../store/channelsSlice';
+import { fetchMessages, addMessage } from '../store/messagesSlice';
 import { useAuth } from '../hooks/useAuth';
 import ChannelsList from '../components/ChannelsList';
 import MessageForm from '../components/MessageForm';
