@@ -28,7 +28,14 @@ const ChatPage = () => {
 
         socketService.onNewMessage((newMessage) => {
           console.log('Received new message via WebSocket:', newMessage);
-          dispatch(addMessage(newMessage));
+          // Проверяем, нет ли уже такого сообщения в списке
+          const existingMessage = messages.find(msg => msg.id === newMessage.id);
+          if (!existingMessage) {
+            console.log('Adding new message from WebSocket to state');
+            dispatch(addMessage(newMessage));
+          } else {
+            console.log('Message already exists in state, skipping WebSocket update');
+          }
         });
 
         socketService.onNewChannel((newChannel) => {

@@ -19,13 +19,10 @@ export const sendMessage = createAsyncThunk(
   'messages/sendMessage',
   async (messageData, { rejectWithValue }) => {
     try {
-      // Отправляем сообщение через API
+      console.log('Sending message via API:', messageData);
+      // Отправляем сообщение только через API
       const response = await api.post('/messages', messageData);
-      
-      // Также отправляем через WebSocket для real-time обновлений
-      const socketService = (await import('../services/socket')).default;
-      socketService.emit('newMessage', messageData);
-      
+      console.log('Message sent successfully:', response.data);
       return response.data;
     } catch (error) {
       console.error('sendMessage error:', error);
@@ -44,16 +41,17 @@ const messagesSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
+      console.log('Adding message to state:', action.payload);
       // Проверяем, нет ли уже такого сообщения
       const existingMessage = state.items.find(
-        msg => msg.id === action.payload.id || 
-        (msg.body === action.payload.body && 
-         msg.channelId === action.payload.channelId && 
-         msg.username === action.payload.username)
+        msg => msg.id === action.payload.id
       );
       
       if (!existingMessage) {
         state.items.push(action.payload);
+        console.log('Message added to state, total messages:', state.items.length);
+      } else {
+        console.log('Message already exists in state, skipping add:', action.payload.id);
       }
     },
     clearMessages: (state) => {
@@ -75,6 +73,7 @@ const messagesSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
+        console.log('Message sent fulfilled, adding to state:', action.payload);
         // Проверяем, нет ли уже такого сообщения
         const existingMessage = state.items.find(
           msg => msg.id === action.payload.id
@@ -82,6 +81,9 @@ const messagesSlice = createSlice({
         
         if (!existingMessage) {
           state.items.push(action.payload);
+          console.log('Message added to state from sendMessage.fulfilled');
+        } else {
+          console.log('Message already exists in state, skipping add from sendMessage.fulfilled');
         }
       });
   },

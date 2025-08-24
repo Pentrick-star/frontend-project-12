@@ -65,10 +65,13 @@ class SocketService {
 
   onNewMessage(callback) {
     if (this.socket) {
+      console.log('Setting up newMessage listener');
       this.socket.on('newMessage', (message) => {
-        console.log('Received new message:', message);
+        console.log('WebSocket newMessage event received:', message);
         callback(message);
       });
+    } else {
+      console.log('Socket not available for newMessage listener');
     }
   }
 
