@@ -43,6 +43,9 @@ const ChatPage = () => {
             console.log('Set current channel from WebSocket to:', newChannel.id);
           } else {
             console.log('Channel already exists in state, skipping WebSocket update');
+            // Если канал уже существует, просто устанавливаем его как текущий
+            dispatch(setCurrentChannel(newChannel.id));
+            console.log('Set current channel from WebSocket (existing):', newChannel.id);
           }
         });
 

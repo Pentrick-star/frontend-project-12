@@ -76,12 +76,18 @@ const channelsSlice = createSlice({
     },
     addChannel: (state, action) => {
       console.log('Adding channel to state:', action.payload);
-      state.items.push(action.payload);
-      if (!state.currentChannelId) {
-        state.currentChannelId = action.payload.id;
-        console.log('Set currentChannelId to:', action.payload.id);
+      // Проверяем, нет ли уже такого канала
+      const existingChannel = state.items.find(ch => ch.id === action.payload.id);
+      if (!existingChannel) {
+        state.items.push(action.payload);
+        if (!state.currentChannelId) {
+          state.currentChannelId = action.payload.id;
+          console.log('Set currentChannelId to:', action.payload.id);
+        }
+        console.log('Updated channels state:', state.items);
+      } else {
+        console.log('Channel already exists in state, skipping add:', action.payload.id);
       }
-      console.log('Updated channels state:', state.items);
     },
     removeChannelById: (state, action) => {
       const removedId = action.payload;
@@ -119,9 +125,16 @@ const channelsSlice = createSlice({
       })
       .addCase(createChannel.fulfilled, (state, action) => {
         console.log('Channel creation fulfilled, adding to state:', action.payload);
-        state.items.push(action.payload);
-        state.currentChannelId = action.payload.id;
-        console.log('Updated channels state:', state.items);
+        // Проверяем, нет ли уже такого канала
+        const existingChannel = state.items.find(ch => ch.id === action.payload.id);
+        if (!existingChannel) {
+          state.items.push(action.payload);
+          state.currentChannelId = action.payload.id;
+          console.log('Updated channels state:', state.items);
+        } else {
+          console.log('Channel already exists in state, just setting currentChannelId:', action.payload.id);
+          state.currentChannelId = action.payload.id;
+        }
       })
       .addCase(createChannel.rejected, (state, action) => {
         console.error('Channel creation rejected:', action.error);

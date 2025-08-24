@@ -31,9 +31,8 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       const result = await dispatch(createChannel({ name: filteredName })).unwrap();
       console.log('Channel created successfully:', result);
       resetForm();
-      // ЯВНО выбрать новый канал после создания
-      dispatch(setCurrentChannel(result.id));
-      console.log('Set current channel to:', result.id);
+      // Не нужно явно устанавливать currentChannel, так как это делается в createChannel.fulfilled
+      console.log('Channel created and currentChannelId should be set to:', result.id);
       // Добавляем небольшую задержку перед закрытием модального окна
       setTimeout(() => {
         onClose();
