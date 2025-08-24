@@ -42,7 +42,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   return (
     <>
       <div className="modal-backdrop fade show" onClick={onClose} style={{ zIndex: 1040 }}></div>
-      <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1">
+      <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1" data-testid="add-channel-modal">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
           <div className="modal-header">
@@ -55,7 +55,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
             onSubmit={handleSubmit}
           >
             {({ isSubmitting }) => (
-              <Form>
+              <Form data-testid="add-channel-form">
                 <div className="modal-body">
                   <div className="mb-3">
                     <label htmlFor="channelName" className="form-label">{t('modals.addLabel')}</label>
@@ -65,6 +65,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                       name="name"
                       className="form-control"
                       autoFocus
+                      data-testid="channel-name-input"
                     />
                     <ErrorMessage name="name" component="div" className="text-danger small" />
                   </div>
@@ -74,6 +75,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                     type="button" 
                     onClick={onClose} 
                     className="btn btn-secondary"
+                    data-testid="cancel-button"
                   >
                     {t('modals.addBtns.cancel')}
                   </button>
@@ -81,6 +83,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                     type="submit" 
                     disabled={isSubmitting} 
                     className="btn btn-primary"
+                    data-testid="submit-button"
                   >
                     {isSubmitting ? t('loading.creating') : t('modals.addBtns.submit')}
                   </button>

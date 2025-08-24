@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { fetchChannels } from '../store/channelsSlice';
-import { fetchMessages, addMessage } from '../store/messagesSlice';
+import { fetchChannels, fetchMessages, addChannel, removeChannelById, updateChannel } from '../store/channelsSlice';
+import { addMessage } from '../store/messagesSlice';
+import { useAuth } from '../hooks/useAuth';
 import ChannelsList from '../components/ChannelsList';
 import MessageForm from '../components/MessageForm';
 import socketService from '../services/socket';
-import { useAuth } from '../hooks/useAuth';
 
 const ChatPage = () => {
   const { t } = useTranslation();
@@ -27,6 +27,18 @@ const ChatPage = () => {
 
         socketService.onNewMessage((newMessage) => {
           dispatch(addMessage(newMessage));
+        });
+
+        socketService.onNewChannel((newChannel) => {
+          dispatch(addChannel(newChannel));
+        });
+
+        socketService.onRemoveChannel((channelId) => {
+          dispatch(removeChannelById(channelId));
+        });
+
+        socketService.onRenameChannel((updatedChannel) => {
+          dispatch(updateChannel(updatedChannel));
         });
 
         return () => {

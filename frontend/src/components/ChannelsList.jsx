@@ -69,14 +69,15 @@ const ChannelsList = () => {
           className="p-0 text-primary btn btn-group-vertical"
           onClick={() => setShowAddModal(true)}
           title={t('modals.titles.addingChannel')}
+          data-testid="add-channel-button"
         >
           <i className="bi bi-plus-lg"></i>
           <span className="visually-hidden">{t('modals.titles.addingChannel')}</span>
         </button>
       </div>
-      <ul className="nav flex-column nav-pills nav-fill px-2">
+      <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
         {channels.map((channel) => (
-          <li key={channel.id} className="nav-item w-100 position-relative">
+          <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
             <div className="d-flex justify-content-between align-items-start w-100">
               <button
                 type="button"
