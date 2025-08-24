@@ -71,6 +71,8 @@ class SocketService {
   onNewMessage(callback) {
     if (this.socket) {
       console.log('Setting up newMessage listener');
+      // Убираем предыдущий обработчик, если он есть
+      this.socket.off('newMessage');
       this.socket.on('newMessage', (message) => {
         console.log('WebSocket newMessage event received:', message);
         callback(message);
@@ -83,6 +85,8 @@ class SocketService {
   onNewChannel(callback) {
     if (this.socket) {
       console.log('Setting up newChannel listener');
+      // Убираем предыдущий обработчик, если он есть
+      this.socket.off('newChannel');
       this.socket.on('newChannel', (data) => {
         console.log('WebSocket newChannel event received:', data);
         callback(data);
@@ -94,13 +98,23 @@ class SocketService {
 
   onRemoveChannel(callback) {
     if (this.socket) {
+      console.log('Setting up removeChannel listener');
+      // Убираем предыдущий обработчик, если он есть
+      this.socket.off('removeChannel');
       this.socket.on('removeChannel', callback);
+    } else {
+      console.log('Socket not available for removeChannel listener');
     }
   }
 
   onRenameChannel(callback) {
     if (this.socket) {
+      console.log('Setting up renameChannel listener');
+      // Убираем предыдущий обработчик, если он есть
+      this.socket.off('renameChannel');
       this.socket.on('renameChannel', callback);
+    } else {
+      console.log('Socket not available for renameChannel listener');
     }
   }
 

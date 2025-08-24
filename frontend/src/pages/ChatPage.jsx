@@ -21,71 +21,55 @@ const ChatPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (token) {
-      try {
-        console.log('Attempting WebSocket connection with token');
-        // Проверяем, не подключены ли мы уже
-        if (socketService.socket && socketService.socket.connected) {
-          console.log('WebSocket already connected, skipping connection');
-          return;
-        }
-        socketService.connect(token);
-
-        socketService.onNewMessage((newMessage) => {
-          console.log('Received new message via WebSocket:', newMessage);
-          console.log('Current messages in component:', messages.length);
-          console.log('Current message IDs in component:', messages.map(msg => msg.id));
-          
-          // Проверяем, нет ли уже такого сообщения в списке
-          const existingMessage = messages.find(msg => msg.id === newMessage.id);
-          if (!existingMessage) {
-            console.log('Adding new message from WebSocket to state');
-            dispatch(addMessage(newMessage));
-          } else {
-            console.log('Message already exists in state, skipping WebSocket update');
-            console.log('Existing message in component:', existingMessage);
-          }
-        });
-
-        socketService.onNewChannel((newChannel) => {
-          console.log('Received new channel via WebSocket:', newChannel);
-          // Проверяем, нет ли уже такого канала в списке
-          const existingChannel = channels.find(ch => ch.id === newChannel.id);
-          if (!existingChannel) {
-            console.log('Adding new channel from WebSocket to state');
-            dispatch(addChannel(newChannel));
-            // Если это новый канал, устанавливаем его как текущий
-            dispatch(setCurrentChannel(newChannel.id));
-            console.log('Set current channel from WebSocket to:', newChannel.id);
-          } else {
-            console.log('Channel already exists in state, skipping WebSocket update');
-            // Если канал уже существует, просто устанавливаем его как текущий
-            dispatch(setCurrentChannel(newChannel.id));
-            console.log('Set current channel from WebSocket (existing):', newChannel.id);
-          }
-        });
-
-        socketService.onRemoveChannel((channelId) => {
-          console.log('Received remove channel via WebSocket:', channelId);
-          dispatch(removeChannelById(channelId));
-        });
-
-        socketService.onRenameChannel((updatedChannel) => {
-          console.log('Received rename channel via WebSocket:', updatedChannel);
-          dispatch(updateChannel(updatedChannel));
-        });
-
-        return () => {
-          console.log('Disconnecting WebSocket');
-          socketService.disconnect();
-        };
-      } catch (error) {
-        console.log('WebSocket connection failed, continuing without real-time updates:', error);
-      }
-    } else {
+    if (!token) {
       console.log('No token available for WebSocket connection');
+      return;
     }
-  }, [token, dispatch, channels]);
+
+    try {
+      console.log('Attempting WebSocket connection with token');
+      // Проверяем, не подключены ли мы уже
+      if (socketService.socket && socketService.socket.connected) {
+        console.log('WebSocket already connected, skipping connection');
+        return;
+      }
+      socketService.connect(token);
+
+      const handleNewMessage = (newMessage) => {
+        console.log('Received new message via WebSocket:', newMessage);
+        dispatch(addMessage(newMessage));
+      };
+
+      const handleNewChannel = (newChannel) => {
+        console.log('Received new channel via WebSocket:', newChannel);
+        dispatch(addChannel(newChannel));
+        dispatch(setCurrentChannel(newChannel.id));
+        console.log('Set current channel from WebSocket to:', newChannel.id);
+      };
+
+      const handleRemoveChannel = (channelId) => {
+        console.log('Received remove channel via WebSocket:', channelId);
+        dispatch(removeChannelById(channelId));
+      };
+
+      const handleRenameChannel = (updatedChannel) => {
+        console.log('Received rename channel via WebSocket:', updatedChannel);
+        dispatch(updateChannel(updatedChannel));
+      };
+
+      socketService.onNewMessage(handleNewMessage);
+      socketService.onNewChannel(handleNewChannel);
+      socketService.onRemoveChannel(handleRemoveChannel);
+      socketService.onRenameChannel(handleRenameChannel);
+
+      return () => {
+        console.log('Disconnecting WebSocket');
+        socketService.disconnect();
+      };
+    } catch (error) {
+      console.log('WebSocket connection failed, continuing without real-time updates:', error);
+    }
+  }, [token]); // Только token в зависимостях!
 
   // Добавляем обработку ошибок для API запросов
   useEffect(() => {

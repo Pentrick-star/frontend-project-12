@@ -42,8 +42,6 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, action) => {
       console.log('Adding message to state:', action.payload);
-      console.log('Current messages count:', state.items.length);
-      console.log('Existing message IDs:', state.items.map(msg => msg.id));
       
       // Проверяем, нет ли уже такого сообщения
       const existingMessage = state.items.find(
@@ -55,7 +53,6 @@ const messagesSlice = createSlice({
         console.log('Message added to state, total messages:', state.items.length);
       } else {
         console.log('Message already exists in state, skipping add:', action.payload.id);
-        console.log('Existing message:', existingMessage);
       }
     },
     clearMessages: (state) => {
