@@ -73,6 +73,7 @@ const ChatPage = () => {
 
   // Добавляем обработку ошибок для API запросов
   useEffect(() => {
+    console.log('Data fetch useEffect triggered, token:', token ? 'present' : 'missing');
     if (!token) {
       console.log('No token available, skipping data fetch');
       return;
