@@ -74,7 +74,13 @@ class SocketService {
 
   onNewChannel(callback) {
     if (this.socket) {
-      this.socket.on('newChannel', callback);
+      console.log('Setting up newChannel listener');
+      this.socket.on('newChannel', (data) => {
+        console.log('WebSocket newChannel event received:', data);
+        callback(data);
+      });
+    } else {
+      console.log('Socket not available for newChannel listener');
     }
   }
 

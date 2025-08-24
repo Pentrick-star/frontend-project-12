@@ -75,10 +75,13 @@ const channelsSlice = createSlice({
       state.currentChannelId = action.payload;
     },
     addChannel: (state, action) => {
+      console.log('Adding channel to state:', action.payload);
       state.items.push(action.payload);
       if (!state.currentChannelId) {
         state.currentChannelId = action.payload.id;
+        console.log('Set currentChannelId to:', action.payload.id);
       }
+      console.log('Updated channels state:', state.items);
     },
     removeChannelById: (state, action) => {
       const removedId = action.payload;

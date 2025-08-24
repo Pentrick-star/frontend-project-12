@@ -17,7 +17,7 @@ const ChannelsList = () => {
   const [showDropdown, setShowDropdown] = useState(null);
   const dropdownRef = useRef(null);
 
-  console.log('ChannelsList rendering, showAddModal:', showAddModal, 'channels count:', channels.length, 'loading:', loading);
+  console.log('ChannelsList rendering, showAddModal:', showAddModal, 'channels count:', channels.length, 'loading:', loading, 'currentChannelId:', currentChannelId);
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Не закрываем dropdown, если клик был по элементу в dropdown
@@ -87,7 +87,7 @@ const ChannelsList = () => {
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
         {channels.map((channel) => {
-          console.log('Rendering channel:', channel);
+          console.log('Rendering channel:', channel, 'isCurrent:', channel.id === currentChannelId);
           return (
           <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
             <div className="d-flex justify-content-between align-items-start w-100">

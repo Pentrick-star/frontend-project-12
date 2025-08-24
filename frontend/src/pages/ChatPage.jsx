@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { fetchChannels, addChannel, removeChannelById, updateChannel } from '../store/channelsSlice';
+import { fetchChannels, addChannel, removeChannelById, updateChannel, setCurrentChannel } from '../store/channelsSlice';
 import { fetchMessages, addMessage } from '../store/messagesSlice';
 import { useAuth } from '../hooks/useAuth';
 import ChannelsList from '../components/ChannelsList';
@@ -38,6 +38,9 @@ const ChatPage = () => {
           if (!existingChannel) {
             console.log('Adding new channel from WebSocket to state');
             dispatch(addChannel(newChannel));
+            // Если это новый канал, устанавливаем его как текущий
+            dispatch(setCurrentChannel(newChannel.id));
+            console.log('Set current channel from WebSocket to:', newChannel.id);
           } else {
             console.log('Channel already exists in state, skipping WebSocket update');
           }
