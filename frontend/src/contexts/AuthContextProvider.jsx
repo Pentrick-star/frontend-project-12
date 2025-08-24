@@ -37,8 +37,10 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = (newToken) => {
+    console.log('AuthContextProvider login called with token:', newToken ? 'present' : 'missing');
     localStorage.setItem('token', newToken);
     setTokenState(newToken);
+    console.log('Token state updated, setting temporary user');
     // Устанавливаем временного пользователя на основе токена
     // Позже /auth/me обновит данные
     setUserState({ username: 'User' });

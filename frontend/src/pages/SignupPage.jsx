@@ -45,8 +45,9 @@ const SignupPage = () => {
         
         if (loginResponse.data.token) {
           const { token } = loginResponse.data;
-          console.log('Auto-login successful after signup');
+          console.log('Auto-login successful after signup, token received');
           login(token);
+          console.log('Login function called, navigating to home page');
           navigate('/');
         }
       }
