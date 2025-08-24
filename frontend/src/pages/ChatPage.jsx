@@ -24,10 +24,18 @@ const ChatPage = () => {
     if (token) {
       try {
         console.log('Attempting WebSocket connection with token');
+        // Проверяем, не подключены ли мы уже
+        if (socketService.socket && socketService.socket.connected) {
+          console.log('WebSocket already connected, skipping connection');
+          return;
+        }
         socketService.connect(token);
 
         socketService.onNewMessage((newMessage) => {
           console.log('Received new message via WebSocket:', newMessage);
+          console.log('Current messages in component:', messages.length);
+          console.log('Current message IDs in component:', messages.map(msg => msg.id));
+          
           // Проверяем, нет ли уже такого сообщения в списке
           const existingMessage = messages.find(msg => msg.id === newMessage.id);
           if (!existingMessage) {
@@ -35,6 +43,7 @@ const ChatPage = () => {
             dispatch(addMessage(newMessage));
           } else {
             console.log('Message already exists in state, skipping WebSocket update');
+            console.log('Existing message in component:', existingMessage);
           }
         });
 

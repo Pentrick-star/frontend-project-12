@@ -42,6 +42,9 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, action) => {
       console.log('Adding message to state:', action.payload);
+      console.log('Current messages count:', state.items.length);
+      console.log('Existing message IDs:', state.items.map(msg => msg.id));
+      
       // Проверяем, нет ли уже такого сообщения
       const existingMessage = state.items.find(
         msg => msg.id === action.payload.id
@@ -52,6 +55,7 @@ const messagesSlice = createSlice({
         console.log('Message added to state, total messages:', state.items.length);
       } else {
         console.log('Message already exists in state, skipping add:', action.payload.id);
+        console.log('Existing message:', existingMessage);
       }
     },
     clearMessages: (state) => {
@@ -74,6 +78,9 @@ const messagesSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         console.log('Message sent fulfilled, adding to state:', action.payload);
+        console.log('Current messages count before add:', state.items.length);
+        console.log('Existing message IDs before add:', state.items.map(msg => msg.id));
+        
         // Проверяем, нет ли уже такого сообщения
         const existingMessage = state.items.find(
           msg => msg.id === action.payload.id
@@ -82,8 +89,10 @@ const messagesSlice = createSlice({
         if (!existingMessage) {
           state.items.push(action.payload);
           console.log('Message added to state from sendMessage.fulfilled');
+          console.log('Total messages after add:', state.items.length);
         } else {
           console.log('Message already exists in state, skipping add from sendMessage.fulfilled');
+          console.log('Existing message:', existingMessage);
         }
       });
   },

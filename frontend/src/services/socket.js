@@ -11,6 +11,7 @@ class SocketService {
     const wsUrl = isTest ? window.location.origin : 'http://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);
+    console.log('Current socket state:', this.socket ? 'exists' : 'null');
     
     try {
       this.socket = io(wsUrl, {
@@ -34,6 +35,10 @@ class SocketService {
       
       this.socket.on('connect_error', (error) => {
         console.error('WebSocket connection error:', error);
+      });
+      
+      this.socket.on('disconnect', (reason) => {
+        console.log('WebSocket disconnected:', reason);
       });
     } catch (error) {
       console.log('WebSocket connection failed:', error);
