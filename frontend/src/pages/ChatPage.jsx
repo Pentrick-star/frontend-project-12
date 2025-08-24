@@ -23,6 +23,7 @@ const ChatPage = () => {
   useEffect(() => {
     if (token) {
       try {
+        console.log('Attempting WebSocket connection with token');
         socketService.connect(token);
 
         socketService.onNewMessage((newMessage) => {
@@ -46,17 +47,21 @@ const ChatPage = () => {
         });
 
         return () => {
+          console.log('Disconnecting WebSocket');
           socketService.disconnect();
         };
       } catch (error) {
         console.log('WebSocket connection failed, continuing without real-time updates:', error);
       }
+    } else {
+      console.log('No token available for WebSocket connection');
     }
   }, [token, dispatch]);
 
   // Добавляем обработку ошибок для API запросов
   useEffect(() => {
     try {
+      console.log('Fetching initial channels and messages');
       dispatch(fetchChannels());
       dispatch(fetchMessages());
     } catch (error) {

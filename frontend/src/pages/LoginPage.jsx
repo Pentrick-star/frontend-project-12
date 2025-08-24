@@ -20,10 +20,12 @@ const LoginPage = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setAuthError('');
+      console.log('Attempting login with username:', values.username);
       const response = await api.post('/login', values);
       
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
+        console.log('Login successful, token received');
         login(token);
         navigate('/');
       }

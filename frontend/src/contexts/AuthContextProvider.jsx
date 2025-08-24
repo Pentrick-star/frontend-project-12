@@ -9,12 +9,15 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
+      console.log('Validating token with /auth/me');
       // Получаем данные пользователя с сервера
       api.get('/auth/me')
         .then(response => {
+          console.log('Token validation successful:', response.data);
           setUserState(response.data);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log('Token validation failed:', error.response?.status);
           // Если токен недействителен, удаляем его
           localStorage.removeItem('token');
           setTokenState(null);

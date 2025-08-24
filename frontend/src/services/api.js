@@ -26,10 +26,12 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log('API Error:', error.response?.status, error.response?.data);
     // Редирект на логин только если мы не на странице логина или регистрации
     if (error.response?.status === 401 && 
         !window.location.pathname.includes('/login') && 
         !window.location.pathname.includes('/signup')) {
+      console.log('Unauthorized, redirecting to login');
       localStorage.removeItem('token');
       window.location.href = '/login';
     }
