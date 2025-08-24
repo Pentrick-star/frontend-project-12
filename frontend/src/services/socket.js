@@ -7,7 +7,7 @@ class SocketService {
 
   connect(token) {
     // В тестовой среде используем текущий хост
-    const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+    const isTest = typeof window !== 'undefined' && window.location.hostname === 'localhost' && window.location.port !== '5173';
     const wsUrl = isTest ? window.location.origin : 'ws://localhost:5001';
     
     console.log('Connecting to WebSocket:', wsUrl);

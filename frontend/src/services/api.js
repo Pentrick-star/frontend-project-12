@@ -10,12 +10,14 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
+    console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`, { token: token ? 'present' : 'missing' });
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
   (error) => {
+    console.error('API Request Error:', error);
     return Promise.reject(error);
   }
 );
@@ -23,6 +25,7 @@ api.interceptors.request.use(
 // Перехватчик для обработки ошибок авторизации
 api.interceptors.response.use(
   (response) => {
+    console.log(`API Response: ${response.config.method?.toUpperCase()} ${response.config.url}`, response.status, response.data);
     return response;
   },
   (error) => {
