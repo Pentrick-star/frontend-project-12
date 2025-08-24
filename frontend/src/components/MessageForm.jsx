@@ -49,7 +49,7 @@ const MessageForm = () => {
         disabled={loading}
         className="form-control"
         name="body"
-        aria-label={t('messagePlaceholder')}
+        aria-label={t('newMessage')}
       />
       <button 
         type="submit" 

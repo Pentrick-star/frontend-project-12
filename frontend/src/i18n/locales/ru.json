@@ -9,6 +9,7 @@
   "messages_other": "сообщение",
   "messagePlaceholder": "Введите сообщение...",
   "messageBtnText": "Отправить",
+  "newMessage": "Новое сообщение",
   "loading": {
     "creating": "Создание...",
     "saving": "Сохранение...",
