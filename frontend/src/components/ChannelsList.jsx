@@ -75,15 +75,28 @@ const ChannelsList = () => {
           aria-label={t('modals.titles.addingChannel')}
           role="button"
           name="add-channel"
+          disabled={loading}
         >
-          <i className="bi bi-plus-lg"></i>
+          {loading ? (
+            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          ) : (
+            <i className="bi bi-plus-lg"></i>
+          )}
           <span className="visually-hidden">{t('modals.titles.addingChannel')}</span>
         </button>
 
       </div>
-      <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
-        {channels.map((channel) => {
-          return (
+      {loading ? (
+        <div className="d-flex justify-content-center align-items-center p-3">
+          <div className="spinner-border spinner-border-sm" role="status">
+            <span className="visually-hidden">Загрузка...</span>
+          </div>
+        </div>
+      ) : (
+        <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
+                    {channels.map((channel) => {
+            try {
+              return (
           <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
             <div className="d-flex justify-content-between align-items-start w-100">
               <button
@@ -160,18 +173,29 @@ const ChannelsList = () => {
             )}
           </li>
         );
+            } catch (error) {
+              console.error('Failed to render channel:', error);
+              return null;
+            }
         })}
-      </ul>
+        </ul>
+      )}
 
       <AddChannelModal
         isOpen={showAddModal}
-        onClose={() => setShowAddModal(false)}
+        onClose={() => {
+          setShowAddModal(false);
+          setShowDropdown(null);
+        }}
       />
 
       {showRenameModal && (
         <RenameChannelModal
           isOpen={showRenameModal}
-          onClose={() => setShowRenameModal(false)}
+          onClose={() => {
+            setShowRenameModal(false);
+            setShowDropdown(null);
+          }}
           channel={selectedChannel}
         />
       )}
@@ -179,7 +203,10 @@ const ChannelsList = () => {
       {showRemoveModal && (
         <RemoveChannelModal
           isOpen={showRemoveModal}
-          onClose={() => setShowRemoveModal(false)}
+          onClose={() => {
+            setShowRemoveModal(false);
+            setShowDropdown(null);
+          }}
           channel={selectedChannel}
         />
       )}

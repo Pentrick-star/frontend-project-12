@@ -56,8 +56,17 @@ const MessageForm = () => {
         disabled={loading || !message.trim()} 
         className="btn btn-outline-secondary"
       >
-        →
-        <span className="visually-hidden">{t('messageBtnText')}</span>
+        {loading ? (
+          <>
+            <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            <span className="visually-hidden">{t('messageBtnText')}</span>
+          </>
+        ) : (
+          <>
+            →
+            <span className="visually-hidden">{t('messageBtnText')}</span>
+          </>
+        )}
       </button>
     </form>
   );

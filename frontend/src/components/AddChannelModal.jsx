@@ -27,12 +27,11 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const filteredName = filterProfanity(values.name);
-      const result = await dispatch(createChannel({ name: filteredName })).unwrap();
+      await dispatch(createChannel({ name: filteredName })).unwrap();
       resetForm();
-      setTimeout(() => {
-        onClose();
-      }, 100);
+      onClose();
     } catch (error) {
+      console.error('Failed to create channel:', error);
       // Не закрываем модальное окно при ошибке
     } finally {
       setSubmitting(false);
@@ -112,7 +111,14 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                     className="btn btn-primary"
                     data-testid="submit-button"
                   >
-                    {isSubmitting ? t('loading.creating') : t('modals.addBtns.submit')}
+                    {isSubmitting ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        {t('loading.creating')}
+                      </>
+                    ) : (
+                      t('modals.addBtns.submit')
+                    )}
                   </button>
                 </div>
               </Form>

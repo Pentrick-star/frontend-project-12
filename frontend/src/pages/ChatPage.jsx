@@ -16,9 +16,11 @@ const ChatPage = () => {
   const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages);
 
   useEffect(() => {
+    if (!token) return;
+    
     dispatch(fetchChannels());
     dispatch(fetchMessages());
-  }, [dispatch]);
+  }, [token, dispatch]);
 
   useEffect(() => {
     if (!token) {
@@ -26,12 +28,7 @@ const ChatPage = () => {
     }
 
     try {
-      // Проверяем, не подключены ли мы уже
-      if (socketService.socket && socketService.socket.connected) {
-        return;
-      }
       socketService.connect(token);
-
       const handleNewMessage = (newMessage) => {
         dispatch(addMessage(newMessage));
       };
@@ -58,22 +55,13 @@ const ChatPage = () => {
         socketService.disconnect();
       };
     } catch (error) {
+      console.error('WebSocket connection failed:', error);
       // WebSocket connection failed, continuing without real-time updates
     }
-  }, [token]); // Только token в зависимостях!
-
-  // Загружаем данные после получения токена
-  useEffect(() => {
-    if (!token) return;
-    
-    dispatch(fetchChannels());
-    dispatch(fetchMessages());
   }, [token, dispatch]);
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
-  const channelMessages = messages.filter(message => {
-    return message.channelId === currentChannelId;
-  });
+  const channelMessages = messages.filter(message => message.channelId === currentChannelId);
 
   if (channelsLoading || messagesLoading) {
     return (
@@ -102,12 +90,18 @@ const ChatPage = () => {
             </div>
             {currentChannel && (
               <div className="text-muted small">
-                {channelMessages.length} {t('messages_many')}
+                                  {channelMessages.length} {t('messages_many')}
               </div>
             )}
           </div>
           <div className="flex-grow-1 overflow-auto p-3" id="messages-box">
-            {channelMessages.length === 0 ? (
+            {messagesLoading ? (
+              <div className="d-flex justify-content-center align-items-center h-100">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Загрузка сообщений...</span>
+                </div>
+              </div>
+            ) : channelMessages.length === 0 ? (
               <div></div>
             ) : (
               channelMessages.map((message) => (

@@ -12,8 +12,16 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
 
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
+      try {
+        if (e.key === 'Escape') {
+          try {
+            onClose();
+          } catch (error) {
+            console.error('Failed to close modal on escape:', error);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to handle escape key:', error);
       }
     };
 
@@ -25,13 +33,38 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
 
   const handleRemove = async () => {
     try {
-      setIsRemoving(true);
-      await dispatch(removeChannel(channel.id)).unwrap();
-      onClose();
+      try {
+        setIsRemoving(true);
+      } catch (error) {
+        console.error('Failed to set removing state to true:', error);
+      }
+      try {
+        await dispatch(removeChannel((() => {
+          try {
+            return channel.id;
+          } catch (error) {
+            console.error('Failed to get channel id:', error);
+            throw new Error('Invalid channel id');
+          }
+        })())).unwrap();
+      } catch (error) {
+        console.error('Failed to dispatch removeChannel:', error);
+        throw error;
+      }
+      try {
+        onClose();
+      } catch (error) {
+        console.error('Failed to close modal in handleRemove:', error);
+      }
     } catch (error) {
       console.error('Failed to remove channel:', error);
+      // Ошибка уже обрабатывается в slice через toast
     } finally {
-      setIsRemoving(false);
+      try {
+        setIsRemoving(false);
+      } catch (error) {
+        console.error('Failed to set removing state:', error);
+      }
     }
   };
 
@@ -39,23 +72,48 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
 
   return (
     <>
-      <div className="modal-backdrop fade show" onClick={onClose} style={{ zIndex: 1040 }}></div>
+      <div className="modal-backdrop fade show"       onClick={() => {
+        try {
+          onClose();
+        } catch (error) {
+          console.error('Failed to close modal on backdrop click:', error);
+        }
+      }} style={{ zIndex: 1040 }}></div>
       <div className="modal fade show" style={{ display: 'block', zIndex: 1050 }} tabIndex="-1">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
           <div className="modal-header">
             <div className="modal-title h5">{t('modals.titles.deletingChannel')}</div>
-            <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
+            <button type="button" className="btn-close"               onClick={() => {
+                try {
+                  onClose();
+                } catch (error) {
+                  console.error('Failed to close modal on button click:', error);
+                }
+              }} aria-label="Close"></button>
           </div>
           <div className="modal-body">
             <p>
-              {t('modals.deleteQuestion')} <b>{channel.name}</b>?
+              {t('modals.deleteQuestion')} <b>{(() => {
+                try {
+                  return channel.name;
+                } catch (error) {
+                  console.error('Failed to get channel name:', error);
+                  return 'Unknown';
+                }
+              })()}</b>?
             </p>
           </div>
           <div className="modal-footer">
             <button 
               type="button" 
-              onClick={onClose} 
+              onClick={() => {
+                try {
+                  onClose();
+                } catch (error) {
+                  console.error('Failed to close modal on cancel click:', error);
+                }
+              }} 
               className="btn btn-secondary"
             >
               {t('modals.deleteBtns.cancel')}
@@ -63,10 +121,31 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
             <button 
               type="button" 
               onClick={handleRemove} 
-              disabled={isRemoving}
+              disabled={(() => {
+                try {
+                  return isRemoving;
+                } catch (error) {
+                  console.error('Failed to check removing state:', error);
+                  return false;
+                }
+              })()}
               className="btn btn-danger"
             >
-              {isRemoving ? t('loading.deleting') : t('modals.deleteBtns.delete')}
+              {(() => {
+                try {
+                  return isRemoving;
+                } catch (error) {
+                  console.error('Failed to check removing state for content:', error);
+                  return false;
+                }
+              })() ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  {t('loading.deleting')}
+                </>
+              ) : (
+                t('modals.deleteBtns.delete')
+              )}
             </button>
           </div>
           </div>

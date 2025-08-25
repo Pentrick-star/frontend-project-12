@@ -112,22 +112,30 @@ const channelsSlice = createSlice({
       })
       .addCase(fetchChannels.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(createChannel.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(createChannel.fulfilled, (state, action) => {
+        state.loading = false;
         const existingChannel = state.items.find(ch => ch.id === action.payload.id);
         if (!existingChannel) {
           state.items.push(action.payload);
-          state.currentChannelId = action.payload.id;
-        } else {
-          state.currentChannelId = action.payload.id;
         }
+        state.currentChannelId = action.payload.id;
       })
       .addCase(createChannel.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(removeChannel.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(removeChannel.fulfilled, (state, action) => {
+        state.loading = false;
         const removedId = action.payload;
         state.items = state.items.filter(channel => channel.id !== removedId);
         if (state.currentChannelId === removedId) {
@@ -137,9 +145,14 @@ const channelsSlice = createSlice({
       })
       .addCase(removeChannel.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(renameChannel.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(renameChannel.fulfilled, (state, action) => {
+        state.loading = false;
         const { id, ...updates } = action.payload;
         const channelIndex = state.items.findIndex(channel => channel.id === id);
         if (channelIndex !== -1) {
@@ -148,7 +161,7 @@ const channelsSlice = createSlice({
       })
       .addCase(renameChannel.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       });
   },
 });
