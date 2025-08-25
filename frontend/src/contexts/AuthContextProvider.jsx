@@ -9,20 +9,16 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      console.log('Validating token with /auth/me');
       // Получаем данные пользователя с сервера
       api.get('/auth/me')
         .then(response => {
-          console.log('Token validation successful:', response.data);
           // Проверяем, что ответ не является HTML
           if (typeof response.data === 'string' && response.data.includes('<!doctype html>')) {
-            console.log('Token validation returned HTML instead of JSON, treating as invalid');
             throw new Error('Invalid response format');
           }
           setUserState(response.data);
         })
         .catch((error) => {
-          console.log('Token validation failed:', error.response?.status);
           // Если токен недействителен, удаляем его
           localStorage.removeItem('token');
           setTokenState(null);

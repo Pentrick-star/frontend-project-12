@@ -29,7 +29,6 @@ const SignupPage = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setSignupError('');
-      console.log('Attempting signup with username:', values.username);
       const response = await api.post('/signup', {
         username: values.username,
         password: values.password,
@@ -37,7 +36,6 @@ const SignupPage = () => {
       
       // После успешной регистрации сразу входим
       if (response.status === 201 || response.status === 200) {
-        console.log('Signup successful, attempting login');
         const loginResponse = await api.post('/login', {
           username: values.username,
           password: values.password,
@@ -45,14 +43,14 @@ const SignupPage = () => {
         
         if (loginResponse.data.token) {
           const { token } = loginResponse.data;
-          console.log('Auto-login successful after signup, token received');
           login(token);
-          console.log('Login function called, navigating to home page');
-          navigate('/');
+          // Добавляем небольшую задержку перед навигацией
+          setTimeout(() => {
+            navigate('/');
+          }, 100);
         }
       }
     } catch (error) {
-      console.log('Signup error:', error.response?.status, error.message);
       if (error.response?.status === 409) {
         setSignupError(t('signupPage.signupError'));
       } else {
