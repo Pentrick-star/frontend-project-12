@@ -79,13 +79,18 @@ const ChatPage = () => {
       return;
     }
     
-    try {
-      console.log('Fetching initial channels and messages with token');
-      dispatch(fetchChannels());
-      dispatch(fetchMessages());
-    } catch (error) {
-      console.log('Failed to fetch initial data:', error);
-    }
+    // Добавляем небольшую задержку, чтобы убедиться, что токен установлен
+    const timer = setTimeout(() => {
+      try {
+        console.log('Fetching initial channels and messages with token after delay');
+        dispatch(fetchChannels());
+        dispatch(fetchMessages());
+      } catch (error) {
+        console.log('Failed to fetch initial data:', error);
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, [token, dispatch]);
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);

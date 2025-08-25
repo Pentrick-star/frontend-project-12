@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     // Устанавливаем временного пользователя на основе токена
     // Позже /auth/me обновит данные
     setUserState({ username: 'User' });
+    console.log('Login function completed, token should be available now');
   };
 
   const logout = () => {
