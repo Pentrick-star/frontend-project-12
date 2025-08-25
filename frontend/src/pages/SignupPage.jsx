@@ -44,10 +44,8 @@ const SignupPage = () => {
         if (loginResponse.data.token) {
           const { token } = loginResponse.data;
           login(token);
-          // Добавляем небольшую задержку перед навигацией
-          setTimeout(() => {
-            navigate('/');
-          }, 100);
+          // Убираем задержку и сразу переходим на главную страницу
+          navigate('/');
         }
       }
     } catch (error) {

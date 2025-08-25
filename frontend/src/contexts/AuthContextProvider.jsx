@@ -12,10 +12,6 @@ export const AuthProvider = ({ children }) => {
       // Получаем данные пользователя с сервера
       api.get('/auth/me')
         .then(response => {
-          // Проверяем, что ответ не является HTML
-          if (typeof response.data === 'string' && response.data.includes('<!doctype html>')) {
-            throw new Error('Invalid response format');
-          }
           setUserState(response.data);
         })
         .catch((error) => {
