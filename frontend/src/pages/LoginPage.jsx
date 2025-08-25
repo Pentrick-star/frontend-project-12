@@ -20,17 +20,14 @@ const LoginPage = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       setAuthError('');
-      console.log('Attempting login with username:', values.username);
       const response = await api.post('/login', values);
       
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
-        console.log('Login successful, token received');
         login(token);
         navigate('/');
       }
     } catch (error) {
-      console.log('Login error:', error.response?.status, error.message);
       // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
       const errorMessage = t('loginPage.error');
       setAuthError(errorMessage);

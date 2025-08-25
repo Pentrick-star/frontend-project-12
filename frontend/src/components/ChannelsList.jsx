@@ -17,7 +17,7 @@ const ChannelsList = () => {
   const [showDropdown, setShowDropdown] = useState(null);
   const dropdownRef = useRef(null);
 
-  console.log('ChannelsList rendering, showAddModal:', showAddModal, 'channels count:', channels.length, 'loading:', loading, 'currentChannelId:', currentChannelId);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Не закрываем dropdown, если клик был по элементу в dropdown
@@ -69,11 +69,7 @@ const ChannelsList = () => {
         <button 
           type="button"
           className="p-0 text-primary btn btn-group-vertical add-channel"
-          onClick={() => {
-            console.log('Add channel button clicked, current showAddModal:', showAddModal);
-            setShowAddModal(true);
-            console.log('Set showAddModal to true');
-          }}
+          onClick={() => setShowAddModal(true)}
           title={t('modals.titles.addingChannel')}
           data-testid="add-channel-button"
           aria-label={t('modals.titles.addingChannel')}
@@ -87,7 +83,6 @@ const ChannelsList = () => {
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
         {channels.map((channel) => {
-          console.log('Rendering channel:', channel, 'isCurrent:', channel.id === currentChannelId);
           return (
           <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
             <div className="d-flex justify-content-between align-items-start w-100">
@@ -170,11 +165,7 @@ const ChannelsList = () => {
 
       <AddChannelModal
         isOpen={showAddModal}
-        onClose={() => {
-          console.log('Closing add channel modal, current showAddModal:', showAddModal);
-          setShowAddModal(false);
-          console.log('Set showAddModal to false');
-        }}
+        onClose={() => setShowAddModal(false)}
       />
 
       {showRenameModal && (

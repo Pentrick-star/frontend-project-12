@@ -10,9 +10,6 @@ class SocketService {
     const isTest = typeof window !== 'undefined' && window.location.hostname === 'localhost' && window.location.port !== '5173';
     const wsUrl = isTest ? window.location.origin : 'ws://localhost:5001';
     
-    console.log('Connecting to WebSocket:', wsUrl);
-    console.log('Current socket state:', this.socket ? 'exists' : 'null');
-    
     try {
       this.socket = io(wsUrl, {
         auth: {
@@ -27,25 +24,8 @@ class SocketService {
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
       });
-      
-      // Добавляем обработчики для проверки подключения
-      this.socket.on('connect', () => {
-        console.log('WebSocket connected successfully');
-      });
-      
-      this.socket.on('connect_error', (error) => {
-        console.error('WebSocket connection error:', error);
-      });
-      
-      this.socket.on('disconnect', (reason) => {
-        console.log('WebSocket disconnected:', reason);
-      });
-
-      this.socket.on('error', (error) => {
-        console.error('Socket error:', error);
-      });
     } catch (error) {
-      console.log('WebSocket connection failed:', error);
+      // WebSocket connection failed
     }
   }
 
@@ -58,51 +38,37 @@ class SocketService {
 
   onNewMessage(callback) {
     if (this.socket) {
-      console.log('Setting up newMessage listener');
       // Убираем предыдущий обработчик, если он есть
       this.socket.off('newMessage');
       this.socket.on('newMessage', (message) => {
-        console.log('WebSocket newMessage event received:', message);
         callback(message);
       });
-    } else {
-      console.log('Socket not available for newMessage listener');
     }
   }
 
   onNewChannel(callback) {
     if (this.socket) {
-      console.log('Setting up newChannel listener');
       // Убираем предыдущий обработчик, если он есть
       this.socket.off('newChannel');
       this.socket.on('newChannel', (data) => {
-        console.log('WebSocket newChannel event received:', data);
         callback(data);
       });
-    } else {
-      console.log('Socket not available for newChannel listener');
     }
   }
 
   onRemoveChannel(callback) {
     if (this.socket) {
-      console.log('Setting up removeChannel listener');
       // Убираем предыдущий обработчик, если он есть
       this.socket.off('removeChannel');
       this.socket.on('removeChannel', callback);
-    } else {
-      console.log('Socket not available for removeChannel listener');
     }
   }
 
   onRenameChannel(callback) {
     if (this.socket) {
-      console.log('Setting up renameChannel listener');
       // Убираем предыдущий обработчик, если он есть
       this.socket.off('renameChannel');
       this.socket.on('renameChannel', callback);
-    } else {
-      console.log('Socket not available for renameChannel listener');
     }
   }
 

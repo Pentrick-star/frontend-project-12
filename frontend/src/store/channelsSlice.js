@@ -21,13 +21,10 @@ export const createChannel = createAsyncThunk(
   'channels/createChannel',
   async (channelData, { rejectWithValue }) => {
     try {
-      console.log('Creating channel with data:', channelData);
       const response = await api.post('/channels', channelData);
-      console.log('Channel creation response:', response.data);
       toast.success('Канал создан');
       return response.data;
     } catch (error) {
-      console.error('Channel creation error:', error.response?.status, error.response?.data);
       toast.error('Ошибка создания канала');
       return rejectWithValue(error.message);
     }
@@ -75,18 +72,12 @@ const channelsSlice = createSlice({
       state.currentChannelId = action.payload;
     },
     addChannel: (state, action) => {
-      console.log('Adding channel to state:', action.payload);
-      // Проверяем, нет ли уже такого канала
       const existingChannel = state.items.find(ch => ch.id === action.payload.id);
       if (!existingChannel) {
         state.items.push(action.payload);
         if (!state.currentChannelId) {
           state.currentChannelId = action.payload.id;
-          console.log('Set currentChannelId to:', action.payload.id);
         }
-        console.log('Updated channels state:', state.items);
-      } else {
-        console.log('Channel already exists in state, skipping add:', action.payload.id);
       }
     },
     removeChannelById: (state, action) => {
@@ -112,37 +103,27 @@ const channelsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchChannels.fulfilled, (state, action) => {
-        console.log('FetchChannels fulfilled, received channels:', action.payload);
         state.loading = false;
         state.items = action.payload;
-        console.log('Updated channels state:', state.items);
-        console.log('Current currentChannelId before update:', state.currentChannelId);
         if (state.items.length > 0 && !state.currentChannelId) {
           const generalChannel = state.items.find(channel => channel.name === 'general');
           state.currentChannelId = generalChannel ? generalChannel.id : state.items[0].id;
-          console.log('Set currentChannelId to:', state.currentChannelId);
         }
-        console.log('Final currentChannelId:', state.currentChannelId);
       })
       .addCase(fetchChannels.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
       .addCase(createChannel.fulfilled, (state, action) => {
-        console.log('Channel creation fulfilled, adding to state:', action.payload);
-        // Проверяем, нет ли уже такого канала
         const existingChannel = state.items.find(ch => ch.id === action.payload.id);
         if (!existingChannel) {
           state.items.push(action.payload);
           state.currentChannelId = action.payload.id;
-          console.log('Updated channels state:', state.items);
         } else {
-          console.log('Channel already exists in state, just setting currentChannelId:', action.payload.id);
           state.currentChannelId = action.payload.id;
         }
       })
       .addCase(createChannel.rejected, (state, action) => {
-        console.error('Channel creation rejected:', action.error);
         state.loading = false;
         state.error = action.error.message;
       })

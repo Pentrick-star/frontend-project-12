@@ -22,38 +22,30 @@ const ChatPage = () => {
 
   useEffect(() => {
     if (!token) {
-      console.log('No token available for WebSocket connection');
       return;
     }
 
     try {
-      console.log('Attempting WebSocket connection with token');
       // Проверяем, не подключены ли мы уже
       if (socketService.socket && socketService.socket.connected) {
-        console.log('WebSocket already connected, skipping connection');
         return;
       }
       socketService.connect(token);
 
       const handleNewMessage = (newMessage) => {
-        console.log('Received new message via WebSocket:', newMessage);
         dispatch(addMessage(newMessage));
       };
 
       const handleNewChannel = (newChannel) => {
-        console.log('Received new channel via WebSocket:', newChannel);
         dispatch(addChannel(newChannel));
         dispatch(setCurrentChannel(newChannel.id));
-        console.log('Set current channel from WebSocket to:', newChannel.id);
       };
 
       const handleRemoveChannel = (channelId) => {
-        console.log('Received remove channel via WebSocket:', channelId);
         dispatch(removeChannelById(channelId));
       };
 
       const handleRenameChannel = (updatedChannel) => {
-        console.log('Received rename channel via WebSocket:', updatedChannel);
         dispatch(updateChannel(updatedChannel));
       };
 
@@ -63,11 +55,10 @@ const ChatPage = () => {
       socketService.onRenameChannel(handleRenameChannel);
 
       return () => {
-        console.log('Disconnecting WebSocket');
         socketService.disconnect();
       };
     } catch (error) {
-      console.log('WebSocket connection failed, continuing without real-time updates:', error);
+      // WebSocket connection failed, continuing without real-time updates
     }
   }, [token]); // Только token в зависимостях!
 
