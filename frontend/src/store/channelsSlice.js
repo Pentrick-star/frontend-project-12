@@ -8,10 +8,14 @@ export const fetchChannels = createAsyncThunk(
     try {
       console.log('Fetching channels from API');
       const response = await api.get('/channels');
-      console.log('Channels API response:', response.data);
+      console.log('Channels API response status:', response.status);
+      console.log('Channels API response data:', response.data);
+      console.log('Channels API response headers:', response.headers);
       return response.data;
     } catch (error) {
-      console.error('FetchChannels error:', error.response?.status, error.response?.data);
+      console.error('FetchChannels error status:', error.response?.status);
+      console.error('FetchChannels error data:', error.response?.data);
+      console.error('FetchChannels error message:', error.message);
       if (error.response?.status !== 401) {
         toast.error('Ошибка загрузки данных');
       }

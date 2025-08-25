@@ -6,9 +6,15 @@ export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async (_, { rejectWithValue }) => {
     try {
+      console.log('Fetching messages from API');
       const response = await api.get('/messages');
+      console.log('Messages API response status:', response.status);
+      console.log('Messages API response data:', response.data);
       return response.data;
     } catch (error) {
+      console.error('FetchMessages error status:', error.response?.status);
+      console.error('FetchMessages error data:', error.response?.data);
+      console.error('FetchMessages error message:', error.message);
       toast.error('Ошибка загрузки данных');
       return rejectWithValue(error.message);
     }
