@@ -27,7 +27,8 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const filteredName = filterProfanity(values.name);
-      await dispatch(createChannel({ name: filteredName })).unwrap();
+      const result = await dispatch(createChannel({ name: filteredName })).unwrap();
+      console.log('Channel created successfully:', result);
       resetForm();
       onClose();
     } catch (error) {
@@ -41,6 +42,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
+        console.log('Escape key pressed');
         onClose();
       }
     };
@@ -59,7 +61,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
     <>
       <div 
         className="modal-backdrop fade show" 
-        onClick={onClose} 
+        onClick={() => {
+          console.log('Modal backdrop clicked');
+          onClose();
+        }} 
         style={{ zIndex: 1040 }}
       ></div>
       <div className="modal fade show" style={{ display: 'block', zIndex: 1050, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }} tabIndex="-1" data-testid="add-channel-modal">
@@ -67,12 +72,15 @@ const AddChannelModal = ({ isOpen, onClose }) => {
           <div className="modal-content">
           <div className="modal-header">
             <div className="modal-title h5">{t('modals.titles.addingChannel')}</div>
-            <button 
-              type="button" 
-              className="btn-close" 
-              onClick={onClose} 
-              aria-label="Close"
-            ></button>
+                          <button 
+                type="button" 
+                className="btn-close" 
+                onClick={() => {
+                  console.log('Modal close button clicked');
+                  onClose();
+                }} 
+                aria-label="Close"
+              ></button>
           </div>
           <Formik
             initialValues={{ name: '' }}
@@ -99,7 +107,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                 <div className="modal-footer">
                   <button 
                     type="button" 
-                    onClick={onClose} 
+                    onClick={() => {
+                      console.log('Modal cancel button clicked');
+                      onClose();
+                    }} 
                     className="btn btn-secondary"
                     data-testid="cancel-button"
                   >

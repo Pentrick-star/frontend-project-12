@@ -27,37 +27,40 @@ const ChatPage = () => {
       return;
     }
 
-    try {
-      socketService.connect(token);
-      const handleNewMessage = (newMessage) => {
-        dispatch(addMessage(newMessage));
-      };
+    // Добавляем небольшую задержку для стабилизации соединения
+    const timeoutId = setTimeout(() => {
+      try {
+        socketService.connect(token);
+        const handleNewMessage = (newMessage) => {
+          dispatch(addMessage(newMessage));
+        };
 
-      const handleNewChannel = (newChannel) => {
-        dispatch(addChannel(newChannel));
-        dispatch(setCurrentChannel(newChannel.id));
-      };
+        const handleNewChannel = (newChannel) => {
+          dispatch(addChannel(newChannel));
+          dispatch(setCurrentChannel(newChannel.id));
+        };
 
-      const handleRemoveChannel = (channelId) => {
-        dispatch(removeChannelById(channelId));
-      };
+        const handleRemoveChannel = (channelId) => {
+          dispatch(removeChannelById(channelId));
+        };
 
-      const handleRenameChannel = (updatedChannel) => {
-        dispatch(updateChannel(updatedChannel));
-      };
+        const handleRenameChannel = (updatedChannel) => {
+          dispatch(updateChannel(updatedChannel));
+        };
 
-      socketService.onNewMessage(handleNewMessage);
-      socketService.onNewChannel(handleNewChannel);
-      socketService.onRemoveChannel(handleRemoveChannel);
-      socketService.onRenameChannel(handleRenameChannel);
+        socketService.onNewMessage(handleNewMessage);
+        socketService.onNewChannel(handleNewChannel);
+        socketService.onRemoveChannel(handleRemoveChannel);
+        socketService.onRenameChannel(handleRenameChannel);
+      } catch (error) {
+        console.error('WebSocket connection failed:', error);
+      }
+    }, 100);
 
-      return () => {
-        socketService.disconnect();
-      };
-    } catch (error) {
-      console.error('WebSocket connection failed:', error);
-      // WebSocket connection failed, continuing without real-time updates
-    }
+    return () => {
+      clearTimeout(timeoutId);
+      socketService.disconnect();
+    };
   }, [token, dispatch]);
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);

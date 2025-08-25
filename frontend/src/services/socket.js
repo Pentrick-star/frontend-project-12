@@ -24,8 +24,17 @@ class SocketService {
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
       });
+
+      // Добавляем обработчики ошибок
+      this.socket.on('connect_error', (error) => {
+        console.error('WebSocket connection error:', error);
+      });
+
+      this.socket.on('disconnect', (reason) => {
+        console.log('WebSocket disconnected:', reason);
+      });
     } catch (error) {
-      // WebSocket connection failed
+      console.error('Failed to create WebSocket connection:', error);
     }
   }
 
