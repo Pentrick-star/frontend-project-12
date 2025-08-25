@@ -30,7 +30,11 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       const result = await dispatch(createChannel({ name: filteredName })).unwrap();
       console.log('Channel created successfully:', result);
       resetForm();
-      onClose();
+      // Принудительно закрываем модальное окно через небольшую задержку
+      setTimeout(() => {
+        console.log('Forcing modal close after channel creation');
+        onClose();
+      }, 50);
     } catch (error) {
       console.error('Failed to create channel:', error);
       // Не закрываем модальное окно при ошибке

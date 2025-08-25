@@ -78,25 +78,14 @@ const ChannelsList = () => {
           aria-label={t('modals.titles.addingChannel')}
           role="button"
           name="add-channel"
-          disabled={loading}
+          disabled={false}
         >
-          {loading ? (
-            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          ) : (
-            <i className="bi bi-plus-lg"></i>
-          )}
+          <i className="bi bi-plus-lg"></i>
           <span className="visually-hidden">{t('modals.titles.addingChannel')}</span>
         </button>
 
       </div>
-      {loading ? (
-        <div className="d-flex justify-content-center align-items-center p-3">
-          <div className="spinner-border spinner-border-sm" role="status">
-            <span className="visually-hidden">Загрузка...</span>
-          </div>
-        </div>
-      ) : (
-        <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
+      <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
                     {channels.map((channel) => {
             try {
               return (
@@ -182,7 +171,6 @@ const ChannelsList = () => {
             }
         })}
         </ul>
-      )}
 
       <AddChannelModal
         isOpen={showAddModal}

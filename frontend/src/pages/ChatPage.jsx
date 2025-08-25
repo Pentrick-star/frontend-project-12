@@ -27,38 +27,34 @@ const ChatPage = () => {
       return;
     }
 
-    // Добавляем небольшую задержку для стабилизации соединения
-    const timeoutId = setTimeout(() => {
-      try {
-        socketService.connect(token);
-        const handleNewMessage = (newMessage) => {
-          dispatch(addMessage(newMessage));
-        };
+    try {
+      socketService.connect(token);
+      const handleNewMessage = (newMessage) => {
+        dispatch(addMessage(newMessage));
+      };
 
-        const handleNewChannel = (newChannel) => {
-          dispatch(addChannel(newChannel));
-          dispatch(setCurrentChannel(newChannel.id));
-        };
+      const handleNewChannel = (newChannel) => {
+        dispatch(addChannel(newChannel));
+        dispatch(setCurrentChannel(newChannel.id));
+      };
 
-        const handleRemoveChannel = (channelId) => {
-          dispatch(removeChannelById(channelId));
-        };
+      const handleRemoveChannel = (channelId) => {
+        dispatch(removeChannelById(channelId));
+      };
 
-        const handleRenameChannel = (updatedChannel) => {
-          dispatch(updateChannel(updatedChannel));
-        };
+      const handleRenameChannel = (updatedChannel) => {
+        dispatch(updateChannel(updatedChannel));
+      };
 
-        socketService.onNewMessage(handleNewMessage);
-        socketService.onNewChannel(handleNewChannel);
-        socketService.onRemoveChannel(handleRemoveChannel);
-        socketService.onRenameChannel(handleRenameChannel);
-      } catch (error) {
-        console.error('WebSocket connection failed:', error);
-      }
-    }, 100);
+      socketService.onNewMessage(handleNewMessage);
+      socketService.onNewChannel(handleNewChannel);
+      socketService.onRemoveChannel(handleRemoveChannel);
+      socketService.onRenameChannel(handleRenameChannel);
+    } catch (error) {
+      console.error('WebSocket connection failed:', error);
+    }
 
     return () => {
-      clearTimeout(timeoutId);
       socketService.disconnect();
     };
   }, [token, dispatch]);
