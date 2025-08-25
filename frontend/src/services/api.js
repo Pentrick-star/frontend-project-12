@@ -10,21 +10,12 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
-    console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`, { 
-      token: token ? 'present' : 'missing',
-      tokenLength: token ? token.length : 0,
-      headers: config.headers
-    });
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log('Authorization header set:', config.headers.Authorization);
-    } else {
-      console.log('No token available for request');
     }
     return config;
   },
   (error) => {
-    console.error('API Request Error:', error);
     return Promise.reject(error);
   }
 );
@@ -32,16 +23,13 @@ api.interceptors.request.use(
 // Перехватчик для обработки ошибок авторизации
 api.interceptors.response.use(
   (response) => {
-    console.log(`API Response: ${response.config.method?.toUpperCase()} ${response.config.url}`, response.status, response.data);
     return response;
   },
   (error) => {
-    console.log('API Error:', error.response?.status, error.response?.data);
     // Редирект на логин только если мы не на странице логина или регистрации
     if (error.response?.status === 401 && 
         !window.location.pathname.includes('/login') && 
         !window.location.pathname.includes('/signup')) {
-      console.log('Unauthorized, redirecting to login');
       localStorage.removeItem('token');
       window.location.href = '/login';
     }

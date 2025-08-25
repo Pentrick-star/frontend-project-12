@@ -71,33 +71,14 @@ const ChatPage = () => {
     }
   }, [token]); // Только token в зависимостях!
 
-  // Добавляем обработку ошибок для API запросов
+  // Загружаем данные после получения токена
   useEffect(() => {
-    console.log('Data fetch useEffect triggered, token:', token ? 'present' : 'missing');
-    if (!token) {
-      console.log('No token available, skipping data fetch');
-      return;
-    }
+    if (!token) return;
     
-    // Проверяем, что токен действительно доступен в localStorage
-    const storedToken = localStorage.getItem('token');
-    console.log('Stored token check:', storedToken ? 'present' : 'missing');
-    
-    if (!storedToken) {
-      console.log('No token in localStorage, skipping data fetch');
-      return;
-    }
-    
-    // Добавляем небольшую задержку, чтобы убедиться, что токен установлен
     const timer = setTimeout(() => {
-      try {
-        console.log('Fetching initial channels and messages with token after delay');
-        dispatch(fetchChannels());
-        dispatch(fetchMessages());
-      } catch (error) {
-        console.log('Failed to fetch initial data:', error);
-      }
-    }, 200); // Увеличиваем задержку до 200ms
+      dispatch(fetchChannels());
+      dispatch(fetchMessages());
+    }, 100);
     
     return () => clearTimeout(timer);
   }, [token, dispatch]);

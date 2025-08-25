@@ -37,20 +37,11 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = (newToken) => {
-    console.log('AuthContextProvider login called with token:', newToken ? 'present' : 'missing');
-    console.log('Token length:', newToken ? newToken.length : 0);
     localStorage.setItem('token', newToken);
-    console.log('Token saved to localStorage');
     setTokenState(newToken);
-    console.log('Token state updated, setting temporary user');
     // Устанавливаем временного пользователя на основе токена
     // Позже /auth/me обновит данные
     setUserState({ username: 'User' });
-    console.log('Login function completed, token should be available now');
-    
-    // Проверяем, что токен действительно сохранен
-    const savedToken = localStorage.getItem('token');
-    console.log('Token verification - saved token:', savedToken ? 'present' : 'missing', 'length:', savedToken ? savedToken.length : 0);
   };
 
   const logout = () => {
