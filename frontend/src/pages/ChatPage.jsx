@@ -66,12 +66,8 @@ const ChatPage = () => {
   useEffect(() => {
     if (!token) return;
     
-    const timer = setTimeout(() => {
-      dispatch(fetchChannels());
-      dispatch(fetchMessages());
-    }, 100);
-    
-    return () => clearTimeout(timer);
+    dispatch(fetchChannels());
+    dispatch(fetchMessages());
   }, [token, dispatch]);
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
