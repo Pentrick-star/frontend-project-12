@@ -79,6 +79,15 @@ const ChatPage = () => {
       return;
     }
     
+    // Проверяем, что токен действительно доступен в localStorage
+    const storedToken = localStorage.getItem('token');
+    console.log('Stored token check:', storedToken ? 'present' : 'missing');
+    
+    if (!storedToken) {
+      console.log('No token in localStorage, skipping data fetch');
+      return;
+    }
+    
     // Добавляем небольшую задержку, чтобы убедиться, что токен установлен
     const timer = setTimeout(() => {
       try {
@@ -88,7 +97,7 @@ const ChatPage = () => {
       } catch (error) {
         console.log('Failed to fetch initial data:', error);
       }
-    }, 100);
+    }, 200); // Увеличиваем задержку до 200ms
     
     return () => clearTimeout(timer);
   }, [token, dispatch]);
