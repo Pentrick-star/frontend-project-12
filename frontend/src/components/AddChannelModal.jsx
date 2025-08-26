@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { createChannel, setCurrentChannel, fetchChannels } from '../store/channelsSlice';
+import { createChannel, setCurrentChannel } from '../store/channelsSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 
 const AddChannelModal = ({ isOpen, onClose }) => {
@@ -29,10 +29,6 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       const filteredName = filterProfanity(values.name);
       await dispatch(createChannel({ name: filteredName })).unwrap();
       resetForm();
-      
-      // Принудительно обновляем состояние каналов
-      await dispatch(fetchChannels());
-      
       onClose();
     } catch (error) {
       // Не закрываем модальное окно при ошибке
