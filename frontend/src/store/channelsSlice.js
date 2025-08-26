@@ -126,6 +126,7 @@ const channelsSlice = createSlice({
           state.items.push(action.payload);
         }
         state.currentChannelId = action.payload.id;
+        console.log('Channel created and state updated:', action.payload);
       })
       .addCase(createChannel.rejected, (state, action) => {
         state.loading = false;

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { createChannel, setCurrentChannel } from '../store/channelsSlice';
+import { createChannel, setCurrentChannel, fetchChannels } from '../store/channelsSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 
 const AddChannelModal = ({ isOpen, onClose }) => {
@@ -30,10 +30,17 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       const result = await dispatch(createChannel({ name: filteredName })).unwrap();
       console.log('Channel created successfully:', result);
       resetForm();
-      // Принудительно закрываем модальное окно через небольшую задержку
+      
+      // Принудительно закрываем модальное окно и обновляем состояние
       setTimeout(() => {
         console.log('Forcing modal close after channel creation');
         onClose();
+        
+        // Дополнительно обновляем состояние, если WebSocket не работает
+        setTimeout(() => {
+          console.log('Refreshing channels state');
+          dispatch(fetchChannels());
+        }, 100);
       }, 50);
     } catch (error) {
       console.error('Failed to create channel:', error);
