@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { sendMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 import { useAuth } from '../hooks/useAuth';
-import socketService from '../services/socket';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -58,13 +57,12 @@ const MessageForm = () => {
       >
         {loading ? (
           <>
-            <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            <output className="spinner-border spinner-border-sm me-1" aria-hidden="true"></output>
             <span className="visually-hidden">{t('messageBtnText')}</span>
           </>
         ) : (
           <>
-            →
-            <span className="visually-hidden">{t('messageBtnText')}</span>
+            →<span className="visually-hidden">{t('messageBtnText')}</span>
           </>
         )}
       </button>

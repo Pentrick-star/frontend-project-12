@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { createChannel, setCurrentChannel } from '../store/channelsSlice';
+import { createChannel } from '../store/channelsSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 
 const AddChannelModal = ({ isOpen, onClose }) => {
