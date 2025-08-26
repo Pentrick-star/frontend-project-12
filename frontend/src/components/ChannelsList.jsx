@@ -83,9 +83,7 @@ const ChannelsList = () => {
 
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
-                    {channels.map((channel) => {
-            try {
-              return (
+                    {channels.map((channel) => (
           <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
             <div className="d-flex justify-content-between align-items-start w-100">
               <button
@@ -161,12 +159,7 @@ const ChannelsList = () => {
               </ul>
             )}
           </li>
-        );
-            } catch (error) {
-              console.error('Failed to render channel:', error);
-              return null;
-            }
-        })}
+        ))}
         </ul>
 
       <AddChannelModal
