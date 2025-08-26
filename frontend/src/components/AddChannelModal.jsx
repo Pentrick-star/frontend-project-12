@@ -82,7 +82,6 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               <Form data-testid="add-channel-form">
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="channelName" className="form-label">{t('modals.addLabel')}</label>
                     <Field
                       type="text"
                       id="channelName"
@@ -90,7 +89,6 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                       className="form-control"
                       autoFocus
                       data-testid="channel-name-input"
-                      placeholder={t('modals.addLabel')}
                     />
                     <ErrorMessage name="name" component="div" className="text-danger small" />
                   </div>
