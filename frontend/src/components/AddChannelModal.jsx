@@ -29,6 +29,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       const filteredName = filterProfanity(values.name);
       await dispatch(createChannel({ name: filteredName })).unwrap();
       resetForm();
+      
+      // Принудительно обновляем состояние каналов
+      await dispatch(fetchChannels());
+      
       onClose();
     } catch (error) {
       // Не закрываем модальное окно при ошибке

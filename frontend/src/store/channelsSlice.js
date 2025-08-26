@@ -79,6 +79,8 @@ const channelsSlice = createSlice({
           state.currentChannelId = action.payload.id;
         }
       }
+      // Убеждаемся, что ошибки сброшены
+      state.error = null;
     },
     removeChannelById: (state, action) => {
       const removedId = action.payload;
@@ -109,6 +111,8 @@ const channelsSlice = createSlice({
           const generalChannel = state.items.find(channel => channel.name === 'general');
           state.currentChannelId = generalChannel ? generalChannel.id : state.items[0].id;
         }
+        // Убеждаемся, что ошибки сброшены
+        state.error = null;
       })
       .addCase(fetchChannels.rejected, (state, action) => {
         state.loading = false;
@@ -125,6 +129,8 @@ const channelsSlice = createSlice({
           state.items.push(action.payload);
         }
         state.currentChannelId = action.payload.id;
+        // Убеждаемся, что состояние обновлено
+        state.error = null;
       })
       .addCase(createChannel.rejected, (state, action) => {
         state.loading = false;
