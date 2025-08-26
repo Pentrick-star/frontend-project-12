@@ -25,7 +25,6 @@ export const createChannel = createAsyncThunk(
       toast.success('Канал создан');
       return response.data;
     } catch (error) {
-      console.error('Failed to create channel:', error);
       toast.error('Ошибка создания канала');
       return rejectWithValue(error.response?.data?.message || error.message);
     }
@@ -126,7 +125,6 @@ const channelsSlice = createSlice({
           state.items.push(action.payload);
         }
         state.currentChannelId = action.payload.id;
-        console.log('Channel created and state updated:', action.payload);
       })
       .addCase(createChannel.rejected, (state, action) => {
         state.loading = false;

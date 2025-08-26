@@ -69,10 +69,7 @@ const ChannelsList = () => {
         <button 
           type="button"
           className="p-0 text-primary btn btn-group-vertical add-channel"
-          onClick={() => {
-            console.log('Opening add channel modal');
-            setShowAddModal(true);
-          }}
+          onClick={() => setShowAddModal(true)}
           title={t('modals.titles.addingChannel')}
           data-testid="add-channel-button"
           aria-label={t('modals.titles.addingChannel')}
