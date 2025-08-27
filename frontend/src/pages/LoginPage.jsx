@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -9,8 +9,15 @@ import { useAuth } from '../hooks/useAuth';
 const LoginPage = () => {
   const { t } = useTranslation();
   const [authError, setAuthError] = useState('');
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, token } = useAuth();
+
+  useEffect(() => {
+    if (shouldRedirect && token) {
+      navigate('/');
+    }
+  }, [shouldRedirect, token, navigate]);
 
   const validationSchema = Yup.object({
     username: Yup.string().required(t('signupPage.required')),
@@ -25,10 +32,7 @@ const LoginPage = () => {
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
         login(token);
-        // Добавляем небольшую задержку для обновления состояния
-        setTimeout(() => {
-          navigate('/');
-        }, 100);
+        setShouldRedirect(true);
       }
     } catch (error) {
       // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
