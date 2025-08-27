@@ -32,11 +32,13 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = (newToken) => {
+    console.log('AuthProvider: login called with token', newToken);
     localStorage.setItem('token', newToken);
     setTokenState(newToken);
     // Устанавливаем временного пользователя на основе токена
     // Позже /auth/me обновит данные
     setUserState({ username: 'User' });
+    console.log('AuthProvider: login completed, token set to', newToken);
   };
 
   const logout = () => {

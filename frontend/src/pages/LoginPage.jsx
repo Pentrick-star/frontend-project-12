@@ -9,17 +9,8 @@ import { useAuth } from '../hooks/useAuth';
 const LoginPage = () => {
   const { t } = useTranslation();
   const [authError, setAuthError] = useState('');
-  const [shouldRedirect, setShouldRedirect] = useState(false);
   const navigate = useNavigate();
-  const { login, token } = useAuth();
-
-  useEffect(() => {
-    console.log('LoginPage: shouldRedirect =', shouldRedirect, 'token =', token);
-    if (shouldRedirect && token) {
-      console.log('LoginPage: navigating to /');
-      navigate('/');
-    }
-  }, [shouldRedirect, token, navigate]);
+  const { login } = useAuth();
 
   const validationSchema = Yup.object({
     username: Yup.string().required(t('signupPage.required')),
@@ -34,7 +25,11 @@ const LoginPage = () => {
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
         login(token);
-        setShouldRedirect(true);
+        // Принудительно обновляем состояние и делаем редирект
+        setTimeout(() => {
+          console.log('LoginPage: forcing redirect to /');
+          window.location.href = '/';
+        }, 0);
       }
     } catch (error) {
       // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
