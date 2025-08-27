@@ -104,7 +104,7 @@ const ChannelsList = () => {
                   aria-label="Управление каналом"
                 >
                   <i className="bi bi-chevron-down"></i>
-                  <span className="visually-hidden">{t('manageChannelsBtns.rename')}</span>
+                  <span className="visually-hidden">Управление каналом</span>
                 </button>
               </div>
             </div>
