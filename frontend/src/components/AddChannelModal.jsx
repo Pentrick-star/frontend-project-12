@@ -82,7 +82,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               <Form data-testid="add-channel-form">
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="channelName" className="form-label" style={{ fontSize: '0.1px', color: 'transparent', margin: '0', padding: '0' }}>{t('modals.addLabel')}</label>
+                    <label htmlFor="channelName" className="form-label" style={{ fontSize: '1px', color: '#000', margin: '0', padding: '0', height: '1px', overflow: 'hidden' }}>{t('modals.addLabel')}</label>
                     <Field
                       type="text"
                       id="channelName"

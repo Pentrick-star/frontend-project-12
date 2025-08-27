@@ -78,7 +78,7 @@ const ChannelsList = () => {
           disabled={false}
         >
           <i className="bi bi-plus-lg"></i>
-          <span className="visually-hidden">{t('modals.titles.addingChannel')}</span>
+          <span className="visually-hidden">+</span>
         </button>
 
       </div>
