@@ -25,7 +25,10 @@ const LoginPage = () => {
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
         login(token);
-        navigate('/');
+        // Добавляем небольшую задержку для обновления состояния
+        setTimeout(() => {
+          navigate('/');
+        }, 100);
       }
     } catch (error) {
       // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
