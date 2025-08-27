@@ -8,13 +8,16 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('AuthProvider: token =', token, 'loading =', loading);
     if (token) {
       // Получаем данные пользователя с сервера
       api.get('/auth/me')
         .then(response => {
+          console.log('AuthProvider: /auth/me success', response.data);
           setUserState(response.data);
         })
         .catch((error) => {
+          console.log('AuthProvider: /auth/me error', error);
           // Если токен недействителен, удаляем его
           localStorage.removeItem('token');
           setTokenState(null);

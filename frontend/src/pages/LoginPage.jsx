@@ -14,7 +14,9 @@ const LoginPage = () => {
   const { login, token } = useAuth();
 
   useEffect(() => {
+    console.log('LoginPage: shouldRedirect =', shouldRedirect, 'token =', token);
     if (shouldRedirect && token) {
+      console.log('LoginPage: navigating to /');
       navigate('/');
     }
   }, [shouldRedirect, token, navigate]);
