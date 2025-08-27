@@ -96,16 +96,16 @@ const ChannelsList = () => {
                 <span className="me-1">#</span>
                 {channel.name}
               </button>
-              <div className="dropdown flex-shrink-0" ref={dropdownRef}>
+              <div className="dropdown flex-shrink-0" ref={dropdownRef} style={{ pointerEvents: 'auto' }}>
                 <button
                   type="button"
                   className="btn btn-sm text-dark p-0"
                   onClick={(e) => handleDropdownToggle(channel.id, e)}
                   aria-label="Управление каналом"
                   data-testid="manage-channel-button"
+                  style={{ pointerEvents: 'auto' }}
                 >
                   <i className="bi bi-chevron-down"></i>
-                  <span className="visually-hidden">Управление каналом</span>
                 </button>
               </div>
             </div>
