@@ -16,6 +16,10 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       .min(3, t('modals.addErrors.min'))
       .max(20, t('modals.addErrors.max'))
       .required(t('modals.addErrors.required'))
+      .test('not-only-spaces', t('modals.addErrors.required'), function(value) {
+        if (!value) return false;
+        return value.trim().length >= 3;
+      })
       .test('unique', t('modals.addErrors.repeats'), function(value) {
         if (!value) return true;
         return !channels.some(channel => 
@@ -26,7 +30,8 @@ const AddChannelModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const filteredName = filterProfanity(values.name);
+      const trimmedName = values.name.trim();
+      const filteredName = filterProfanity(trimmedName);
       await dispatch(createChannel({ name: filteredName })).unwrap();
       resetForm();
       onClose();
