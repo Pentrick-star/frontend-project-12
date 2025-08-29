@@ -25,13 +25,10 @@ const LoginPage = () => {
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
         login(token);
-        // Принудительно обновляем состояние и делаем редирект
-        setTimeout(() => {
-          console.log('LoginPage: forcing redirect to /');
-          window.location.href = '/';
-        }, 0);
+        navigate('/');
       }
     } catch (error) {
+      console.error('Login error:', error);
       // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
       const errorMessage = t('loginPage.error');
       setAuthError(errorMessage);

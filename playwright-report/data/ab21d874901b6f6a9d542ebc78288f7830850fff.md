@@ -1,0 +1,124 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link "Hexlet Chat" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - button "Выйти" [ref=e8] [cursor=pointer]
+  - generic [ref=e10]:
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Каналы
+        - button "Добавить канал" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17] [cursor=pointer]: 
+          - generic [ref=e18] [cursor=pointer]: +
+      - list [ref=e19]:
+        - listitem [ref=e20]:
+          - generic [ref=e21]:
+            - button "#general" [ref=e22] [cursor=pointer]:
+              - generic [ref=e23] [cursor=pointer]: "#"
+              - text: general
+            - button "Управление каналом" [ref=e25] [cursor=pointer]:
+              - generic [ref=e26] [cursor=pointer]: 
+              - generic [ref=e27] [cursor=pointer]: Управление каналом
+        - listitem [ref=e28]:
+          - generic [ref=e29]:
+            - button "#randomfefюэюэ" [ref=e30] [cursor=pointer]:
+              - generic [ref=e31] [cursor=pointer]: "#"
+              - text: randomfefюэюэ
+            - button "Управление каналом" [ref=e33] [cursor=pointer]:
+              - generic [ref=e34] [cursor=pointer]: 
+              - generic [ref=e35] [cursor=pointer]: Управление каналом
+        - listitem [ref=e36]:
+          - generic [ref=e37]:
+            - button "#test channel" [ref=e38] [cursor=pointer]:
+              - generic [ref=e39] [cursor=pointer]: "#"
+              - text: test channel
+            - button "Управление каналом" [ref=e41] [cursor=pointer]:
+              - generic [ref=e42] [cursor=pointer]: 
+              - generic [ref=e43] [cursor=pointer]: Управление каналом
+        - listitem [ref=e44]:
+          - generic [ref=e45]:
+            - button "#*****" [ref=e46] [cursor=pointer]:
+              - generic [ref=e47] [cursor=pointer]: "#"
+              - text: "*****"
+            - button "Управление каналом" [ref=e49] [cursor=pointer]:
+              - generic [ref=e50] [cursor=pointer]: 
+              - generic [ref=e51] [cursor=pointer]: Управление каналом
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e55]: "# general"
+        - generic [ref=e56]: 21 сообщений
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]: "admin:"
+          - generic [ref=e60]: kblbl
+        - generic [ref=e61]:
+          - generic [ref=e62]: "admin:"
+          - generic [ref=e63]: ымвыв
+        - generic [ref=e64]:
+          - generic [ref=e65]: "Unknown:"
+          - generic [ref=e66]: fweewfef
+        - generic [ref=e67]:
+          - generic [ref=e68]: "Unknown:"
+          - generic [ref=e69]: effe
+        - generic [ref=e70]:
+          - generic [ref=e71]: "Unknown:"
+          - generic [ref=e72]: ew
+        - generic [ref=e73]:
+          - generic [ref=e74]: "Unknown:"
+          - generic [ref=e75]: fe
+        - generic [ref=e76]:
+          - generic [ref=e77]: "Unknown:"
+          - generic [ref=e78]: ef
+        - generic [ref=e79]:
+          - generic [ref=e80]: "Unknown:"
+          - generic [ref=e81]: rrg
+        - generic [ref=e82]:
+          - generic [ref=e83]: "Unknown:"
+          - generic [ref=e84]: f
+        - generic [ref=e85]:
+          - generic [ref=e86]: "Unknown:"
+          - generic [ref=e87]: fe
+        - generic [ref=e88]:
+          - generic [ref=e89]: "Unknown:"
+          - generic [ref=e90]: ef
+        - generic [ref=e91]:
+          - generic [ref=e92]: "Unknown:"
+          - generic [ref=e93]: feeewf
+        - generic [ref=e94]:
+          - generic [ref=e95]: "Unknown:"
+          - generic [ref=e96]: fe
+        - generic [ref=e97]:
+          - generic [ref=e98]: "admin:"
+          - generic [ref=e99]: тлтлтд
+        - generic [ref=e100]:
+          - generic [ref=e101]: "Unknown:"
+          - generic [ref=e102]: dfeffe
+        - generic [ref=e103]:
+          - generic [ref=e104]: "Unknown:"
+          - generic [ref=e105]: bjjbb
+        - generic [ref=e106]:
+          - generic [ref=e107]: "Unknown:"
+          - generic [ref=e108]: ааа
+        - generic [ref=e109]:
+          - generic [ref=e110]: "Unknown:"
+          - generic [ref=e111]: kikiig
+        - generic [ref=e112]:
+          - generic [ref=e113]: "Unknown:"
+          - generic [ref=e114]: акка
+        - generic [ref=e115]:
+          - generic [ref=e116]: "admin:"
+          - generic [ref=e117]: ааа
+        - generic [ref=e118]:
+          - generic [ref=e119]: "Unknown:"
+          - generic [ref=e120]: message for general
+      - generic [ref=e122]:
+        - textbox "Новое сообщение" [ref=e123]
+        - button "→ Отправить" [disabled]:
+          - text: →
+          - generic: Отправить
+  - region "Notifications Alt+T"
+```

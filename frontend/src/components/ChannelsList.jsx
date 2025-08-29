@@ -20,19 +20,14 @@ const ChannelsList = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Не закрываем dropdown, если клик был по элементу в dropdown
-      if (event.target.closest('.dropdown-item')) {
-        return;
-      }
-      
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(null);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -96,14 +91,13 @@ const ChannelsList = () => {
                 <span className="me-1">#</span>
                 {channel.name}
               </button>
-              <div className="dropdown flex-shrink-0" ref={dropdownRef} style={{ pointerEvents: 'auto', zIndex: 999 }}>
+              <div className="dropdown flex-shrink-0" ref={dropdownRef}>
                 <button
                   type="button"
                   className="btn btn-sm text-dark p-0"
                   onClick={(e) => handleDropdownToggle(channel.id, e)}
                   aria-label="Управление каналом"
                   data-testid="manage-channel-button"
-                  style={{ pointerEvents: 'auto', zIndex: 1000 }}
                 >
                   <i className="bi bi-chevron-down"></i>
                   <span className="visually-hidden">Управление каналом</span>
@@ -116,50 +110,35 @@ const ChannelsList = () => {
                 right: '0', 
                 top: '100%', 
                 minWidth: '120px',
-                zIndex: 1070,
-                backgroundColor: '#ffffff',
-                border: '1px solid #dee2e6',
-                borderRadius: '4px',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                pointerEvents: 'auto'
+                zIndex: 1070
               }}>
                 <li>
-                  <div 
+                  <button 
+                    type="button"
                     className="dropdown-item"
-                    onMouseDown={(e) => {
+                    onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       handleRename(channel);
                     }}
-                    style={{ 
-                      cursor: 'pointer',
-                      padding: '8px 16px',
-                      backgroundColor: '#f8f9fa'
-                    }}
                     data-testid="rename-channel-button"
-                    aria-label="Переименовать"
                   >
                     {t('manageChannelsBtns.rename')}
-                  </div>
+                  </button>
                 </li>
                 {isRemovable(channel) && (
                   <li>
-                    <div 
+                    <button 
+                      type="button"
                       className="dropdown-item text-danger"
-                      onMouseDown={(e) => {
+                      onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         handleRemove(channel);
                       }}
-                      style={{ 
-                        cursor: 'pointer',
-                        padding: '8px 16px',
-                        backgroundColor: '#f8f9fa',
-                        color: '#dc3545'
-                      }}
                     >
                       {t('manageChannelsBtns.delete')}
-                    </div>
+                    </button>
                   </li>
                 )}
               </ul>
