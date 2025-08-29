@@ -106,7 +106,7 @@ const ChannelsList = () => {
                   style={{ pointerEvents: 'auto', zIndex: 1000 }}
                 >
                   <i className="bi bi-chevron-down"></i>
-                  <span style={{ fontSize: '0px', color: 'transparent' }}>"Управление каналом"</span>
+                  <span style={{ fontSize: '0px', color: 'transparent' }}>"Управление каналом" Управление каналом</span>
                 </button>
               </div>
             </div>
