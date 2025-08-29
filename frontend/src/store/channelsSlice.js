@@ -164,6 +164,8 @@ const channelsSlice = createSlice({
         if (channelIndex !== -1) {
           state.items[channelIndex] = { ...state.items[channelIndex], ...updates };
         }
+        // Убеждаемся, что ошибки сброшены
+        state.error = null;
       })
       .addCase(renameChannel.rejected, (state, action) => {
         state.loading = false;

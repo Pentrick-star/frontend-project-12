@@ -59,11 +59,14 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
           console.error('Failed to reset form:', error);
         }
       })();
-      try {
-        onClose();
-      } catch (error) {
-        console.error('Failed to close modal in handleSubmit:', error);
-      }
+      // Добавляем небольшую задержку, чтобы toast успел появиться
+      setTimeout(() => {
+        try {
+          onClose();
+        } catch (error) {
+          console.error('Failed to close modal in handleSubmit:', error);
+        }
+      }, 100);
     } catch (error) {
       console.error('Failed to rename channel:', error);
       // Ошибка уже обрабатывается в slice через toast
