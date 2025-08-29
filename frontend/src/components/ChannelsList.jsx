@@ -96,7 +96,7 @@ const ChannelsList = () => {
                 <span className="me-1">#</span>
                 {channel.name}
               </button>
-              <div className="dropdown flex-shrink-0" ref={dropdownRef} style={{ pointerEvents: 'auto', zIndex: 999 }}>
+              <div className="dropdown flex-shrink-0" ref={dropdownRef} style={{ pointerEvents: 'none', zIndex: 999 }}>
                 <button
                   type="button"
                   className="btn btn-sm text-dark p-0"
@@ -106,7 +106,6 @@ const ChannelsList = () => {
                   style={{ pointerEvents: 'auto', zIndex: 1000 }}
                 >
                   <i className="bi bi-chevron-down"></i>
-                  <span className="visually-hidden" style={{ pointerEvents: 'none' }}>Управление каналом</span>
                 </button>
               </div>
             </div>
