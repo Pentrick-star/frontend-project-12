@@ -106,6 +106,7 @@ const ChannelsList = () => {
                   style={{ pointerEvents: 'auto', zIndex: 1000 }}
                 >
                   <i className="bi bi-chevron-down"></i>
+                  <span style={{ fontSize: '0px', color: 'transparent' }}>Управление каналом</span>
                 </button>
               </div>
             </div>
@@ -115,11 +116,12 @@ const ChannelsList = () => {
                 right: '0', 
                 top: '100%', 
                 minWidth: '120px',
-                zIndex: 1060,
+                zIndex: 1070,
                 backgroundColor: '#ffffff',
                 border: '1px solid #dee2e6',
                 borderRadius: '4px',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                pointerEvents: 'auto'
               }}>
                 <li>
                   <div 
