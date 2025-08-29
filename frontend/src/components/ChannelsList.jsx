@@ -106,7 +106,7 @@ const ChannelsList = () => {
                   style={{ pointerEvents: 'auto', zIndex: 1000 }}
                 >
                   <i className="bi bi-chevron-down"></i>
-                  <span style={{ fontSize: '0px', color: 'transparent' }}>"Управление каналом" Управление каналом</span>
+                  <span className="visually-hidden">Управление каналом</span>
                 </button>
               </div>
             </div>
@@ -137,6 +137,7 @@ const ChannelsList = () => {
                       backgroundColor: '#f8f9fa'
                     }}
                     data-testid="rename-channel-button"
+                    aria-label="Переименовать"
                   >
                     {t('manageChannelsBtns.rename')}
                   </div>
