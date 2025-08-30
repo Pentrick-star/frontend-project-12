@@ -25,10 +25,18 @@ const LoginPage = () => {
       
       if (response.status === 200 && response.data.token) {
         console.log('Login response data:', response.data);
-        const { token } = response.data;
+        const { token, username, user } = response.data;
         dispatch(setToken(token));
-        // Получаем данные пользователя
-        await dispatch(fetchUser());
+        
+        // Если сервер возвращает данные пользователя в ответе на логин
+        if (username || user) {
+          const userData = user || { username };
+          console.log('Setting user data from login response:', userData);
+          dispatch(setUser(userData));
+        } else {
+          // Иначе получаем данные пользователя
+          await dispatch(fetchUser());
+        }
         navigate('/');
       }
     } catch (error) {

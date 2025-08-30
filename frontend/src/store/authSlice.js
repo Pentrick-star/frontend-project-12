@@ -47,7 +47,23 @@ const authSlice = createSlice({
         console.log('User data keys:', Object.keys(action.payload || {}));
         
         // Убеждаемся, что данные пользователя сохраняются правильно
-        state.user = action.payload;
+        // Обрабатываем разные возможные форматы данных
+        const userData = action.payload;
+        if (typeof userData === 'object' && userData !== null) {
+          // Если данные приходят как объект, сохраняем как есть
+          state.user = userData;
+        } else if (typeof userData === 'string') {
+          // Если данные приходят как строка, возможно это JSON
+          try {
+            state.user = JSON.parse(userData);
+          } catch (e) {
+            // Если не JSON, создаем объект с username
+            state.user = { username: userData };
+          }
+        } else {
+          // Fallback
+          state.user = { username: 'Unknown' };
+        }
         console.log('State user after save:', state.user);
       });
   },
