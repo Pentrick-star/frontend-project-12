@@ -31,22 +31,6 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        console.log('=== WEBSOCKET MESSAGE DEBUG ===');
-        console.log('New message received via WebSocket:', newMessage);
-        console.log('Message fields:', Object.keys(newMessage));
-        console.log('Message username field:', newMessage.username);
-        console.log('Message name field:', newMessage.name);
-        console.log('Message login field:', newMessage.login);
-        console.log('Message user object:', newMessage.user);
-        if (newMessage.user) {
-          console.log('User object keys:', Object.keys(newMessage.user));
-          console.log('User.username:', newMessage.user.username);
-          console.log('User.name:', newMessage.user.name);
-          console.log('User.login:', newMessage.user.login);
-        }
-        
-        // Убеждаемся, что у сообщения есть правильное имя пользователя
-        // Проверяем все возможные поля для имени пользователя
         let username = 'Unknown';
         if (newMessage.username) {
           username = newMessage.username;
@@ -61,7 +45,6 @@ const ChatPage = () => {
         } else if (newMessage.user && newMessage.user.login) {
           username = newMessage.user.login;
         } else if (currentUser && currentUser.username) {
-          // Если в сообщении нет имени, используем имя текущего пользователя
           username = currentUser.username;
         } else if (currentUser && currentUser.name) {
           username = currentUser.name;
@@ -69,14 +52,10 @@ const ChatPage = () => {
           username = currentUser.login;
         }
         
-        console.log('Current user from Redux:', currentUser);
-        console.log('Extracted username:', username);
-        
         const messageWithUsername = {
           ...newMessage,
           username,
         };
-        console.log('Message with username being dispatched:', messageWithUsername);
         dispatch(addMessage(messageWithUsername));
       };
 
@@ -110,9 +89,6 @@ const ChatPage = () => {
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => message.channelId === currentChannelId);
   
-  // Логируем сообщения для отладки
-  console.log('ChatPage - Current messages:', channelMessages);
-
   if (channelsLoading || messagesLoading) {
     return (
       <div className="d-flex justify-content-center align-items-center h-100">
@@ -155,7 +131,6 @@ const ChatPage = () => {
               <div></div>
             ) : (
               channelMessages.map((message) => {
-                // Используем ту же логику извлечения имени пользователя
                 let username = 'Unknown';
                 if (message.username) {
                   username = message.username;
@@ -170,22 +145,12 @@ const ChatPage = () => {
                 } else if (message.user && message.user.login) {
                   username = message.user.login;
                 } else if (currentUser && currentUser.username) {
-                  // Если в сообщении нет имени, используем имя текущего пользователя
                   username = currentUser.username;
                 } else if (currentUser && currentUser.name) {
                   username = currentUser.name;
                 } else if (currentUser && currentUser.login) {
                   username = currentUser.login;
                 }
-                
-                console.log('=== MESSAGE RENDERING DEBUG ===');
-                console.log('Rendering message:', message);
-                console.log('Message ID:', message.id);
-                console.log('Message body:', message.body);
-                console.log('Message channelId:', message.channelId);
-                console.log('Message username for rendering:', username);
-                console.log('Message user object:', message.user);
-                console.log('Current user from Redux:', currentUser);
                 
                 return (
                   <div key={message.id} className="text-break mb-2">

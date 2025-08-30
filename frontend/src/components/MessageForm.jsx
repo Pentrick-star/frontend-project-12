@@ -13,43 +13,27 @@ const MessageForm = () => {
   const { loading } = useSelector((state) => state.messages);
   const user = useSelector((state) => state.auth.user);
   
-  // Логируем состояние пользователя при каждом рендере
-  console.log('MessageForm - Current user state:', user);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!message.trim() || !currentChannelId) return;
 
-    console.log('=== MESSAGE FORM DEBUG ===');
-    console.log('Current user state:', user);
-    console.log('User object keys:', Object.keys(user || {}));
-    console.log('User username field:', user?.username);
-    console.log('User name field:', user?.name);
-    console.log('User login field:', user?.login);
-    console.log('Current channel ID:', currentChannelId);
-
     try {
       const filteredMessage = filterProfanity(message.trim());
       const username = user?.username || user?.name || user?.login || 'Unknown';
-      console.log('Sending message with username:', username);
-      console.log('User object:', user);
       
       const messageData = {
         body: filteredMessage,
         channelId: currentChannelId,
-        username, // теперь имя пользователя отправляется всем клиентам
+        username,
       };
-      console.log('Message data being sent:', messageData);
       
-      // Отправляем сообщение через WebSocket
       socketService.emit('newMessage', messageData);
-      // Добавляем сообщение локально для мгновенного отображения
+      
       const localMessage = {
         id: Date.now(),
         ...messageData,
         createdAt: new Date().toISOString(),
       };
-      console.log('Local message being added:', localMessage);
       dispatch(addMessage(localMessage));
       setMessage('');
     } catch (error) {
