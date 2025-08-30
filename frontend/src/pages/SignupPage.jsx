@@ -44,18 +44,10 @@ const SignupPage = () => {
         
         if (loginResponse.data.token) {
           console.log('Signup login response data:', loginResponse.data);
-          const { token, username, user } = loginResponse.data;
+          const { token } = loginResponse.data;
           dispatch(setToken(token));
-          
-          // Если сервер возвращает данные пользователя в ответе на логин
-          if (username || user) {
-            const userData = user || { username };
-            console.log('Setting user data from signup login response:', userData);
-            dispatch(setUser(userData));
-          } else {
-            // Иначе получаем данные пользователя
-            await dispatch(fetchUser());
-          }
+          // Получаем данные пользователя
+          await dispatch(fetchUser());
           navigate('/');
         }
       }
