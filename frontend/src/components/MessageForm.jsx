@@ -34,10 +34,13 @@ const MessageForm = () => {
       socketService.emit('newMessage', messageData);
       
       // Добавляем сообщение локально для мгновенного отображения
+      const username = user?.username || user?.name || user?.login || 'Unknown';
+      console.log('Using username for message:', username);
+      
       dispatch(addMessage({
         id: Date.now(),
         ...messageData,
-        username: user?.username || 'Unknown',
+        username,
         createdAt: new Date().toISOString(),
       }));
       

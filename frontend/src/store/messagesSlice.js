@@ -46,9 +46,10 @@ const messagesSlice = createSlice({
       
       if (!existingMessage) {
         // Убеждаемся, что у сообщения есть правильное имя пользователя
+        const username = action.payload.username || action.payload.name || action.payload.login || 'Unknown';
         const messageWithUsername = {
           ...action.payload,
-          username: action.payload.username || 'Unknown',
+          username,
         };
         state.items.push(messageWithUsername);
       }

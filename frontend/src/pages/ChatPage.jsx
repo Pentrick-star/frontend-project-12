@@ -32,9 +32,10 @@ const ChatPage = () => {
       const handleNewMessage = (newMessage) => {
         console.log('New message received via WebSocket:', newMessage);
         // Убеждаемся, что у сообщения есть правильное имя пользователя
+        const username = newMessage.username || newMessage.name || newMessage.login || 'Unknown';
         const messageWithUsername = {
           ...newMessage,
-          username: newMessage.username || 'Unknown',
+          username,
         };
         dispatch(addMessage(messageWithUsername));
       };
@@ -114,13 +115,16 @@ const ChatPage = () => {
             ) : channelMessages.length === 0 ? (
               <div></div>
             ) : (
-              channelMessages.map((message) => (
-                <div key={message.id} className="text-break mb-2">
-                  <b>{message.username || 'Unknown'}:</b>
-                  {' '}
-                  <span>{message.body}</span>
-                </div>
-              ))
+              channelMessages.map((message) => {
+                const username = message.username || message.name || message.login || 'Unknown';
+                return (
+                  <div key={message.id} className="text-break mb-2">
+                    <b>{username}:</b>
+                    {' '}
+                    <span>{message.body}</span>
+                  </div>
+                );
+              })
             )}
           </div>
           <div className="p-3 border-top bg-white">
