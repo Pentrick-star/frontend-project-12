@@ -24,6 +24,7 @@ const LoginPage = () => {
       const response = await api.post('/login', values);
       
       if (response.status === 200 && response.data.token) {
+        console.log('Login response data:', response.data);
         const { token } = response.data;
         dispatch(setToken(token));
         // Получаем данные пользователя

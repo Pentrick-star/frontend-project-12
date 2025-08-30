@@ -17,6 +17,9 @@ const MessageForm = () => {
     e.preventDefault();
     if (!message.trim() || !currentChannelId) return;
 
+    console.log('Current user state:', user);
+    console.log('User username:', user?.username);
+
     try {
       const filteredMessage = filterProfanity(message.trim());
       const messageData = {

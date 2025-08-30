@@ -43,6 +43,7 @@ const SignupPage = () => {
         });
         
         if (loginResponse.data.token) {
+          console.log('Signup login response data:', loginResponse.data);
           const { token } = loginResponse.data;
           dispatch(setToken(token));
           // Получаем данные пользователя

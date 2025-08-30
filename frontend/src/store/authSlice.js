@@ -8,6 +8,8 @@ export const fetchUser = createAsyncThunk(
       console.log('Fetching user data...');
       const response = await api.get('/auth/me');
       console.log('User data received:', response.data);
+      console.log('User data type:', typeof response.data);
+      console.log('User data keys:', Object.keys(response.data || {}));
       // Убеждаемся, что возвращаем правильную структуру данных
       return response.data;
     } catch (error) {
