@@ -21,18 +21,11 @@ const MessageForm = () => {
       const messageData = {
         body: filteredMessage,
         channelId: currentChannelId,
-        username: user?.username || 'user2', // Используем 'user2' для второго пользователя
+        username: user?.username || 'Unknown',
       };
       
       // Отправляем сообщение через API
       await dispatch(sendMessage(messageData)).unwrap();
-      
-      // Сразу добавляем сообщение в Redux для мгновенного отображения
-      dispatch(addMessage({
-        id: Date.now(), // Временный ID
-        ...messageData,
-        createdAt: new Date().toISOString(),
-      }));
       
       setMessage('');
     } catch (error) {

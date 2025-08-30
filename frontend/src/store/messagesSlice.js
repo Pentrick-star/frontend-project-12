@@ -42,7 +42,12 @@ const messagesSlice = createSlice({
       );
       
       if (!existingMessage) {
-        state.items.push(action.payload);
+        // Убеждаемся, что у сообщения есть правильное имя пользователя
+        const messageWithUsername = {
+          ...action.payload,
+          username: action.payload.username || 'Unknown',
+        };
+        state.items.push(messageWithUsername);
       }
     },
     clearMessages: (state) => {
@@ -57,7 +62,11 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        // Убеждаемся, что у всех сообщений есть правильные имена пользователей
+        state.items = action.payload.map(message => ({
+          ...message,
+          username: message.username || 'Unknown',
+        }));
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;
@@ -69,7 +78,12 @@ const messagesSlice = createSlice({
         );
         
         if (!existingMessage) {
-          state.items.push(action.payload);
+          // Убеждаемся, что у сообщения есть правильное имя пользователя
+          const messageWithUsername = {
+            ...action.payload,
+            username: action.payload.username || 'Unknown',
+          };
+          state.items.push(messageWithUsername);
         }
       });
   },
