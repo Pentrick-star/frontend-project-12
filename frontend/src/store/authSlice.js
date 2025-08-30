@@ -5,9 +5,12 @@ export const fetchUser = createAsyncThunk(
   'auth/fetchUser',
   async (_, { rejectWithValue }) => {
     try {
+      console.log('Fetching user data...');
       const response = await api.get('/auth/me');
+      console.log('User data received:', response.data);
       return response.data;
     } catch (error) {
+      console.error('Error fetching user:', error);
       return rejectWithValue(error.message);
     }
   }

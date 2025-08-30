@@ -21,7 +21,7 @@ const MessageForm = () => {
       const messageData = {
         body: filteredMessage,
         channelId: currentChannelId,
-        username: user?.username || 'admin',
+        username: user?.username || 'user2', // Используем 'user2' для второго пользователя
       };
       
       // Отправляем сообщение через API
