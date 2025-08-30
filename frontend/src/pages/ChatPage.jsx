@@ -30,7 +30,12 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        dispatch(addMessage(newMessage));
+        // Убеждаемся, что у сообщения есть правильное имя пользователя
+        const messageWithUsername = {
+          ...newMessage,
+          username: newMessage.username || 'Unknown',
+        };
+        dispatch(addMessage(messageWithUsername));
       };
 
       const handleNewChannel = (newChannel) => {
