@@ -45,10 +45,8 @@ const SignupPage = () => {
         if (loginResponse.data.token) {
           const { token } = loginResponse.data;
           dispatch(setToken(token));
-          // Добавляем небольшую задержку, чтобы Redux успел обновиться
-          setTimeout(() => {
-            navigate('/');
-          }, 100);
+          // Принудительно обновляем страницу для синхронизации состояния
+          window.location.href = '/';
         }
       }
     } catch (error) {

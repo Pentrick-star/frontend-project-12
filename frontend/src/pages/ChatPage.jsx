@@ -15,13 +15,8 @@ const ChatPage = () => {
   const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages);
 
   useEffect(() => {
-    console.log('ChatPage: token =', token);
-    if (!token) {
-      console.log('ChatPage: no token, skipping fetch');
-      return;
-    }
+    if (!token) return;
     
-    console.log('ChatPage: fetching channels and messages');
     dispatch(fetchChannels());
     dispatch(fetchMessages());
   }, [token, dispatch]);

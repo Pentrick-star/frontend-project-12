@@ -11,7 +11,7 @@ const ChannelsList = () => {
   const dispatch = useDispatch();
   const { items: channels, currentChannelId, loading } = useSelector((state) => state.channels);
   
-  console.log('ChannelsList: channels =', channels, 'currentChannelId =', currentChannelId, 'loading =', loading);
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);

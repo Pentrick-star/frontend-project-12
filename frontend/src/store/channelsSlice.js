@@ -6,12 +6,9 @@ export const fetchChannels = createAsyncThunk(
   'channels/fetchChannels',
   async (_, { rejectWithValue }) => {
     try {
-      console.log('Fetching channels...');
       const response = await api.get('/channels');
-      console.log('Channels response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching channels:', error);
       if (error.response?.status !== 401) {
         toast.error('Ошибка загрузки данных');
       }
