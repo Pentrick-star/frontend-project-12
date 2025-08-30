@@ -1,15 +1,17 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../hooks/useAuth';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../store/authSlice';
 
 const Header = () => {
   const { t } = useTranslation();
-  const { user, logout } = useAuth();
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    dispatch(logout());
     navigate('/login');
   };
 

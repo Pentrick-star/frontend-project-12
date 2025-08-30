@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 import api from '../services/api';
-import { useAuth } from '../hooks/useAuth';
+import { setToken } from '../store/authSlice';
 
 const LoginPage = () => {
   const { t } = useTranslation();
   const [authError, setAuthError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object({
     username: Yup.string().required(t('signupPage.required')),
@@ -24,7 +25,7 @@ const LoginPage = () => {
       
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
-        login(token);
+        dispatch(setToken(token));
         navigate('/');
       }
     } catch (error) {

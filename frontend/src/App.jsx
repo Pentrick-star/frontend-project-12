@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from './store';
-import { AuthProvider } from './contexts/AuthContextProvider';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
 import ChatPage from './pages/ChatPage';
@@ -16,37 +15,35 @@ import './App.css';
 function App() {
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <Router>
-          <div className="d-flex flex-column h-100">
-            <Header />
-            <Routes>
-              <Route 
-                path="/" 
-                element={
-                  <PrivateRoute>
-                    <ChatPage />
-                  </PrivateRoute>
-                } 
-              />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
+      <Router>
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <PrivateRoute>
+                  <ChatPage />
+                </PrivateRoute>
+              } 
             />
-          </div>
-        </Router>
-      </AuthProvider>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </div>
+      </Router>
     </Provider>
   );
 }

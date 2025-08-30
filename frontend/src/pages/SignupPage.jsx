@@ -3,15 +3,16 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 import api from '../services/api';
-import { useAuth } from '../hooks/useAuth';
+import { setToken } from '../store/authSlice';
 
 const SignupPage = () => {
   const { t } = useTranslation();
   const [signupError, setSignupError] = useState('');
 
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object({
     username: Yup.string()
@@ -43,8 +44,7 @@ const SignupPage = () => {
         
         if (loginResponse.data.token) {
           const { token } = loginResponse.data;
-          login(token);
-          // Убираем задержку и сразу переходим на главную страницу
+          dispatch(setToken(token));
           navigate('/');
         }
       }

@@ -10,6 +10,8 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
       localStorage.setItem('token', action.payload);
+      // Устанавливаем временного пользователя
+      state.user = { username: 'User' };
     },
     setUser: (state, action) => {
       state.user = action.payload;

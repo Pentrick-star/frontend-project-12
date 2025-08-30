@@ -1,15 +1,11 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useSelector } from 'react-redux';
 
 const PrivateRoute = ({ children }) => {
-  const { token, loading } = useAuth();
+  const token = useSelector((state) => state.auth.token);
 
-  console.log('PrivateRoute: token =', token, 'loading =', loading);
-
-  if (loading) {
-    return <div>Загрузка...</div>;
-  }
+  console.log('PrivateRoute: token =', token);
 
   if (!token) {
     console.log('PrivateRoute: redirecting to /login');
