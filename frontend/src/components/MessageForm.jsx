@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { sendMessage, addMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
+import socketService from '../services/socket';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -21,11 +22,16 @@ const MessageForm = () => {
       const messageData = {
         body: filteredMessage,
         channelId: currentChannelId,
-        username: user?.username || 'Unknown',
       };
       
       // Отправляем сообщение через API
-      await dispatch(sendMessage(messageData)).unwrap();
+      const result = await dispatch(sendMessage(messageData)).unwrap();
+      
+      // Добавляем сообщение с правильным именем пользователя
+      dispatch(addMessage({
+        ...result,
+        username: user?.username || 'Unknown',
+      }));
       
       setMessage('');
     } catch (error) {

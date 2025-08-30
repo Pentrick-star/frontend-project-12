@@ -73,18 +73,8 @@ const messagesSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        const existingMessage = state.items.find(
-          msg => msg.id === action.payload.id
-        );
-        
-        if (!existingMessage) {
-          // Убеждаемся, что у сообщения есть правильное имя пользователя
-          const messageWithUsername = {
-            ...action.payload,
-            username: action.payload.username || 'Unknown',
-          };
-          state.items.push(messageWithUsername);
-        }
+        // Не добавляем сообщение здесь, так как оно будет добавлено через addMessage
+        // с правильным именем пользователя
       });
   },
 });
