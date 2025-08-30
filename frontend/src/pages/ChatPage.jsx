@@ -26,58 +26,36 @@ const ChatPage = () => {
       return;
     }
 
-    // Добавляем таймаут для WebSocket подключения
-    const connectionTimeout = setTimeout(() => {
-      console.log('WebSocket connection timeout, continuing without real-time updates');
-    }, 5000);
-
     try {
       socketService.connect(token);
       
-      // Проверяем, что соединение установилось
-      const checkConnection = () => {
-        if (socketService.socket && socketService.socket.connected) {
-          clearTimeout(connectionTimeout);
-          console.log('WebSocket connected successfully');
-          
-          const handleNewMessage = (newMessage) => {
-            dispatch(addMessage(newMessage));
-          };
-
-          const handleNewChannel = (newChannel) => {
-            dispatch(addChannel(newChannel));
-            dispatch(setCurrentChannel(newChannel.id));
-          };
-
-          const handleRemoveChannel = (channelId) => {
-            dispatch(removeChannelById(channelId));
-          };
-
-          const handleRenameChannel = (updatedChannel) => {
-            dispatch(updateChannel(updatedChannel));
-          };
-
-          socketService.onNewMessage(handleNewMessage);
-          socketService.onNewChannel(handleNewChannel);
-          socketService.onRemoveChannel(handleRemoveChannel);
-          socketService.onRenameChannel(handleRenameChannel);
-        } else {
-          // Если соединение не установилось, продолжаем без WebSocket
-          clearTimeout(connectionTimeout);
-          console.log('WebSocket not connected, continuing without real-time updates');
-        }
+      const handleNewMessage = (newMessage) => {
+        dispatch(addMessage(newMessage));
       };
 
-      // Проверяем соединение через небольшую задержку
-      setTimeout(checkConnection, 1000);
+      const handleNewChannel = (newChannel) => {
+        dispatch(addChannel(newChannel));
+        dispatch(setCurrentChannel(newChannel.id));
+      };
+
+      const handleRemoveChannel = (channelId) => {
+        dispatch(removeChannelById(channelId));
+      };
+
+      const handleRenameChannel = (updatedChannel) => {
+        dispatch(updateChannel(updatedChannel));
+      };
+
+      socketService.onNewMessage(handleNewMessage);
+      socketService.onNewChannel(handleNewChannel);
+      socketService.onRemoveChannel(handleRemoveChannel);
+      socketService.onRenameChannel(handleRenameChannel);
       
     } catch (error) {
-      clearTimeout(connectionTimeout);
       console.error('WebSocket connection failed:', error);
     }
 
     return () => {
-      clearTimeout(connectionTimeout);
       socketService.disconnect();
     };
   }, [token, dispatch]);

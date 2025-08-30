@@ -6,9 +6,8 @@ class SocketService {
   }
 
   connect(token) {
-    // В тестовой среде используем текущий хост
-    const isTest = typeof window !== 'undefined' && window.location.hostname === 'localhost' && window.location.port !== '5173';
-    const wsUrl = isTest ? window.location.origin : 'ws://localhost:5001';
+    // Используем текущий хост для WebSocket
+    const wsUrl = window.location.origin;
     
     try {
       this.socket = io(wsUrl, {
