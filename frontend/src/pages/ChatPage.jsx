@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { fetchChannels, addChannel, removeChannelById, updateChannel, setCurrentChannel } from '../store/channelsSlice';
 import { fetchMessages, addMessage } from '../store/messagesSlice';
-import { useAuth } from '../hooks/useAuth';
 import ChannelsList from '../components/ChannelsList';
 import MessageForm from '../components/MessageForm';
 import socketService from '../services/socket';
@@ -11,7 +10,7 @@ import socketService from '../services/socket';
 const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { token } = useAuth();
+  const token = useSelector((state) => state.auth.token);
   const { items: channels, currentChannelId, loading: channelsLoading } = useSelector((state) => state.channels);
   const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages);
 

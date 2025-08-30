@@ -26,7 +26,10 @@ const LoginPage = () => {
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
         dispatch(setToken(token));
-        navigate('/');
+        // Добавляем небольшую задержку, чтобы Redux успел обновиться
+        setTimeout(() => {
+          navigate('/');
+        }, 100);
       }
     } catch (error) {
       console.error('Login error:', error);
