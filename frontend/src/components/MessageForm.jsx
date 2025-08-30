@@ -25,25 +25,21 @@ const MessageForm = () => {
 
     try {
       const filteredMessage = filterProfanity(message.trim());
+      const username = user?.username || user?.name || user?.login || 'Unknown';
       const messageData = {
         body: filteredMessage,
         channelId: currentChannelId,
+        username, // теперь имя пользователя отправляется всем клиентам
       };
-      
       // Отправляем сообщение через WebSocket
       socketService.emit('newMessage', messageData);
-      
       // Добавляем сообщение локально для мгновенного отображения
-      const username = user?.username || user?.name || user?.login || 'Unknown';
-      
       const localMessage = {
         id: Date.now(),
         ...messageData,
-        username,
         createdAt: new Date().toISOString(),
       };
       dispatch(addMessage(localMessage));
-      
       setMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);
