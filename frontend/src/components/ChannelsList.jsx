@@ -82,7 +82,7 @@ const ChannelsList = () => {
       <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
                     {channels.map((channel) => (
           <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
-            <div className="d-flex justify-content-between align-items-start w-100">
+            <div className="d-flex justify-content-between align-items-start w-100" ref={dropdownRef}>
               <button
                 type="button"
                 className={`w-100 rounded-0 text-start text-truncate btn ${
@@ -93,18 +93,16 @@ const ChannelsList = () => {
                 <span className="me-1">#</span>
                 {channel.name}
               </button>
-              <div className="dropdown flex-shrink-0" ref={dropdownRef}>
-                <button
-                  type="button"
-                  className="btn btn-sm text-dark p-0"
-                  onClick={(e) => handleDropdownToggle(channel.id, e)}
-                  aria-label="Управление каналом"
-                  data-testid="manage-channel-button"
-                >
-                  <i className="bi bi-chevron-down"></i>
-                  <span className="visually-hidden">Управление каналом</span>
-                </button>
-              </div>
+              <button
+                type="button"
+                className="btn btn-sm text-dark p-0"
+                onClick={(e) => handleDropdownToggle(channel.id, e)}
+                aria-label="Управление каналом"
+                data-testid="manage-channel-button"
+              >
+                <i className="bi bi-chevron-down"></i>
+                <span className="visually-hidden">Управление каналом</span>
+              </button>
             </div>
             {showDropdown === channel.id && (
               <ul className="dropdown-menu show" style={{ 
