@@ -11,6 +11,7 @@ const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const currentUser = useSelector((state) => state.auth.user);
   const { items: channels, currentChannelId, loading: channelsLoading } = useSelector((state) => state.channels);
   const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages);
 
@@ -30,11 +31,19 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
+        console.log('=== WEBSOCKET MESSAGE DEBUG ===');
         console.log('New message received via WebSocket:', newMessage);
         console.log('Message fields:', Object.keys(newMessage));
         console.log('Message username field:', newMessage.username);
         console.log('Message name field:', newMessage.name);
         console.log('Message login field:', newMessage.login);
+        console.log('Message user object:', newMessage.user);
+        if (newMessage.user) {
+          console.log('User object keys:', Object.keys(newMessage.user));
+          console.log('User.username:', newMessage.user.username);
+          console.log('User.name:', newMessage.user.name);
+          console.log('User.login:', newMessage.user.login);
+        }
         
         // Убеждаемся, что у сообщения есть правильное имя пользователя
         // Проверяем все возможные поля для имени пользователя
@@ -51,14 +60,23 @@ const ChatPage = () => {
           username = newMessage.user.name;
         } else if (newMessage.user && newMessage.user.login) {
           username = newMessage.user.login;
+        } else if (currentUser && currentUser.username) {
+          // Если в сообщении нет имени, используем имя текущего пользователя
+          username = currentUser.username;
+        } else if (currentUser && currentUser.name) {
+          username = currentUser.name;
+        } else if (currentUser && currentUser.login) {
+          username = currentUser.login;
         }
         
+        console.log('Current user from Redux:', currentUser);
         console.log('Extracted username:', username);
         
         const messageWithUsername = {
           ...newMessage,
           username,
         };
+        console.log('Message with username being dispatched:', messageWithUsername);
         dispatch(addMessage(messageWithUsername));
       };
 
@@ -151,10 +169,24 @@ const ChatPage = () => {
                   username = message.user.name;
                 } else if (message.user && message.user.login) {
                   username = message.user.login;
+                } else if (currentUser && currentUser.username) {
+                  // Если в сообщении нет имени, используем имя текущего пользователя
+                  username = currentUser.username;
+                } else if (currentUser && currentUser.name) {
+                  username = currentUser.name;
+                } else if (currentUser && currentUser.login) {
+                  username = currentUser.login;
                 }
                 
+                console.log('=== MESSAGE RENDERING DEBUG ===');
                 console.log('Rendering message:', message);
+                console.log('Message ID:', message.id);
+                console.log('Message body:', message.body);
+                console.log('Message channelId:', message.channelId);
                 console.log('Message username for rendering:', username);
+                console.log('Message user object:', message.user);
+                console.log('Current user from Redux:', currentUser);
+                
                 return (
                   <div key={message.id} className="text-break mb-2">
                     <b>{username}:</b>

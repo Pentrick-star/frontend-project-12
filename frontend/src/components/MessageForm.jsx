@@ -20,8 +20,13 @@ const MessageForm = () => {
     e.preventDefault();
     if (!message.trim() || !currentChannelId) return;
 
+    console.log('=== MESSAGE FORM DEBUG ===');
     console.log('Current user state:', user);
-    console.log('User username:', user?.username);
+    console.log('User object keys:', Object.keys(user || {}));
+    console.log('User username field:', user?.username);
+    console.log('User name field:', user?.name);
+    console.log('User login field:', user?.login);
+    console.log('Current channel ID:', currentChannelId);
 
     try {
       const filteredMessage = filterProfanity(message.trim());
@@ -44,6 +49,7 @@ const MessageForm = () => {
         ...messageData,
         createdAt: new Date().toISOString(),
       };
+      console.log('Local message being added:', localMessage);
       dispatch(addMessage(localMessage));
       setMessage('');
     } catch (error) {
