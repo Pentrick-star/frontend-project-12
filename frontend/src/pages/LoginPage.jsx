@@ -24,10 +24,15 @@ const LoginPage = () => {
       const response = await api.post('/login', values);
       
       if (response.status === 200 && response.data.token) {
-        const { token } = response.data;
+        const { token, username } = response.data;
         dispatch(setToken(token));
-        // Получаем данные пользователя
-        await dispatch(fetchUser());
+        // Если сервер возвращает username в ответе на логин, сохраняем его
+        if (username) {
+          dispatch(setUser({ username }));
+        } else {
+          // Иначе получаем данные пользователя
+          await dispatch(fetchUser());
+        }
         navigate('/');
       }
     } catch (error) {
