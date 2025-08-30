@@ -33,10 +33,13 @@ const ChatPage = () => {
         console.log('New message received via WebSocket:', newMessage);
         // Убеждаемся, что у сообщения есть правильное имя пользователя
         const username = newMessage.username || newMessage.name || newMessage.login || 'Unknown';
+        console.log('Extracted username from WebSocket message:', username);
+        
         const messageWithUsername = {
           ...newMessage,
           username,
         };
+        console.log('Adding message to Redux:', messageWithUsername);
         dispatch(addMessage(messageWithUsername));
       };
 

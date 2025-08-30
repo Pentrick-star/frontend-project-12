@@ -34,18 +34,21 @@ const MessageForm = () => {
       };
       
       // Отправляем сообщение через WebSocket
+      console.log('Sending message via WebSocket:', messageData);
       socketService.emit('newMessage', messageData);
       
       // Добавляем сообщение локально для мгновенного отображения
       const username = user?.username || user?.name || user?.login || 'Unknown';
       console.log('Using username for message:', username);
       
-      dispatch(addMessage({
+      const localMessage = {
         id: Date.now(),
         ...messageData,
         username,
         createdAt: new Date().toISOString(),
-      }));
+      };
+      console.log('Adding local message:', localMessage);
+      dispatch(addMessage(localMessage));
       
       setMessage('');
     } catch (error) {
