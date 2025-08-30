@@ -43,7 +43,12 @@ const authSlice = createSlice({
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         console.log('User data saved to Redux:', action.payload);
+        console.log('User data type:', typeof action.payload);
+        console.log('User data keys:', Object.keys(action.payload || {}));
+        
+        // Убеждаемся, что данные пользователя сохраняются правильно
         state.user = action.payload;
+        console.log('State user after save:', state.user);
       });
   },
 });

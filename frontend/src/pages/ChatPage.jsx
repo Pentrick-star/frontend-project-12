@@ -73,6 +73,13 @@ const ChatPage = () => {
   // Логируем сообщения для отладки
   console.log('ChatPage - Current messages:', channelMessages);
   console.log('ChatPage - Current user:', useSelector((state) => state.auth.user));
+  console.log('ChatPage - Messages with usernames:', channelMessages.map(msg => ({
+    id: msg.id,
+    username: msg.username,
+    name: msg.name,
+    login: msg.login,
+    body: msg.body
+  })));
 
   if (channelsLoading || messagesLoading) {
     return (

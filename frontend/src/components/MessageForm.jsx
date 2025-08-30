@@ -15,6 +15,9 @@ const MessageForm = () => {
   
   // Логируем состояние пользователя при каждом рендере
   console.log('MessageForm - Current user state:', user);
+  console.log('MessageForm - User username:', user?.username);
+  console.log('MessageForm - User name:', user?.name);
+  console.log('MessageForm - User login:', user?.login);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
