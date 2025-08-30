@@ -101,7 +101,7 @@ const ChannelsList = () => {
                 data-testid="manage-channel-button"
               >
                 <i className="bi bi-chevron-down"></i>
-                <span>Управление каналом</span>
+                <span className="visually-hidden">Управление каналом</span>
               </button>
             </div>
             {showDropdown === channel.id && (
