@@ -12,6 +12,9 @@ const MessageForm = () => {
   const { currentChannelId } = useSelector((state) => state.channels);
   const { loading } = useSelector((state) => state.messages);
   const user = useSelector((state) => state.auth.user);
+  
+  // Логируем состояние пользователя при каждом рендере
+  console.log('MessageForm - Current user state:', user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

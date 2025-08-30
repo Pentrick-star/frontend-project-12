@@ -42,6 +42,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
+        console.log('User data saved to Redux:', action.payload);
         state.user = action.payload;
       });
   },

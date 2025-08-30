@@ -68,6 +68,10 @@ const ChatPage = () => {
 
   const currentChannel = channels.find(channel => channel.id === currentChannelId);
   const channelMessages = messages.filter(message => message.channelId === currentChannelId);
+  
+  // Логируем сообщения для отладки
+  console.log('ChatPage - Current messages:', channelMessages);
+  console.log('ChatPage - Current user:', useSelector((state) => state.auth.user));
 
   if (channelsLoading || messagesLoading) {
     return (
