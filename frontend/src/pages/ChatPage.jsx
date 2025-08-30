@@ -33,13 +33,11 @@ const ChatPage = () => {
         console.log('New message received via WebSocket:', newMessage);
         // Убеждаемся, что у сообщения есть правильное имя пользователя
         const username = newMessage.username || newMessage.name || newMessage.login || 'Unknown';
-        console.log('Extracted username from WebSocket message:', username);
         
         const messageWithUsername = {
           ...newMessage,
           username,
         };
-        console.log('Adding message to Redux:', messageWithUsername);
         dispatch(addMessage(messageWithUsername));
       };
 
@@ -75,14 +73,6 @@ const ChatPage = () => {
   
   // Логируем сообщения для отладки
   console.log('ChatPage - Current messages:', channelMessages);
-  console.log('ChatPage - Current user:', useSelector((state) => state.auth.user));
-  console.log('ChatPage - Messages with usernames:', channelMessages.map(msg => ({
-    id: msg.id,
-    username: msg.username,
-    name: msg.name,
-    login: msg.login,
-    body: msg.body
-  })));
 
   if (channelsLoading || messagesLoading) {
     return (

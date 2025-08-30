@@ -37,8 +37,6 @@ const messagesSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      console.log('addMessage called with payload:', action.payload);
-      
       const existingMessage = state.items.find(
         msg => msg.id === action.payload.id || 
               (msg.body === action.payload.body && 
@@ -53,10 +51,7 @@ const messagesSlice = createSlice({
           ...action.payload,
           username,
         };
-        console.log('Adding new message to state:', messageWithUsername);
         state.items.push(messageWithUsername);
-      } else {
-        console.log('Message already exists, skipping:', action.payload);
       }
     },
     clearMessages: (state) => {

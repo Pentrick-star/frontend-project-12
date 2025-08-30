@@ -15,9 +15,6 @@ const MessageForm = () => {
   
   // Логируем состояние пользователя при каждом рендере
   console.log('MessageForm - Current user state:', user);
-  console.log('MessageForm - User username:', user?.username);
-  console.log('MessageForm - User name:', user?.name);
-  console.log('MessageForm - User login:', user?.login);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,12 +31,10 @@ const MessageForm = () => {
       };
       
       // Отправляем сообщение через WebSocket
-      console.log('Sending message via WebSocket:', messageData);
       socketService.emit('newMessage', messageData);
       
       // Добавляем сообщение локально для мгновенного отображения
       const username = user?.username || user?.name || user?.login || 'Unknown';
-      console.log('Using username for message:', username);
       
       const localMessage = {
         id: Date.now(),
@@ -47,7 +42,6 @@ const MessageForm = () => {
         username,
         createdAt: new Date().toISOString(),
       };
-      console.log('Adding local message:', localMessage);
       dispatch(addMessage(localMessage));
       
       setMessage('');
