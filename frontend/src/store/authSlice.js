@@ -8,6 +8,7 @@ export const fetchUser = createAsyncThunk(
       console.log('Fetching user data...');
       const response = await api.get('/auth/me');
       console.log('User data received:', response.data);
+      // Убеждаемся, что возвращаем правильную структуру данных
       return response.data;
     } catch (error) {
       console.error('Error fetching user:', error);
