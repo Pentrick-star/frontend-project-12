@@ -27,14 +27,15 @@ const MessageForm = () => {
         channelId: currentChannelId,
       };
       
-      // Отправляем сообщение через API
-      const result = await dispatch(sendMessage(messageData)).unwrap();
-      console.log('Message sent result:', result);
+      // Отправляем сообщение через WebSocket
+      socketService.emit('newMessage', messageData);
       
-      // Добавляем сообщение с данными от сервера
+      // Добавляем сообщение локально для мгновенного отображения
       dispatch(addMessage({
-        ...result,
-        username: result.username || user?.username || 'Unknown',
+        id: Date.now(),
+        ...messageData,
+        username: user?.username || 'Unknown',
+        createdAt: new Date().toISOString(),
       }));
       
       setMessage('');

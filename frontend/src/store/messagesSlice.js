@@ -76,19 +76,7 @@ const messagesSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        console.log('sendMessage.fulfilled payload:', action.payload);
-        const existingMessage = state.items.find(
-          msg => msg.id === action.payload.id
-        );
-        
-        if (!existingMessage) {
-          // Убеждаемся, что у сообщения есть правильное имя пользователя
-          const messageWithUsername = {
-            ...action.payload,
-            username: action.payload.username || 'Unknown',
-          };
-          state.items.push(messageWithUsername);
-        }
+        // Не добавляем сообщение здесь, так как используем WebSocket
       });
   },
 });
