@@ -30,6 +30,7 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
+        console.log('New message received via WebSocket:', newMessage);
         // Убеждаемся, что у сообщения есть правильное имя пользователя
         const messageWithUsername = {
           ...newMessage,

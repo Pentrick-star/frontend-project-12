@@ -76,6 +76,7 @@ const messagesSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
+        console.log('sendMessage.fulfilled payload:', action.payload);
         const existingMessage = state.items.find(
           msg => msg.id === action.payload.id
         );
