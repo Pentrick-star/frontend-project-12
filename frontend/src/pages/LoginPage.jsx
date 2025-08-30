@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import api from '../services/api';
-import { setToken } from '../store/authSlice';
+import { setToken, fetchUser } from '../store/authSlice';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -26,6 +26,8 @@ const LoginPage = () => {
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
         dispatch(setToken(token));
+        // Получаем данные пользователя
+        await dispatch(fetchUser());
         // Принудительно обновляем страницу для синхронизации состояния
         window.location.href = '/';
       }

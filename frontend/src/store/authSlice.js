@@ -1,4 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../services/api';
+
+export const fetchUser = createAsyncThunk(
+  'auth/fetchUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/auth/me');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
@@ -10,8 +23,6 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
       localStorage.setItem('token', action.payload);
-      // Устанавливаем временного пользователя
-      state.user = { username: 'User' };
     },
     setUser: (state, action) => {
       state.user = action.payload;
@@ -21,6 +32,12 @@ const authSlice = createSlice({
       state.user = null;
       localStorage.removeItem('token');
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      });
   },
 });
 

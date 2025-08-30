@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import api from '../services/api';
-import { setToken } from '../store/authSlice';
+import { setToken, fetchUser } from '../store/authSlice';
 
 const SignupPage = () => {
   const { t } = useTranslation();
@@ -45,6 +45,8 @@ const SignupPage = () => {
         if (loginResponse.data.token) {
           const { token } = loginResponse.data;
           dispatch(setToken(token));
+          // Получаем данные пользователя
+          await dispatch(fetchUser());
           // Принудительно обновляем страницу для синхронизации состояния
           window.location.href = '/';
         }
