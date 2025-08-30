@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { sendMessage } from '../store/messagesSlice';
+import { sendMessage, addMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 
 const MessageForm = () => {
@@ -18,11 +18,22 @@ const MessageForm = () => {
 
     try {
       const filteredMessage = filterProfanity(message.trim());
-      await dispatch(sendMessage({
+      const messageData = {
         body: filteredMessage,
         channelId: currentChannelId,
-        username: user?.username || 'admin', // Временно используем 'admin' для тестов
-      })).unwrap();
+        username: user?.username || 'admin',
+      };
+      
+      // Отправляем сообщение через API
+      await dispatch(sendMessage(messageData)).unwrap();
+      
+      // Сразу добавляем сообщение в Redux для мгновенного отображения
+      dispatch(addMessage({
+        id: Date.now(), // Временный ID
+        ...messageData,
+        createdAt: new Date().toISOString(),
+      }));
+      
       setMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);
