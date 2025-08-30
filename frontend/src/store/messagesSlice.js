@@ -37,21 +37,40 @@ const messagesSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
+      console.log('Adding message to state:', action.payload);
+      console.log('Current messages in state:', state.items);
+      
       const existingMessage = state.items.find(
-        msg => msg.id === action.payload.id || 
-              (msg.body === action.payload.body && 
-               msg.channelId === action.payload.channelId &&
-               msg.username === action.payload.username)
+        msg => msg.id === action.payload.id
       );
       
+      console.log('Existing message found:', existingMessage);
+      
       if (!existingMessage) {
-        // Убеждаемся, что у сообщения есть правильное имя пользователя
-        const username = action.payload.username || action.payload.name || action.payload.login || 'Unknown';
+        // Используем ту же логику извлечения имени пользователя
+        let username = 'Unknown';
+        if (action.payload.username) {
+          username = action.payload.username;
+        } else if (action.payload.name) {
+          username = action.payload.name;
+        } else if (action.payload.login) {
+          username = action.payload.login;
+        } else if (action.payload.user && action.payload.user.username) {
+          username = action.payload.user.username;
+        } else if (action.payload.user && action.payload.user.name) {
+          username = action.payload.user.name;
+        } else if (action.payload.user && action.payload.user.login) {
+          username = action.payload.user.login;
+        }
+        
         const messageWithUsername = {
           ...action.payload,
           username,
         };
+        console.log('Adding message with username:', messageWithUsername);
         state.items.push(messageWithUsername);
+      } else {
+        console.log('Message not added - duplicate detected');
       }
     },
     clearMessages: (state) => {
@@ -66,11 +85,28 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false;
-        // Убеждаемся, что у всех сообщений есть правильные имена пользователей
-        state.items = action.payload.map(message => ({
-          ...message,
-          username: message.username || 'Unknown',
-        }));
+        // Используем ту же логику извлечения имени пользователя для всех сообщений
+        state.items = action.payload.map(message => {
+          let username = 'Unknown';
+          if (message.username) {
+            username = message.username;
+          } else if (message.name) {
+            username = message.name;
+          } else if (message.login) {
+            username = message.login;
+          } else if (message.user && message.user.username) {
+            username = message.user.username;
+          } else if (message.user && message.user.name) {
+            username = message.user.name;
+          } else if (message.user && message.user.login) {
+            username = message.user.login;
+          }
+          
+          return {
+            ...message,
+            username,
+          };
+        });
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;

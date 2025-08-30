@@ -31,8 +31,29 @@ const ChatPage = () => {
       
       const handleNewMessage = (newMessage) => {
         console.log('New message received via WebSocket:', newMessage);
+        console.log('Message fields:', Object.keys(newMessage));
+        console.log('Message username field:', newMessage.username);
+        console.log('Message name field:', newMessage.name);
+        console.log('Message login field:', newMessage.login);
+        
         // Убеждаемся, что у сообщения есть правильное имя пользователя
-        const username = newMessage.username || newMessage.name || newMessage.login || 'Unknown';
+        // Проверяем все возможные поля для имени пользователя
+        let username = 'Unknown';
+        if (newMessage.username) {
+          username = newMessage.username;
+        } else if (newMessage.name) {
+          username = newMessage.name;
+        } else if (newMessage.login) {
+          username = newMessage.login;
+        } else if (newMessage.user && newMessage.user.username) {
+          username = newMessage.user.username;
+        } else if (newMessage.user && newMessage.user.name) {
+          username = newMessage.user.name;
+        } else if (newMessage.user && newMessage.user.login) {
+          username = newMessage.user.login;
+        }
+        
+        console.log('Extracted username:', username);
         
         const messageWithUsername = {
           ...newMessage,
@@ -116,7 +137,24 @@ const ChatPage = () => {
               <div></div>
             ) : (
               channelMessages.map((message) => {
-                const username = message.username || message.name || message.login || 'Unknown';
+                // Используем ту же логику извлечения имени пользователя
+                let username = 'Unknown';
+                if (message.username) {
+                  username = message.username;
+                } else if (message.name) {
+                  username = message.name;
+                } else if (message.login) {
+                  username = message.login;
+                } else if (message.user && message.user.username) {
+                  username = message.user.username;
+                } else if (message.user && message.user.name) {
+                  username = message.user.name;
+                } else if (message.user && message.user.login) {
+                  username = message.user.login;
+                }
+                
+                console.log('Rendering message:', message);
+                console.log('Message username for rendering:', username);
                 return (
                   <div key={message.id} className="text-break mb-2">
                     <b>{username}:</b>
