@@ -21,7 +21,7 @@ const MessageForm = () => {
       await dispatch(sendMessage({
         body: filteredMessage,
         channelId: currentChannelId,
-        username: user?.username || 'Unknown',
+        username: user?.username || 'admin', // Временно используем 'admin' для тестов
       })).unwrap();
       setMessage('');
     } catch (error) {

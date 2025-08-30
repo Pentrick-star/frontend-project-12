@@ -47,8 +47,7 @@ const SignupPage = () => {
           dispatch(setToken(token));
           // Получаем данные пользователя
           await dispatch(fetchUser());
-          // Принудительно обновляем страницу для синхронизации состояния
-          window.location.href = '/';
+          navigate('/');
         }
       }
     } catch (error) {
