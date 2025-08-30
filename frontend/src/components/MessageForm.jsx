@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { sendMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
-import { useAuth } from '../hooks/useAuth';
 
 const MessageForm = () => {
   const { t } = useTranslation();
@@ -11,7 +10,7 @@ const MessageForm = () => {
   const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
   const { loading } = useSelector((state) => state.messages);
-  const { user } = useAuth();
+  const user = useSelector((state) => state.auth.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
