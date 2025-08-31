@@ -31,14 +31,6 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        console.log('📨 === WEBSOCKET MESSAGE DEBUG ===');
-        console.log('📥 New message received via WebSocket:', newMessage);
-        console.log('🔑 Message fields:', Object.keys(newMessage));
-        console.log('👤 Message username field:', newMessage.username);
-        console.log('👤 Message name field:', newMessage.name);
-        console.log('👤 Message login field:', newMessage.login);
-        console.log('👥 Message user object:', newMessage.user);
-        
         let username = 'Unknown';
         if (newMessage.username) {
           username = newMessage.username;
@@ -60,14 +52,10 @@ const ChatPage = () => {
           username = currentUser.login;
         }
         
-        console.log('👤 Current user from Redux:', currentUser);
-        console.log('✅ Extracted username:', username);
-        
         const messageWithUsername = {
           ...newMessage,
           username,
         };
-        console.log('📤 Message with username being dispatched:', messageWithUsername);
         dispatch(addMessage(messageWithUsername));
       };
 

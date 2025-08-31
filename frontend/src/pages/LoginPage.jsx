@@ -27,13 +27,24 @@ const LoginPage = () => {
         console.log('Login response data:', response.data);
         const { token } = response.data;
         dispatch(setToken(token));
-        // Получаем данные пользователя
-        await dispatch(fetchUser());
-        navigate('/');
+        
+        try {
+          const userResult = await dispatch(fetchUser());
+          console.log('User fetch result:', userResult);
+          if (userResult.error) {
+            console.error('Failed to fetch user:', userResult.error);
+            setAuthError('Failed to load user data');
+            return;
+          }
+          navigate('/');
+        } catch (userError) {
+          console.error('Error fetching user:', userError);
+          setAuthError('Failed to load user data');
+          return;
+        }
       }
     } catch (error) {
       console.error('Login error:', error);
-      // Показываем ошибку для любого неуспешного статуса (401, 400, 500 и т.д.)
       const errorMessage = t('loginPage.error');
       setAuthError(errorMessage);
     } finally {

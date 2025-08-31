@@ -7,6 +7,7 @@ import { logout } from '../store/authSlice';
 const Header = () => {
   const { t } = useTranslation();
   const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,9 +22,9 @@ const Header = () => {
         <Link to="/" className="navbar-brand">
           {t('title')}
         </Link>
-        {user && (
+        {(user || token) && (
           <div className="d-flex align-items-center">
-            <span className="navbar-text me-3">{user.username}</span>
+            <span className="navbar-text me-3">{user?.username || 'User'}</span>
             <button 
               onClick={handleLogout} 
               className="btn btn-primary"
