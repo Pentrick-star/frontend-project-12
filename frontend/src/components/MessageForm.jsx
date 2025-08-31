@@ -19,7 +19,12 @@ const MessageForm = () => {
 
     try {
       const filteredMessage = filterProfanity(message.trim());
-      const username = user?.username || user?.name || user?.login || 'Unknown';
+      const username = user?.username || user?.name || user?.login;
+      
+      if (!username) {
+        console.error('No username found for user:', user);
+        return;
+      }
       
       const messageData = {
         body: filteredMessage,

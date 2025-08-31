@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import api from '../services/api';
 
 const extractUsername = (message, currentUser = null) => {
-  let username = 'Unknown';
+  let username = null;
   if (message.username) {
     username = message.username;
   } else if (message.name) {
@@ -16,12 +16,6 @@ const extractUsername = (message, currentUser = null) => {
     username = message.user.name;
   } else if (message.user && message.user.login) {
     username = message.user.login;
-  } else if (currentUser && currentUser.username) {
-    username = currentUser.username;
-  } else if (currentUser && currentUser.name) {
-    username = currentUser.name;
-  } else if (currentUser && currentUser.login) {
-    username = currentUser.login;
   }
   return username;
 };
@@ -68,6 +62,11 @@ const messagesSlice = createSlice({
       if (!existingMessage) {
         const username = extractUsername(action.payload);
         
+        if (!username) {
+          console.error('Cannot add message without username:', action.payload);
+          return;
+        }
+        
         const messageWithUsername = {
           ...action.payload,
           username,
@@ -89,11 +88,15 @@ const messagesSlice = createSlice({
         state.loading = false;
         state.items = action.payload.map(message => {
           const username = extractUsername(message);
+          if (!username) {
+            console.error('Message from server without username:', message);
+            return null;
+          }
           return {
             ...message,
             username,
           };
-        });
+        }).filter(Boolean); // Убираем null значения
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;

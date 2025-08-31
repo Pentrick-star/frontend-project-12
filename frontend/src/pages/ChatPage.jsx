@@ -31,7 +31,7 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        let username = 'Unknown';
+        let username = null;
         if (newMessage.username) {
           username = newMessage.username;
         } else if (newMessage.name) {
@@ -44,12 +44,11 @@ const ChatPage = () => {
           username = newMessage.user.name;
         } else if (newMessage.user && newMessage.user.login) {
           username = newMessage.user.login;
-        } else if (currentUser && currentUser.username) {
-          username = currentUser.username;
-        } else if (currentUser && currentUser.name) {
-          username = currentUser.name;
-        } else if (currentUser && currentUser.login) {
-          username = currentUser.login;
+        }
+        
+        if (!username) {
+          console.error('No username found in message:', newMessage);
+          return;
         }
         
         const messageWithUsername = {
@@ -131,7 +130,7 @@ const ChatPage = () => {
               <div></div>
             ) : (
               channelMessages.map((message) => {
-                let username = 'Unknown';
+                let username = null;
                 if (message.username) {
                   username = message.username;
                 } else if (message.name) {
@@ -144,12 +143,11 @@ const ChatPage = () => {
                   username = message.user.name;
                 } else if (message.user && message.user.login) {
                   username = message.user.login;
-                } else if (currentUser && currentUser.username) {
-                  username = currentUser.username;
-                } else if (currentUser && currentUser.name) {
-                  username = currentUser.name;
-                } else if (currentUser && currentUser.login) {
-                  username = currentUser.login;
+                }
+                
+                if (!username) {
+                  console.error('No username found for message:', message);
+                  return null;
                 }
                 
                 return (
