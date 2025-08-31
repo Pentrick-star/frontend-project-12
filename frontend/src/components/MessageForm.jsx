@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { sendMessage, addMessage } from '../store/messagesSlice';
+import { addMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 import socketService from '../services/socket';
 
