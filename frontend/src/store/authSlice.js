@@ -5,10 +5,14 @@ export const fetchUser = createAsyncThunk(
   'auth/fetchUser',
   async (_, { rejectWithValue }) => {
     try {
+      console.log('🔍 Fetching user data...');
       const response = await api.get('/auth/me');
+      console.log('📥 User data received from server:', response.data);
+      console.log('📋 User data type:', typeof response.data);
+      console.log('🔑 User data keys:', Object.keys(response.data || {}));
       return response.data;
     } catch (error) {
-      console.error('Error fetching user:', error);
+      console.error('❌ Error fetching user:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -37,6 +41,8 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
+        console.log('💾 User data saved to Redux:', action.payload);
+        console.log('🔍 Current state after save:', state);
         state.user = action.payload;
       });
   },
