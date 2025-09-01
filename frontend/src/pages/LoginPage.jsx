@@ -24,13 +24,11 @@ const LoginPage = () => {
       const response = await api.post('/login', values);
       
       if (response.status === 200 && response.data.token) {
-        console.log('Login response data:', response.data);
         const { token } = response.data;
         dispatch(setToken(token));
         
         try {
           const userResult = await dispatch(fetchUser());
-          console.log('User fetch result:', userResult);
           if (userResult.error) {
             console.error('Failed to fetch user:', userResult.error);
             setAuthError('Failed to load user data');

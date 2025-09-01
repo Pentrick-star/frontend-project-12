@@ -31,25 +31,7 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        let username = null;
-        if (newMessage.username) {
-          username = newMessage.username;
-        } else if (newMessage.name) {
-          username = newMessage.name;
-        } else if (newMessage.login) {
-          username = newMessage.login;
-        } else if (newMessage.user && newMessage.user.username) {
-          username = newMessage.user.username;
-        } else if (newMessage.user && newMessage.user.name) {
-          username = newMessage.user.name;
-        } else if (newMessage.user && newMessage.user.login) {
-          username = newMessage.user.login;
-        }
-        
-        if (!username) {
-          console.error('No username found in message:', newMessage);
-          return;
-        }
+        let username = newMessage.username || newMessage.name || newMessage.login || 'User';
         
         const messageWithUsername = {
           ...newMessage,
@@ -130,25 +112,7 @@ const ChatPage = () => {
               <div></div>
             ) : (
               channelMessages.map((message) => {
-                let username = null;
-                if (message.username) {
-                  username = message.username;
-                } else if (message.name) {
-                  username = message.name;
-                } else if (message.login) {
-                  username = message.login;
-                } else if (message.user && message.user.username) {
-                  username = message.user.username;
-                } else if (message.user && message.user.name) {
-                  username = message.user.name;
-                } else if (message.user && message.user.login) {
-                  username = message.user.login;
-                }
-                
-                if (!username) {
-                  console.error('No username found for message:', message);
-                  return null;
-                }
+                let username = message.username || message.name || message.login || 'User';
                 
                 return (
                   <div key={message.id} className="text-break mb-2">

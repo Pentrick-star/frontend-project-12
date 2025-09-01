@@ -2,24 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import api from '../services/api';
 
-const extractUsername = (message, currentUser = null) => {
-  let username = null;
-  if (message.username) {
-    username = message.username;
-  } else if (message.name) {
-    username = message.name;
-  } else if (message.login) {
-    username = message.login;
-  } else if (message.user && message.user.username) {
-    username = message.user.username;
-  } else if (message.user && message.user.name) {
-    username = message.user.name;
-  } else if (message.user && message.user.login) {
-    username = message.user.login;
-  }
-  return username;
-};
-
 export const fetchMessages = createAsyncThunk(
   'messages/fetchMessages',
   async (_, { rejectWithValue }) => {
@@ -60,12 +42,7 @@ const messagesSlice = createSlice({
       );
       
       if (!existingMessage) {
-        const username = extractUsername(action.payload);
-        
-        if (!username) {
-          console.error('Cannot add message without username:', action.payload);
-          return;
-        }
+        const username = action.payload.username || action.payload.name || action.payload.login || 'User';
         
         const messageWithUsername = {
           ...action.payload,
@@ -87,16 +64,12 @@ const messagesSlice = createSlice({
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.map(message => {
-          const username = extractUsername(message);
-          if (!username) {
-            console.error('Message from server without username:', message);
-            return null;
-          }
+          const username = message.username || message.name || message.login || 'User';
           return {
             ...message,
             username,
           };
-        }).filter(Boolean); // Убираем null значения
+        });
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;
