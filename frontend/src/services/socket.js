@@ -6,8 +6,8 @@ class SocketService {
   }
 
   connect(token) {
-    // Используем текущий хост для WebSocket
-    const wsUrl = window.location.origin;
+    // Подключаемся к backend серверу на порту 5001
+    const wsUrl = 'http://localhost:5001';
     
     try {
       this.socket = io(wsUrl, {
