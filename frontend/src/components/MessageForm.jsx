@@ -19,7 +19,12 @@ const MessageForm = () => {
 
     try {
       const filteredMessage = filterProfanity(message.trim());
-      const username = user?.username || user?.name || user?.login || 'User';
+      const username = user?.username || user?.name || user?.login;
+      
+      if (!username) {
+        console.error('No username found for user:', user);
+        return;
+      }
       
       const messageData = {
         body: filteredMessage,
@@ -29,12 +34,7 @@ const MessageForm = () => {
       
       socketService.emit('newMessage', messageData);
       
-      const localMessage = {
-        id: Date.now(),
-        ...messageData,
-        createdAt: new Date().toISOString(),
-      };
-      dispatch(addMessage(localMessage));
+      // Не добавляем сообщение локально - оно придет через WebSocket
       setMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);

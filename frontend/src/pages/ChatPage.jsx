@@ -31,7 +31,12 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        let username = newMessage.username || newMessage.name || newMessage.login || 'User';
+        let username = newMessage.username || newMessage.name || newMessage.login;
+        
+        if (!username) {
+          console.error('No username found in message:', newMessage);
+          return;
+        }
         
         const messageWithUsername = {
           ...newMessage,
@@ -112,7 +117,12 @@ const ChatPage = () => {
               <div></div>
             ) : (
               channelMessages.map((message) => {
-                let username = message.username || message.name || message.login || 'User';
+                let username = message.username || message.name || message.login;
+                
+                if (!username) {
+                  console.error('No username found for message:', message);
+                  return null;
+                }
                 
                 return (
                   <div key={message.id} className="text-break mb-2">

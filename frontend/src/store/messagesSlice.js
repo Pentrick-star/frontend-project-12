@@ -38,11 +38,19 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, action) => {
       const existingMessage = state.items.find(
-        msg => msg.id === action.payload.id
+        msg => msg.id === action.payload.id ||
+              (msg.body === action.payload.body &&
+               msg.channelId === action.payload.channelId &&
+               msg.username === action.payload.username)
       );
       
       if (!existingMessage) {
-        const username = action.payload.username || action.payload.name || action.payload.login || 'User';
+        const username = action.payload.username || action.payload.name || action.payload.login;
+        
+        if (!username) {
+          console.error('Cannot add message without username:', action.payload);
+          return;
+        }
         
         const messageWithUsername = {
           ...action.payload,
@@ -64,12 +72,16 @@ const messagesSlice = createSlice({
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.map(message => {
-          const username = message.username || message.name || message.login || 'User';
+          const username = message.username || message.name || message.login;
+          if (!username) {
+            console.error('Message from server without username:', message);
+            return null;
+          }
           return {
             ...message,
             username,
           };
-        });
+        }).filter(Boolean);
       })
       .addCase(fetchMessages.rejected, (state, action) => {
         state.loading = false;

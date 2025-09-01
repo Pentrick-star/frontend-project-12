@@ -43,13 +43,10 @@ const SignupPage = () => {
         });
         
         if (loginResponse.data.token) {
-          console.log('SignupPage - login successful, token:', loginResponse.data.token);
           const { token } = loginResponse.data;
           dispatch(setToken(token));
           // Получаем данные пользователя
-          console.log('SignupPage - calling fetchUser...');
-          const userResult = await dispatch(fetchUser());
-          console.log('SignupPage - fetchUser result:', userResult);
+          await dispatch(fetchUser());
           navigate('/');
         }
       }
