@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { filterProfanity } from '../utils/profanityFilter';
-import socketService from '../services/socket';
+import { sendMessage } from '../store/messagesSlice';
 
 const MessageForm = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [message, setMessage] = useState('');
   const { currentChannelId } = useSelector((state) => state.channels);
   const { loading } = useSelector((state) => state.messages);
@@ -29,20 +30,15 @@ const MessageForm = () => {
         username,
       };
       
-      socketService.emit('newMessage', messageData);
-      
-      // Не добавляем сообщение локально - оно придет через WebSocket
+      await dispatch(sendMessage(messageData));
+      // Сообщение придет через WebSocket; поле очищаем сразу
       setMessage('');
     } catch (error) {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSubmit(e);
-    }
-  };
+  // Полагаться на submit формы, чтобы избежать двойной отправки (клик и Enter)
+  // Enter в input сам вызовет submit
 
   return (
     <form onSubmit={handleSubmit} className="input-group">
