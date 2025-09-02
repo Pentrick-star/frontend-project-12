@@ -38,8 +38,20 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage: (state, action) => {
       const existingMessage = state.items.find((msg) => msg.id === action.payload.id);
+
       if (!existingMessage) {
-        state.items.push(action.payload);
+        const username = action.payload.login || action.payload.username || action.payload.name;
+
+        if (!username) {
+          console.error('Cannot add message without username:', action.payload);
+          return;
+        }
+
+        const messageWithUsername = {
+          ...action.payload,
+          username,
+        };
+        state.items.push(messageWithUsername);
       }
     },
     clearMessages: (state) => {
