@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+// В тестах и локальной разработке используем порт 5001
+// В продакшене используем относительный путь
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const baseURL = isLocalhost ? 'http://localhost:5001/api/v1' : '/api/v1';
+
 const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL,
   withCredentials: true,
   timeout: 10000,
 });

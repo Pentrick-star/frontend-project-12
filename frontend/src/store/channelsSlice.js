@@ -10,7 +10,7 @@ export const fetchChannels = createAsyncThunk(
       return response.data;
     } catch (error) {
       if (error.response?.status !== 401) {
-        toast.error(t('errors.network'));
+        toast.error('Ошибка соединения');
       }
       return rejectWithValue(error.message);
     }
@@ -22,12 +22,12 @@ export const createChannel = createAsyncThunk(
   async (channelData, { rejectWithValue, dispatch }) => {
     try {
       const response = await api.post('/channels', channelData);
-      toast.success(t('channels.created'));
+      toast.success('Канал создан');
       dispatch(addChannel(response.data));
       dispatch(setCurrentChannel(response.data.id));
       return response.data;
     } catch (error) {
-      toast.error(t('errors.network'));
+      toast.error('Ошибка соединения');
       return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
@@ -38,10 +38,10 @@ export const removeChannel = createAsyncThunk(
   async (channelId, { rejectWithValue }) => {
     try {
       await api.delete(`/channels/${channelId}`);
-      toast.success(t('channels.removed'));
+      toast.success('Канал удалён');
       return channelId;
     } catch (error) {
-      toast.error(t('errors.network'));
+      toast.error('Ошибка соединения');
       return rejectWithValue(error.message);
     }
   }
@@ -52,10 +52,10 @@ export const renameChannel = createAsyncThunk(
   async ({ channelId, name }, { rejectWithValue }) => {
     try {
       const response = await api.patch(`/channels/${channelId}`, { name });
-      toast.success(t('channels.renamed'));
+      toast.success('Канал переименован');
       return response.data;
     } catch (error) {
-      toast.error(t('errors.network'));
+      toast.error('Ошибка соединения');
       return rejectWithValue(error.message);
     }
   }

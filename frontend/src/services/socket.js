@@ -6,9 +6,11 @@ class SocketService {
   }
 
   connect(token) {
-    // Подключаемся к backend на текущем origin (работает в тестах и в проде)
-    const { protocol, host } = window.location;
-    const wsUrl = `${protocol}//${host}`;
+    // Подключаемся к backend серверу
+    // В тестах и локальной разработке используем порт 5001
+    // В продакшене используем текущий origin
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const wsUrl = isLocalhost ? 'http://localhost:5001' : `${window.location.protocol}//${window.location.host}`;
     
     try {
       this.socket = io(wsUrl, {

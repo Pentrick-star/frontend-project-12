@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { filterProfanity } from '../utils/profanityFilter';
-import { sendMessage } from '../store/messagesSlice';
+import socketService from '../services/socket';
 
 const MessageForm = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const [message, setMessage] = useState('');
   const { currentChannelId } = useSelector((state) => state.channels);
   const { loading } = useSelector((state) => state.messages);
@@ -30,8 +29,9 @@ const MessageForm = () => {
         username,
       };
       
-      await dispatch(sendMessage(messageData));
-      // Сообщение придет через WebSocket; поле очищаем сразу
+      socketService.emit('newMessage', messageData);
+      
+      // Не добавляем сообщение локально - оно придет через WebSocket
       setMessage('');
     } catch (error) {
     }
@@ -46,7 +46,7 @@ const MessageForm = () => {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
+
         placeholder={t('messagePlaceholder')}
         disabled={loading}
         className="form-control"
