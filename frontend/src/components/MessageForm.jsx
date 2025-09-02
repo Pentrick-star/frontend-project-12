@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { addMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 import socketService from '../services/socket';
 
 const MessageForm = () => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
-  const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
   const { loading } = useSelector((state) => state.messages);
   const user = useSelector((state) => state.auth.user);
@@ -19,7 +17,7 @@ const MessageForm = () => {
 
     try {
       const filteredMessage = filterProfanity(message.trim());
-      const username = user?.username || user?.name || user?.login;
+      const username = user?.login || user?.username || user?.name;
       
       if (!username) {
         console.error('No username found for user:', user);

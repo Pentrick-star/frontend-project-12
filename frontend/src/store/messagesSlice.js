@@ -45,7 +45,7 @@ const messagesSlice = createSlice({
       );
       
       if (!existingMessage) {
-        const username = action.payload.username || action.payload.name || action.payload.login;
+        const username = action.payload.login || action.payload.username || action.payload.name;
         
         if (!username) {
           console.error('Cannot add message without username:', action.payload);
@@ -72,7 +72,7 @@ const messagesSlice = createSlice({
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.map(message => {
-          const username = message.username || message.name || message.login;
+          const username = message.login || message.username || message.name;
           if (!username) {
             console.error('Message from server without username:', message);
             return null;
@@ -87,7 +87,7 @@ const messagesSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(sendMessage.fulfilled, (state, action) => {
+      .addCase(sendMessage.fulfilled, () => {
         // Не добавляем сообщение здесь, так как используем WebSocket
       });
   },

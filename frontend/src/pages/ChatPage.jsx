@@ -11,7 +11,6 @@ const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
-  const currentUser = useSelector((state) => state.auth.user);
   const { items: channels, currentChannelId, loading: channelsLoading } = useSelector((state) => state.channels);
   const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages);
 
@@ -31,7 +30,7 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        let username = newMessage.username || newMessage.name || newMessage.login;
+        let username = newMessage.login || newMessage.username || newMessage.name;
         
         if (!username) {
           console.error('No username found in message:', newMessage);
@@ -117,7 +116,7 @@ const ChatPage = () => {
               <div></div>
             ) : (
               channelMessages.map((message) => {
-                let username = message.username || message.name || message.login;
+                let username = message.login || message.username || message.name;
                 
                 if (!username) {
                   console.error('No username found for message:', message);
