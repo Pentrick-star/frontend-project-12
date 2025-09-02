@@ -28,65 +28,27 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const filteredName = (() => {
-        try {
-          return filterProfanity(values.name);
-        } catch (error) {
-          console.error('Failed to filter profanity:', error);
-          return values.name || '';
-        }
-      })();
-      try {
-        await dispatch(renameChannel({ 
-          channelId: (() => {
-            try {
-              return channel.id;
-            } catch (error) {
-              console.error('Failed to get channel id:', error);
-              throw new Error('Invalid channel id');
-            }
-          })(), 
-          name: filteredName 
-        })).unwrap();
-      } catch (error) {
-        console.error('Failed to dispatch renameChannel:', error);
-        throw error;
-      }
-      (() => {
-        try {
-          resetForm();
-        } catch (error) {
-          console.error('Failed to reset form:', error);
-        }
-      })();
+      const filteredName = filterProfanity(values.name);
+      await dispatch(renameChannel({ 
+        channelId: channel.id, 
+        name: filteredName 
+      })).unwrap();
+      resetForm();
       // Добавляем небольшую задержку, чтобы toast успел появиться
       setTimeout(() => {
-        try {
-          onClose();
-        } catch (error) {
-          console.error('Failed to close modal in handleSubmit:', error);
-        }
+        onClose();
       }, 100);
     } catch (error) {
-      console.error('Failed to rename channel:', error);
       // Ошибка уже обрабатывается в slice через toast
     } finally {
-      try {
-        setSubmitting(false);
-      } catch (error) {
-        console.error('Failed to set submitting state:', error);
-      }
+      setSubmitting(false);
     }
   };
 
   useEffect(() => {
     const handleEscape = (e) => {
-      try {
-        if (e.key === 'Escape') {
-          onClose();
-        }
-      } catch (error) {
-        console.error('Failed to handle escape key:', error);
+      if (e.key === 'Escape') {
+        onClose();
       }
     };
 

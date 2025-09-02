@@ -1,3 +1,5 @@
+[![hexlet-check](https://github.com/Pentrick-star/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Pentrick-star/frontend-project-12/actions/workflows/hexlet-check.yml)
+
 # Hexlet Chat
 
 Чат-приложение на React с WebSocket для Hexlet.

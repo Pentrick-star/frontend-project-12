@@ -30,19 +30,16 @@ const LoginPage = () => {
         try {
           const userResult = await dispatch(fetchUser());
           if (userResult.error) {
-            console.error('Failed to fetch user:', userResult.error);
             setAuthError('Failed to load user data');
             return;
           }
           navigate('/');
         } catch (userError) {
-          console.error('Error fetching user:', userError);
           setAuthError('Failed to load user data');
           return;
         }
       }
     } catch (error) {
-      console.error('Login error:', error);
       const errorMessage = t('loginPage.error');
       setAuthError(errorMessage);
     } finally {

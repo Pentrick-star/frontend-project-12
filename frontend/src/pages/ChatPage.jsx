@@ -30,18 +30,7 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        let username = newMessage.login || newMessage.username || newMessage.name;
-        
-        if (!username) {
-          console.error('No username found in message:', newMessage);
-          return;
-        }
-        
-        const messageWithUsername = {
-          ...newMessage,
-          username,
-        };
-        dispatch(addMessage(messageWithUsername));
+        dispatch(addMessage(newMessage));
       };
 
       const handleNewChannel = (newChannel) => {
@@ -63,7 +52,6 @@ const ChatPage = () => {
       socketService.onRenameChannel(handleRenameChannel);
       
     } catch (error) {
-      console.error('WebSocket connection failed:', error);
     }
 
     return () => {
@@ -119,7 +107,6 @@ const ChatPage = () => {
                 let username = message.login || message.username || message.name;
                 
                 if (!username) {
-                  console.error('No username found for message:', message);
                   return null;
                 }
                 

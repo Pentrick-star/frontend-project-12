@@ -8,7 +8,6 @@ export const fetchUser = createAsyncThunk(
       const response = await api.get('/auth/me');
       return response.data;
     } catch (error) {
-      console.error('Error fetching user:', error);
       return rejectWithValue(error.message);
     }
   }

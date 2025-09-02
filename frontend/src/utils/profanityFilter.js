@@ -1,23 +1,14 @@
-// Простой фильтр нецензурных слов
-const profaneWords = ['boobs', 'fuck', 'shit', 'ass', 'bitch', 'dick', 'pussy', 'cock'];
+import filter from 'leo-profanity';
+
+filter.add(filter.getDictionary('en'));
+filter.add(filter.getDictionary('ru'));
 
 export const filterProfanity = (text) => {
   if (!text) return text;
-  
-  let filteredText = text;
-  profaneWords.forEach(word => {
-    const regex = new RegExp(word, 'gi');
-    filteredText = filteredText.replace(regex, '*'.repeat(word.length));
-  });
-  
-  return filteredText;
+  return filter.clean(text);
 };
 
 export const isProfane = (text) => {
   if (!text) return false;
-  
-  return profaneWords.some(word => {
-    const regex = new RegExp(word, 'gi');
-    return regex.test(text);
-  });
+  return filter.check(text);
 };

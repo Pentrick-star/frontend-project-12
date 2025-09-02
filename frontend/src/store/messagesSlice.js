@@ -43,7 +43,6 @@ const messagesSlice = createSlice({
         const username = action.payload.login || action.payload.username || action.payload.name;
 
         if (!username) {
-          console.error('Cannot add message without username:', action.payload);
           return;
         }
 
@@ -69,7 +68,6 @@ const messagesSlice = createSlice({
         state.items = action.payload.map(message => {
           const username = message.login || message.username || message.name;
           if (!username) {
-            console.error('Message from server without username:', message);
             return null;
           }
           return {

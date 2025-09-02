@@ -26,14 +26,14 @@ class SocketService {
 
       // Добавляем обработчики ошибок
       this.socket.on('connect_error', (error) => {
-        console.error('WebSocket connection error:', error);
+        console.error('Socket connection error:', error);
       });
 
       this.socket.on('disconnect', (reason) => {
-        console.log('WebSocket disconnected:', reason);
+        console.log('Socket disconnected:', reason);
       });
     } catch (error) {
-      console.error('Failed to create WebSocket connection:', error);
+      console.error('Socket connection failed:', error);
     }
   }
 

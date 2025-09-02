@@ -12,16 +12,8 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
 
   useEffect(() => {
     const handleEscape = (e) => {
-      try {
-        if (e.key === 'Escape') {
-          try {
-            onClose();
-          } catch (error) {
-            console.error('Failed to close modal on escape:', error);
-          }
-        }
-      } catch (error) {
-        console.error('Failed to handle escape key:', error);
+      if (e.key === 'Escape') {
+        onClose();
       }
     };
 
