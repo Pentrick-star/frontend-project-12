@@ -43,6 +43,7 @@ const messagesSlice = createSlice({
         const username = action.payload.login || action.payload.username || action.payload.name;
 
         if (!username) {
+          console.error('Cannot add message without username:', action.payload);
           return;
         }
 
