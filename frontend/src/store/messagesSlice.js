@@ -37,8 +37,15 @@ const messagesSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      const existingMessage = state.items.find(
-        msg => msg.id === action.payload.id
+      // Проверяем дублирование по содержимому, каналу и времени (в пределах 1 секунды)
+      const newMessage = action.payload;
+      const now = new Date().getTime();
+      
+      const existingMessage = state.items.find(msg => 
+        msg.body === newMessage.body && 
+        msg.channelId === newMessage.channelId &&
+        msg.username === newMessage.username &&
+        Math.abs(new Date(msg.createdAt || now).getTime() - now) < 1000
       );
       
       if (!existingMessage) {
@@ -75,7 +82,7 @@ const messagesSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(sendMessage.fulfilled, (state, action) => {
+      .addCase(sendMessage.fulfilled, () => {
         // Не добавляем сообщение здесь, так как используем WebSocket
       });
   },
