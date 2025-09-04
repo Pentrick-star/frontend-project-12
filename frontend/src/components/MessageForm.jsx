@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { addMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 import socketService from '../services/socket';
 
 const MessageForm = () => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
   const { loading } = useSelector((state) => state.messages);
   const user = useSelector((state) => state.auth.user);
@@ -27,7 +29,13 @@ const MessageForm = () => {
       
       socketService.emit('newMessage', messageData);
       
-      // Не добавляем сообщение локально - оно придет через WebSocket
+      // Добавляем сообщение локально для отправителя
+      const localMessage = {
+        id: Date.now(),
+        ...messageData,
+        createdAt: new Date().toISOString(),
+      };
+      dispatch(addMessage(localMessage));
       setMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);
