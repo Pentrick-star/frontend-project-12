@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { addMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 import socketService from '../services/socket';
 
 const MessageForm = () => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
-  const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
   const { loading } = useSelector((state) => state.messages);
   const user = useSelector((state) => state.auth.user);
@@ -29,19 +27,14 @@ const MessageForm = () => {
       
       socketService.emit('newMessage', messageData);
       
-      const localMessage = {
-        id: Date.now(),
-        ...messageData,
-        createdAt: new Date().toISOString(),
-      };
-      dispatch(addMessage(localMessage));
+      // Не добавляем сообщение локально - оно придет через WebSocket
       setMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e);
@@ -54,7 +47,7 @@ const MessageForm = () => {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         placeholder={t('messagePlaceholder')}
         disabled={loading}
         className="form-control"
