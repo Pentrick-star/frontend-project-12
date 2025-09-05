@@ -19,7 +19,7 @@ const MessageForm = () => {
 
     try {
       const filteredMessage = filterProfanity(message.trim());
-      const username = user?.username || user?.name || user?.login || 'User';
+      const username = user?.login || user?.username || user?.name || 'User';
       
       const messageData = {
         body: filteredMessage,
