@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import api from '../services/api';
-import { setToken, fetchUser } from '../store/authSlice';
+import { setToken, setUser } from '../store/authSlice';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -25,21 +25,10 @@ const LoginPage = () => {
       
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
+        const username = response.data.username || values.username;
         dispatch(setToken(token));
-        
-        try {
-          const userResult = await dispatch(fetchUser());
-          if (userResult.error) {
-            console.error('Failed to fetch user:', userResult.error);
-            setAuthError('Failed to load user data');
-            return;
-          }
-          navigate('/');
-        } catch (userError) {
-          console.error('Error fetching user:', userError);
-          setAuthError('Failed to load user data');
-          return;
-        }
+        dispatch(setUser({ username }));
+        navigate('/');
       }
     } catch (error) {
       console.error('Login error:', error);
