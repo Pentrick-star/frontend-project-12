@@ -31,12 +31,8 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        let username = newMessage.username || newMessage.name || newMessage.login || 'User';
-        
-        const messageWithUsername = {
-          ...newMessage,
-          username,
-        };
+        const username = newMessage.username || 'User';
+        const messageWithUsername = { ...newMessage, username };
         dispatch(addMessage(messageWithUsername));
       };
 
@@ -97,7 +93,12 @@ const ChatPage = () => {
             </div>
             {currentChannel && (
               <div className="text-muted small">
-                                  {channelMessages.length} {t('messages_many')}
+                {channelMessages.length} {(() => {
+                  const count = channelMessages.length;
+                  if (count % 10 === 1 && count % 100 !== 11) return t('messages_one');
+                  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return t('messages_few');
+                  return t('messages_many');
+                })()}
               </div>
             )}
           </div>
@@ -111,17 +112,12 @@ const ChatPage = () => {
             ) : channelMessages.length === 0 ? (
               <div></div>
             ) : (
-              channelMessages.map((message) => {
-                let username = message.username || message.name || message.login || 'User';
-                
-                return (
-                  <div key={message.id} className="text-break mb-2">
-                    <b>{username}:</b>
-                    {' '}
-                    <span>{message.body}</span>
-                  </div>
-                );
-              })
+              channelMessages.map((message) => (
+                <div key={message.id} className="text-break mb-2">
+                  <b>{message.username || 'User'}:</b>{' '}
+                  <span>{message.body}</span>
+                </div>
+              ))
             )}
           </div>
           <div className="p-3 border-top bg-white">

@@ -19,7 +19,7 @@ const MessageForm = () => {
 
     try {
       const filteredMessage = filterProfanity(message.trim());
-      const username = user?.login || user?.username || user?.name || 'User';
+      const username = user?.username || localStorage.getItem('username') || 'User';
       
       const messageData = {
         body: filteredMessage,
