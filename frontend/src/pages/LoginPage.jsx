@@ -69,9 +69,14 @@ const LoginPage = () => {
                             type="text"
                             id="username"
                             name="username"
-                            className="form-control"
+                            className={`form-control ${authError ? 'is-invalid' : ''}`}
                             data-testid="username-field"
                           />
+                          {authError && (
+                            <div className="invalid-feedback">
+                              {t('loginPage.error')}
+                            </div>
+                          )}
                           <ErrorMessage name="username" component="div" className="text-danger small" />
                         </div>
 
@@ -81,9 +86,14 @@ const LoginPage = () => {
                             type="password"
                             id="password"
                             name="password"
-                            className="form-control"
+                            className={`form-control ${authError ? 'is-invalid' : ''}`}
                             data-testid="password-field"
                           />
+                          {authError && (
+                            <div className="invalid-feedback">
+                              {t('loginPage.error')}
+                            </div>
+                          )}
                           <ErrorMessage name="password" component="div" className="text-danger small" />
                         </div>
 
