@@ -31,12 +31,8 @@ const ChatPage = () => {
       socketService.connect(token);
       
       const handleNewMessage = (newMessage) => {
-        let username = newMessage.username || newMessage.name || newMessage.login || 'User';
-        
-        const messageWithUsername = {
-          ...newMessage,
-          username,
-        };
+        const username = newMessage.username || 'User';
+        const messageWithUsername = { ...newMessage, username };
         dispatch(addMessage(messageWithUsername));
       };
 
@@ -111,17 +107,12 @@ const ChatPage = () => {
             ) : channelMessages.length === 0 ? (
               <div></div>
             ) : (
-              channelMessages.map((message) => {
-                let username = message.username || message.name || message.login || 'User';
-                
-                return (
-                  <div key={message.id} className="text-break mb-2">
-                    <b>{username}:</b>
-                    {' '}
-                    <span>{message.body}</span>
-                  </div>
-                );
-              })
+              channelMessages.map((message) => (
+                <div key={message.id} className="text-break mb-2">
+                  <b>{message.username || 'User'}:</b>{' '}
+                  <span>{message.body}</span>
+                </div>
+              ))
             )}
           </div>
           <div className="p-3 border-top bg-white">

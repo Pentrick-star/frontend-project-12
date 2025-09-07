@@ -1,0 +1,55 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - generic [ref=e5]:
+        - link "Hexlet Chat" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - generic [ref=e7]:
+          - generic [ref=e8]: admin
+          - button "Выйти" [ref=e9] [cursor=pointer]
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: Каналы
+          - button "Добавить канал" [ref=e17] [cursor=pointer]:
+            - generic [ref=e18] [cursor=pointer]: +
+        - list [ref=e19]:
+          - listitem [ref=e20]:
+            - button "general" [ref=e22] [cursor=pointer]:
+              - generic [ref=e23] [cursor=pointer]: "#"
+              - text: general
+          - listitem [ref=e24]:
+            - button "random" [ref=e26] [cursor=pointer]:
+              - generic [ref=e27] [cursor=pointer]: "#"
+              - text: random
+          - listitem [ref=e28]:
+            - generic [ref=e29]:
+              - button "new test channel" [ref=e30] [cursor=pointer]:
+                - generic [ref=e31] [cursor=pointer]: "#"
+                - text: new test channel
+              - button "Управление каналом" [ref=e32] [cursor=pointer]:
+                - generic [ref=e33] [cursor=pointer]: 
+                - generic [ref=e34] [cursor=pointer]: Управление каналом
+          - listitem [ref=e35]:
+            - generic [ref=e36]:
+              - button "test channel" [ref=e37] [cursor=pointer]:
+                - generic [ref=e38] [cursor=pointer]: "#"
+                - text: test channel
+              - button "Управление каналом" [ref=e39] [cursor=pointer]:
+                - generic [ref=e40] [cursor=pointer]: 
+                - generic [ref=e41] [cursor=pointer]: Управление каналом
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e45]: "# general"
+          - generic [ref=e46]: 0 сообщений
+        - generic [ref=e49]:
+          - textbox "Новое сообщение" [ref=e50]
+          - button "→ Отправить" [disabled]:
+            - text: →
+            - generic: Отправить
+    - region "Notifications Alt+T"
+  - region "Notifications Alt+T"
+```

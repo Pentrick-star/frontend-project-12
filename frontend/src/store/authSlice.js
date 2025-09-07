@@ -19,7 +19,14 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: localStorage.getItem('token'),
-    user: null,
+    user: (() => {
+      try {
+        const storedUsername = localStorage.getItem('username');
+        return storedUsername ? { username: storedUsername } : null;
+      } catch {
+        return null;
+      }
+    })(),
   },
   reducers: {
     setToken: (state, action) => {
@@ -28,18 +35,28 @@ const authSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload;
+      if (action.payload?.username) {
+        localStorage.setItem('username', action.payload.username);
+      }
     },
     logout: (state) => {
       state.token = null;
       state.user = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('username');
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.fulfilled, (state, action) => {
+    .addCase(fetchUser.fulfilled, (state, action) => {
+      const fetchedUsername = action.payload?.username || action.payload?.name || action.payload?.login;
+      if (fetchedUsername) {
+        state.user = { username: fetchedUsername };
+        localStorage.setItem('username', fetchedUsername);
+      } else {
         state.user = action.payload;
-      });
+      }
+    });
   },
 });
 
