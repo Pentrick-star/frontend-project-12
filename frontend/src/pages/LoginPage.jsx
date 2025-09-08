@@ -22,7 +22,7 @@ const LoginPage = () => {
     try {
       setAuthError('');
       const response = await api.post('/login', values);
-      
+
       if (response.status === 200 && response.data.token) {
         const { token } = response.data;
         const username = response.data.username || values.username;
@@ -32,8 +32,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error('Login error:', error);
-      const errorMessage = t('loginPage.error');
-      setAuthError(errorMessage);
+      setAuthError(t('loginPage.error'));
     } finally {
       setSubmitting(false);
     }
@@ -46,13 +45,21 @@ const LoginPage = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src="https://frontend-chat-ru.hexlet.app/assets/avatar-DIE1AEpS.jpg" alt="Login illustration" className="img-fluid" />
+                <img
+                  src="https://frontend-chat-ru.hexlet.app/assets/avatar-DIE1AEpS.jpg"
+                  alt="Login illustration"
+                  className="img-fluid"
+                />
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <div className="text-center">
                   <h2 className="text-center mb-4">{t('loginPage.title')}</h2>
                   {authError && (
-                    <div className="alert alert-danger" role="alert" data-testid="login-error">
+                    <div
+                      className="alert alert-danger"
+                      role="alert"
+                      data-testid="login-error"
+                    >
                       {authError}
                     </div>
                   )}
@@ -64,7 +71,9 @@ const LoginPage = () => {
                     {({ isSubmitting }) => (
                       <Form>
                         <div className="mb-3">
-                          <label htmlFor="username" className="form-label">{t('loginPage.usernamePlaceholder')}</label>
+                          <label htmlFor="username" className="form-label">
+                            {t('loginPage.usernamePlaceholder')}
+                          </label>
                           <Field
                             type="text"
                             id="username"
@@ -72,11 +81,17 @@ const LoginPage = () => {
                             className={`form-control ${authError ? 'is-invalid' : ''}`}
                             data-testid="username-field"
                           />
-                          <ErrorMessage name="username" component="div" className="text-danger small" />
+                          <ErrorMessage
+                            name="username"
+                            component="div"
+                            className="text-danger small"
+                          />
                         </div>
 
                         <div className="mb-4">
-                          <label htmlFor="password" className="form-label">{t('loginPage.passwordPlaceholder')}</label>
+                          <label htmlFor="password" className="form-label">
+                            {t('loginPage.passwordPlaceholder')}
+                          </label>
                           <Field
                             type="password"
                             id="password"
@@ -84,12 +99,16 @@ const LoginPage = () => {
                             className={`form-control ${authError ? 'is-invalid' : ''}`}
                             data-testid="password-field"
                           />
-                          <ErrorMessage name="password" component="div" className="text-danger small" />
+                          <ErrorMessage
+                            name="password"
+                            component="div"
+                            className="text-danger small"
+                          />
                         </div>
 
-                        <button 
-                          type="submit" 
-                          disabled={isSubmitting} 
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
                           className="w-100 btn btn-primary"
                           data-testid="login-button"
                         >
@@ -99,7 +118,8 @@ const LoginPage = () => {
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span>{t('loginPage.noAcc')}</span> <Link to="/signup">{t('loginPage.signupLink')}</Link>
+                    <span>{t('loginPage.noAcc')}</span>{' '}
+                    <Link to="/signup">{t('loginPage.signupLink')}</Link>
                   </div>
                 </div>
               </div>

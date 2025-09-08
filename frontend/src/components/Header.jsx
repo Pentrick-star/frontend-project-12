@@ -23,15 +23,12 @@ const Header = () => {
           {t('title')}
         </Link>
         {(user || token) && (
-          <div className="d-flex align-items-center">
-            <span className="navbar-text me-3">{user?.username || 'User'}</span>
-            <button 
-              onClick={handleLogout} 
-              className="btn btn-primary"
-            >
-              {t('logoutBtn')}
-            </button>
-          </div>
+          <button 
+            onClick={handleLogout} 
+            className="btn btn-primary"
+          >
+            {t('logoutBtn')}
+          </button>
         )}
       </div>
     </nav>

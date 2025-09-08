@@ -57,14 +57,13 @@ const MessageForm = () => {
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={t('messagePlaceholder')}
-        disabled={loading}
         className="form-control"
         name="body"
         aria-label={t('newMessage')}
       />
       <button 
         type="submit" 
-        disabled={loading || !message.trim()} 
+        disabled={!message.trim()} 
         className="btn btn-outline-secondary"
       >
         {loading ? (
