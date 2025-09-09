@@ -37,8 +37,10 @@ const ChatPage = () => {
       };
 
       const handleNewChannel = (newChannel) => {
+        // При получении события создания канала по сокету
+        // добавляем канал, но НЕ переключаемся на него.
+        // Переключение выполняется только инициатором в createChannel.fulfilled
         dispatch(addChannel(newChannel));
-        dispatch(setCurrentChannel(newChannel.id));
       };
 
       const handleRemoveChannel = (channelId) => {
