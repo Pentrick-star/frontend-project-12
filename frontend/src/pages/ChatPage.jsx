@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { fetchChannels, addChannel, removeChannelById, updateChannel, setCurrentChannel } from '../store/channelsSlice';
+import { fetchChannels, addChannel, removeChannelById, updateChannel } from '../store/channelsSlice';
 import { fetchMessages, addMessage } from '../store/messagesSlice';
 import ChannelsList from '../components/ChannelsList';
 import MessageForm from '../components/MessageForm';
@@ -11,7 +11,6 @@ const ChatPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
-  const currentUser = useSelector((state) => state.auth.user);
   const { items: channels, currentChannelId, loading: channelsLoading } = useSelector((state) => state.channels);
   const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages);
 

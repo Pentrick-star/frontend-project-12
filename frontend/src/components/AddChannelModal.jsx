@@ -35,7 +35,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       await dispatch(createChannel({ name: filteredName })).unwrap();
       resetForm();
       onClose();
-    } catch (error) {
+    } catch {
       // Не закрываем модальное окно при ошибке
     } finally {
       setSubmitting(false);
