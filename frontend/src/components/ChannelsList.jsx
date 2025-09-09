@@ -94,11 +94,10 @@ const ChannelsList = () => {
                   type="button"
                   className="btn btn-sm text-dark p-0"
                   onClick={(e) => handleDropdownToggle(channel.id, e)}
-                  aria-label="Управление каналом"
                   data-testid="manage-channel-button"
                 >
-                  <i className="bi bi-chevron-down" aria-hidden="true"></i>
-                  <span className="visually-hidden">Управление каналом</span>
+                  <i className="bi bi-chevron-down"></i>
+                  <span className="ms-1">Управление каналом</span>
                 </button>
               )}
             </div>

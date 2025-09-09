@@ -60,7 +60,7 @@ const LoginPage = () => {
                       role="alert"
                       data-testid="login-error"
                     >
-                      {authError}
+                      {t('loginPage.error')}
                     </div>
                   )}
                   <Formik

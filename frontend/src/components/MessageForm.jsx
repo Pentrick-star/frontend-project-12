@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { addMessage } from '../store/messagesSlice';
 import { filterProfanity } from '../utils/profanityFilter';
-import socketService from '../services/socket';
+import api from '../services/api';
 
 const MessageForm = () => {
   const { t } = useTranslation();
   const [message, setMessage] = useState('');
-  const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
-  const { loading } = useSelector((state) => state.messages);
   const user = useSelector((state) => state.auth.user);
   
   const handleSubmit = async (e) => {
@@ -26,16 +23,10 @@ const MessageForm = () => {
         channelId: currentChannelId,
         username,
       };
-      
-      socketService.emit('newMessage', messageData);
-      
-      // Добавляем сообщение локально для отправителя
-      const localMessage = {
-        id: Date.now(),
-        ...messageData,
-        createdAt: new Date().toISOString(),
-      };
-      dispatch(addMessage(localMessage));
+
+      // Отправляем на сервер HTTP-запросом — сервер сам разошлёт по сокету всем клиентам
+      await api.post('/messages', messageData);
+
       setMessage('');
     } catch (error) {
       console.error('Failed to send message:', error);
@@ -66,16 +57,9 @@ const MessageForm = () => {
         disabled={!message.trim()} 
         className="btn btn-outline-secondary"
       >
-        {loading ? (
-          <>
-            <output className="spinner-border spinner-border-sm me-1" aria-hidden="true"></output>
-            <span className="visually-hidden">{t('messageBtnText')}</span>
-          </>
-        ) : (
-          <>
-            →<span className="visually-hidden">{t('messageBtnText')}</span>
-          </>
-        )}
+        <>
+          →<span className="visually-hidden">{t('messageBtnText')}</span>
+        </>
       </button>
     </form>
   );
