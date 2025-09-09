@@ -37,9 +37,8 @@ const ChatPage = () => {
       };
 
       const handleNewChannel = (newChannel) => {
-        dispatch(addChannel(newChannel));
-        dispatch(setCurrentChannel(newChannel.id));
-      };
+      dispatch(addChannel(newChannel));
+    };
 
       const handleRemoveChannel = (channelId) => {
         dispatch(removeChannelById(channelId));

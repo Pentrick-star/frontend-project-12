@@ -28,14 +28,18 @@
               - button "new test channel" [ref=e28] [cursor=pointer]:
                 - generic [ref=e29] [cursor=pointer]: "#"
                 - text: new test channel
-              - button "Управление каналом" [ref=e30] [cursor=pointer]:
-                - generic [ref=e31] [cursor=pointer]: Управление каналом
-      - generic [ref=e32]:
-        - generic [ref=e33]:
-          - generic [ref=e35]: "# general"
-          - generic [ref=e36]: 0 сообщений
+              - button " Управление каналом" [ref=e30] [cursor=pointer]:
+                - generic [ref=e31] [cursor=pointer]: 
+                - generic [ref=e32] [cursor=pointer]: Управление каналом
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - generic [ref=e36]: "# general"
+          - generic [ref=e37]: 1 сообщений
         - generic [ref=e39]:
-          - textbox "Новое сообщение" [ref=e40]
+          - generic [ref=e40]: "admin:"
+          - generic [ref=e41]: hello
+        - generic [ref=e43]:
+          - textbox "Новое сообщение" [ref=e44]
           - button "→ Отправить" [disabled]:
             - text: →
             - generic: Отправить
