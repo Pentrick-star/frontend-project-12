@@ -1,0 +1,7 @@
+node_modules
+frontend/dist
+tmp
+test-results
+playwright-report
+coverage
+__tests__
