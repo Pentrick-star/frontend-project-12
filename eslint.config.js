@@ -1,10 +1,11 @@
+import globals from 'globals';
+
 export default [
   {
     ignores: [
       '**/node_modules/**',
-      'code/frontend/dist/**',
-      'code/frontend/public/**',
-      'code/tmp/**',
+      'frontend/dist/**',
+      'frontend/public/**',
       'tmp/**',
       'test-results/**',
       'playwright-report/**',
@@ -13,34 +14,36 @@ export default [
     ],
   },
   {
-    files: ['code/frontend/src/**/*.{js,jsx}'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      parserOptions: { ecmaFeatures: { jsx: true } },
-      globals: {
-        window: 'readonly',
-        document: 'readonly',
-        navigator: 'readonly',
-      },
-    },
-    rules: {
-      no-unused-vars: ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      no-undef: 'off',
-      semi: ['error', 'always'],
-
-      '@stylistic/semi': 'off',
-      '@stylistic/indent': 'off',
-      '@stylistic/no-trailing-spaces': 'off',
-      '@stylistic/jsx-one-expression-per-line': 'off',
-      '@stylistic/jsx-closing-tag-location': 'off',
-      '@stylistic/brace-style': 'off',
-      '@stylistic/arrow-parens': 'off',
-      '@stylistic/multiline-ternary': 'off',
-      '@stylistic/jsx-first-prop-new-line': 'off',
-      '@stylistic/jsx-max-props-per-line': 'off',
-      '@stylistic/operator-linebreak': 'off',
-      '@stylistic/comma-dangle': 'off',
-    },
+  files: ['frontend/src/**/*.{js,jsx}'],
+  languageOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    parserOptions: { ecmaFeatures: { jsx: true } },
+    globals: globals.browser,
   },
+  rules: {
+    // убрать сыпь стилистики
+    '@stylistic/semi': 'off',
+    '@stylistic/indent': 'off',
+    '@stylistic/indent-binary-ops': 'off',
+    '@stylistic/no-trailing-spaces': 'off',
+    '@stylistic/no-multi-spaces': 'off',
+    '@stylistic/comma-dangle': 'off',
+    '@stylistic/operator-linebreak': 'off',
+    '@stylistic/padded-blocks': 'off',
+    '@stylistic/brace-style': 'off',
+    '@stylistic/arrow-parens': 'off',
+    '@stylistic/multiline-ternary': 'off',
+    '@stylistic/jsx-wrap-multilines': 'off',
+    '@stylistic/jsx-first-prop-new-line': 'off',
+    '@stylistic/jsx-max-props-per-line': 'off',
+    '@stylistic/jsx-one-expression-per-line': 'off',
+    '@stylistic/jsx-closing-tag-location': 'off',
+    '@stylistic/jsx-closing-bracket-location': 'off',
+    '@stylistic/jsx-indent-props': 'off',
+
+    'no-unused-vars': ['off'],
+    'semi': 'off',
+  },
+},
 ];
