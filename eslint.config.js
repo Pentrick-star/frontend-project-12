@@ -22,8 +22,6 @@ export default [
     globals: globals.browser,
   },
   rules: {
-    // убрать сыпь стилистики
-    '@stylistic/semi': 'off',
     '@stylistic/indent': 'off',
     '@stylistic/indent-binary-ops': 'off',
     '@stylistic/no-trailing-spaces': 'off',
@@ -43,7 +41,7 @@ export default [
     '@stylistic/jsx-indent-props': 'off',
 
     'no-unused-vars': ['off'],
-    'semi': 'off',
+    "semi": ["error", "always"],
   },
 },
 ];
