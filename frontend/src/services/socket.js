@@ -1,13 +1,13 @@
-import { io } from 'socket.io-client';
+import { io } from 'socket.io-client'
 
 class SocketService {
   constructor() {
-    this.socket = null;
+    this.socket = null
   }
 
   connect(token) {
     // Подключаемся к backend серверу на порту 5001
-    const wsUrl = 'http://localhost:5001';
+    const wsUrl = 'http://localhost:5001'
     
     try {
       this.socket = io(wsUrl, {
@@ -22,69 +22,69 @@ class SocketService {
         reconnection: true,
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
-      });
+      })
 
       // Добавляем обработчики ошибок
       this.socket.on('connect_error', (error) => {
-        console.error('WebSocket connection error:', error);
-      });
+        console.error('WebSocket connection error:', error)
+      })
 
       this.socket.on('disconnect', (reason) => {
-        console.log('WebSocket disconnected:', reason);
-      });
+        console.log('WebSocket disconnected:', reason)
+      })
     } catch (error) {
-      console.error('Failed to create WebSocket connection:', error);
+      console.error('Failed to create WebSocket connection:', error)
     }
   }
 
   disconnect() {
     if (this.socket) {
-      this.socket.disconnect();
-      this.socket = null;
+      this.socket.disconnect()
+      this.socket = null
     }
   }
 
   onNewMessage(callback) {
     if (this.socket) {
       // Убираем предыдущий обработчик, если он есть
-      this.socket.off('newMessage');
+      this.socket.off('newMessage')
       this.socket.on('newMessage', (message) => {
-        callback(message);
-      });
+        callback(message)
+      })
     }
   }
 
   onNewChannel(callback) {
     if (this.socket) {
       // Убираем предыдущий обработчик, если он есть
-      this.socket.off('newChannel');
+      this.socket.off('newChannel')
       this.socket.on('newChannel', (data) => {
-        callback(data);
-      });
+        callback(data)
+      })
     }
   }
 
   onRemoveChannel(callback) {
     if (this.socket) {
       // Убираем предыдущий обработчик, если он есть
-      this.socket.off('removeChannel');
-      this.socket.on('removeChannel', callback);
+      this.socket.off('removeChannel')
+      this.socket.on('removeChannel', callback)
     }
   }
 
   onRenameChannel(callback) {
     if (this.socket) {
       // Убираем предыдущий обработчик, если он есть
-      this.socket.off('renameChannel');
-      this.socket.on('renameChannel', callback);
+      this.socket.off('renameChannel')
+      this.socket.on('renameChannel', callback)
     }
   }
 
   emit(event, data) {
     if (this.socket) {
-      this.socket.emit(event, data);
+      this.socket.emit(event, data)
     }
   }
 }
 
-export default new SocketService();
+export default new SocketService()
