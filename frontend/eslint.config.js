@@ -11,6 +11,11 @@ export default defineConfig([
     extends: ['js/recommended'],
     languageOptions: {
       globals: globals.browser,
+      sourceType: 'module',
+      ecmaVersion: 'latest',
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
     },
   },
   {
@@ -19,6 +24,10 @@ export default defineConfig([
       react: {
         version: 'detect',
       },
+    },
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-vars': 'error',
     },
   },
 ])
