@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 import { renameChannel } from '../store/channelsSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 
@@ -199,6 +200,15 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
     </div>
   </>
   );
+};
+
+RenameChannelModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  channel: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default RenameChannelModal;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import { removeChannel } from '../store/channelsSlice';
 
 const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
@@ -99,6 +100,15 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
       </div>
     </>
   );
+};
+
+RemoveChannelModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  channel: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default RemoveChannelModal;

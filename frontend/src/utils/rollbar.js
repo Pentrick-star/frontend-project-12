@@ -4,6 +4,6 @@ const rollbar = {
   info: () => {},
   warning: () => {},
   debug: () => {},
-};
+}
 
-export default rollbar;
+export default rollbar

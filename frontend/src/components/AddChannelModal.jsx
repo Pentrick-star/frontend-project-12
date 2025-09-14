@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 import { createChannel } from '../store/channelsSlice';
 import { filterProfanity } from '../utils/profanityFilter';
 
@@ -133,6 +134,11 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       </div>
     </>
   );
+};
+
+AddChannelModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default AddChannelModal;
