@@ -8,7 +8,8 @@ export const fetchMessages = createAsyncThunk(
     try {
       const response = await api.get('/messages')
       return response.data
-    } catch (error) {
+    } 
+    catch (error) {
       toast.error('Ошибка загрузки данных')
       return rejectWithValue(error.message)
     }
@@ -21,7 +22,8 @@ export const sendMessage = createAsyncThunk(
     try {
       const response = await api.post('/messages', messageData)
       return response.data
-    } catch (error) {
+    } 
+    catch (error) {
       toast.error('Ошибка отправки сообщения')
       return rejectWithValue(error.message)
     }

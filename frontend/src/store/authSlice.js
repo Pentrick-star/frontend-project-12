@@ -23,7 +23,8 @@ const authSlice = createSlice({
       try {
         const storedUsername = localStorage.getItem('username')
         return storedUsername ? { username: storedUsername } : null
-      } catch {
+      } 
+      catch {
         return null
       }
     })(),
@@ -53,7 +54,8 @@ const authSlice = createSlice({
         if (fetchedUsername) {
           state.user = { username: fetchedUsername }
           localStorage.setItem('username', fetchedUsername)
-        } else {
+        } 
+        else {
           state.user = action.payload
         }
       })

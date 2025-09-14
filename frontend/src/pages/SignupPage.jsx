@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import api from '../services/api';
-import { setToken, setUser } from '../store/authSlice';
+import React, { useState } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import api from '../services/api'
+import { setToken, setUser } from '../store/authSlice'
 
 const SignupPage = () => {
-  const { t } = useTranslation();
-  const [signupError, setSignupError] = useState('');
+  const { t } = useTranslation()
+  const [signupError, setSignupError] = useState('')
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const validationSchema = Yup.object({
     username: Yup.string()
@@ -25,42 +25,42 @@ const SignupPage = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], t('signupPage.confirmPasswordPlaceholder'))
       .required(t('signupPage.required')),
-  });
+  })
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      setSignupError('');
+      setSignupError('')
       const response = await api.post('/signup', {
         username: values.username,
         password: values.password,
-      });
+      })
       
       // После успешной регистрации сразу входим
       if (response.status === 201 || response.status === 200) {
         const loginResponse = await api.post('/login', {
           username: values.username,
           password: values.password,
-        });
+        })
         
         if (loginResponse.data.token) {
-          console.log('SignupPage - login successful, token:', loginResponse.data.token);
-          const { token } = loginResponse.data;
-          const username = loginResponse.data.username || values.username;
-          dispatch(setToken(token));
-          dispatch(setUser({ username }));
-          navigate('/');
+          console.log('SignupPage - login successful, token:', loginResponse.data.token)
+          const { token } = loginResponse.data
+          const username = loginResponse.data.username || values.username
+          dispatch(setToken(token))
+          dispatch(setUser({ username }))
+          navigate('/')
         }
       }
     } catch (error) {
       if (error.response?.status === 409) {
-        setSignupError(t('signupPage.signupError'));
+        setSignupError(t('signupPage.signupError'))
       } else {
-        setSignupError(t('networkError'));
+        setSignupError(t('networkError'))
       }
     } finally {
-      setSubmitting(false);
+      setSubmitting(false)
     }
-  };
+  }
 
   return (
     <div className="container-fluid h-100" data-testid="signup-page">
@@ -134,7 +134,9 @@ const SignupPage = () => {
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span>{t('signupPage.hasAcc')}</span> <Link to="/login">{t('signupPage.loginLink')}</Link>
+                    <span>{t('signupPage.hasAcc')}</span>
+                    
+                    <Link to="/login">{t('signupPage.loginLink')}</Link>
                   </div>
                 </div>
               </div>
@@ -143,7 +145,7 @@ const SignupPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignupPage;
+export default SignupPage

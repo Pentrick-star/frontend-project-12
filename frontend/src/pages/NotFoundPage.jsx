@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const NotFoundPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <div className="container-fluid h-100" style={{ backgroundColor: '#f5f7fa' }}>
@@ -22,7 +22,7 @@ const NotFoundPage = () => {
                     style={{ 
                       backgroundColor: '#007bff', 
                       borderColor: '#007bff',
-                      color: '#ffffff'
+                      color: '#ffffff',
                     }}
                   >
                     {t('common.back')}
@@ -34,7 +34,7 @@ const NotFoundPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NotFoundPage;
+export default NotFoundPage

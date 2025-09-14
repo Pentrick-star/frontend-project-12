@@ -1,42 +1,42 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import api from '../services/api';
-import { setToken, setUser } from '../store/authSlice';
+import React, { useState } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import api from '../services/api'
+import { setToken, setUser } from '../store/authSlice'
 
 const LoginPage = () => {
-  const { t } = useTranslation();
-  const [authError, setAuthError] = useState('');
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const [authError, setAuthError] = useState('')
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const validationSchema = Yup.object({
     username: Yup.string().required(t('signupPage.required')),
     password: Yup.string().required(t('signupPage.required')),
-  });
+  })
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      setAuthError('');
-      const response = await api.post('/login', values);
+      setAuthError('')
+      const response = await api.post('/login', values)
 
       if (response.status === 200 && response.data.token) {
-        const { token } = response.data;
-        const username = response.data.username || values.username;
-        dispatch(setToken(token));
-        dispatch(setUser({ username }));
-        navigate('/');
+        const { token } = response.data
+        const username = response.data.username || values.username
+        dispatch(setToken(token))
+        dispatch(setUser({ username }))
+        navigate('/')
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setAuthError(t('loginPage.error'));
+      console.error('Login error:', error)
+      setAuthError(t('loginPage.error'))
     } finally {
-      setSubmitting(false);
+      setSubmitting(false)
     }
-  };
+  }
 
   return (
     <div className="container-fluid h-100">
@@ -118,7 +118,8 @@ const LoginPage = () => {
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span>{t('loginPage.noAcc')}</span>{' '}
+                    <span>{t('loginPage.noAcc')}</span>
+                    
                     <Link to="/signup">{t('loginPage.signupLink')}</Link>
                   </div>
                 </div>
@@ -128,7 +129,7 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

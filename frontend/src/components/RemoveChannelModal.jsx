@@ -1,39 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import PropTypes from 'prop-types';
-import { removeChannel } from '../store/channelsSlice';
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import PropTypes from 'prop-types'
+import { removeChannel } from '../store/channelsSlice'
 
 const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const [isRemoving, setIsRemoving] = useState(false);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const [isRemoving, setIsRemoving] = useState(false)
 
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = e => {
       if (e.key === 'Escape') {
-        onClose();
+        onClose()
       }
-    };
+    }
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleEscape)
+      return () => document.removeEventListener('keydown', handleEscape)
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose])
 
   const handleRemove = async () => {
     try {
-      setIsRemoving(true);
-      await dispatch(removeChannel(channel.id)).unwrap();
-      onClose();
+      setIsRemoving(true)
+      await dispatch(removeChannel(channel.id)).unwrap()
+      onClose()
     } catch (error) {
-      console.error('Failed to remove channel:', error);
+      console.error('Failed to remove channel:', error)
       // Ошибка уже обрабатывается в slice через toast
     } finally {
-      setIsRemoving(false);
+      setIsRemoving(false)
     }
-  };
+  }
 
   if (!isOpen || !channel) return null;
 
@@ -43,7 +43,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
         className="modal-backdrop fade show"
         onClick={onClose}
         style={{ zIndex: 1040 }}
-      ></div>
+      />
       <div
         className="modal fade show"
         style={{ display: 'block', zIndex: 1050 }}
@@ -60,7 +60,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
                 className="btn-close"
                 onClick={onClose}
                 aria-label="Close"
-              ></button>
+              />
             </div>
             <div className="modal-body">
               <p>
@@ -81,26 +81,27 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
                 disabled={isRemoving}
                 className="btn btn-danger"
               >
-                {isRemoving ? (
-                  <>
-                    <span
-                      className="spinner-border spinner-border-sm me-2"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    {t('loading.deleting')}
-                  </>
-                ) : (
-                  t('modals.deleteBtns.delete')
-                )}
+                {isRemoving 
+                  ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        {t('loading.deleting')}
+                      </>
+                    ) 
+                  : t('modals.deleteBtns.delete')
+                }
               </button>
             </div>
           </div>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 RemoveChannelModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
@@ -109,6 +110,6 @@ RemoveChannelModal.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-};
+}
 
-export default RemoveChannelModal;
+export default RemoveChannelModal

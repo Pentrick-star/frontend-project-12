@@ -1,63 +1,63 @@
-import React, { useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
-import PropTypes from 'prop-types';
-import { createChannel } from '../store/channelsSlice';
-import { filterProfanity } from '../utils/profanityFilter';
+import React, { useEffect } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import * as Yup from 'yup'
+import PropTypes from 'prop-types'
+import { createChannel } from '../store/channelsSlice'
+import { filterProfanity } from '../utils/profanityFilter'
 
 const AddChannelModal = ({ isOpen, onClose }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channels.items);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const channels = useSelector(state => state.channels.items)
 
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(3, t('modals.addErrors.min'))
       .max(20, t('modals.addErrors.max'))
       .required(t('modals.addErrors.required'))
-      .test('not-only-spaces', t('modals.addErrors.required'), function(value) {
-        if (!value) return false;
-        return value.trim().length >= 3;
+      .test('not-only-spaces', t('modals.addErrors.required'), function (value) {
+        if (!value) return false
+        return value.trim().length >= 3
       })
-      .test('unique', t('modals.addErrors.repeats'), function(value) {
-        if (!value) return true;
+      .test('unique', t('modals.addErrors.repeats'), function (value) {
+        if (!value) return true
         return !channels.some(channel => 
           channel.name.toLowerCase() === value.toLowerCase()
-        );
+        )
       }),
-  });
+  })
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const trimmedName = values.name.trim();
-      const filteredName = filterProfanity(trimmedName);
-      await dispatch(createChannel({ name: filteredName })).unwrap();
-      resetForm();
-      onClose();
+      const trimmedName = values.name.trim()
+      const filteredName = filterProfanity(trimmedName)
+      await dispatch(createChannel({ name: filteredName })).unwrap()
+      resetForm()
+      onClose()
     } catch {
       // Не закрываем модальное окно при ошибке
     } finally {
-      setSubmitting(false);
+      setSubmitting(false)
     }
-  };
+  }
 
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = e => {
       if (e.key === 'Escape') {
-        onClose();
+        onClose()
       }
-    };
+    }
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleEscape)
+      return () => document.removeEventListener('keydown', handleEscape)
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose])
 
   if (!isOpen) {
-    return null;
+    return null
   }
 
   return (
@@ -66,19 +66,24 @@ const AddChannelModal = ({ isOpen, onClose }) => {
         className="modal-backdrop fade show" 
         onClick={onClose} 
         style={{ zIndex: 1040 }}
-      ></div>
-      <div className="modal fade show" style={{ display: 'block', zIndex: 1050, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }} tabIndex="-1" data-testid="add-channel-modal">
+      />
+      <div 
+        className="modal fade show" 
+        style={{ display: 'block', zIndex: 1050, position: 'fixed', top: 0, left: 0, width: '100%', height: '100%' }} 
+        tabIndex="-1" 
+        data-testid="add-channel-modal"
+      >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-          <div className="modal-header">
-            <div className="modal-title h5">{t('modals.titles.addingChannel')}</div>
-                          <button 
+            <div className="modal-header">
+              <div className="modal-title h5">{t('modals.titles.addingChannel')}</div>
+              <button 
                 type="button" 
                 className="btn-close" 
                 onClick={onClose} 
                 aria-label="Close"
-              ></button>
-          </div>
+              />
+            </div>
           <Formik
             initialValues={{ name: '' }}
             validationSchema={validationSchema}
@@ -88,7 +93,13 @@ const AddChannelModal = ({ isOpen, onClose }) => {
               <Form data-testid="add-channel-form">
                 <div className="modal-body">
                   <div className="mb-3">
-                    <label htmlFor="channelName" className="form-label" style={{ fontSize: '1px', color: '#000', margin: '0', padding: '0', height: '1px', overflow: 'hidden' }}>{t('modals.addLabel')}</label>
+                    <label 
+                      htmlFor="channelName" 
+                      className="form-label" 
+                      style={{ fontSize: '1px', color: '#000', margin: '0', padding: '0', height: '1px', overflow: 'hidden' }}
+                    >
+                      {t('modals.addLabel')}
+                    </label>
                     <Field
                       type="text"
                       id="channelName"
@@ -116,14 +127,19 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                     className="btn btn-primary"
                     data-testid="submit-button"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                        {t('loading.creating')}
-                      </>
-                    ) : (
-                      t('modals.addBtns.submit')
-                    )}
+                    {isSubmitting 
+                      ? (
+                          <>
+                            <span 
+                              className="spinner-border spinner-border-sm me-2" 
+                              role="status" 
+                              aria-hidden="true"
+                            />
+                            {t('loading.creating')}
+                          </>
+                        ) 
+                      : t('modals.addBtns.submit')
+                    }
                   </button>
                 </div>
               </Form>
@@ -133,12 +149,12 @@ const AddChannelModal = ({ isOpen, onClose }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 AddChannelModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-};
+}
 
-export default AddChannelModal;
+export default AddChannelModal

@@ -1,59 +1,59 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { setCurrentChannel } from '../store/channelsSlice';
-import AddChannelModal from './AddChannelModal';
-import RenameChannelModal from './RenameChannelModal';
-import RemoveChannelModal from './RemoveChannelModal';
+import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { setCurrentChannel } from '../store/channelsSlice'
+import AddChannelModal from './AddChannelModal'
+import RenameChannelModal from './RenameChannelModal'
+import RemoveChannelModal from './RemoveChannelModal'
 
 const ChannelsList = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { items: channels, currentChannelId } = useSelector((state) => state.channels);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { items: channels, currentChannelId } = useSelector(state => state.channels)
 
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showRenameModal, setShowRenameModal] = useState(false);
-  const [showRemoveModal, setShowRemoveModal] = useState(false);
-  const [selectedChannel, setSelectedChannel] = useState(null);
-  const [showDropdown, setShowDropdown] = useState(null);
-  const dropdownRef = useRef(null);
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [showRenameModal, setShowRenameModal] = useState(false)
+  const [showRemoveModal, setShowRemoveModal] = useState(false)
+  const [selectedChannel, setSelectedChannel] = useState(null)
+  const [showDropdown, setShowDropdown] = useState(null)
+  const dropdownRef = useRef(null)
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(null);
+        setShowDropdown(null)
       }
-    };
+    }
 
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('click', handleClickOutside)
     return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
 
-  const handleChannelClick = (channelId) => {
-    dispatch(setCurrentChannel(channelId));
-    setShowDropdown(null);
-  };
+  const handleChannelClick = channelId => {
+    dispatch(setCurrentChannel(channelId))
+    setShowDropdown(null)
+  }
 
   const handleDropdownToggle = (channelId, e) => {
-    e.stopPropagation();
-    setShowDropdown(showDropdown === channelId ? null : channelId);
-  };
+    e.stopPropagation()
+    setShowDropdown(showDropdown === channelId ? null : channelId)
+  }
 
-  const handleRename = (channel) => {
-    setSelectedChannel(channel);
-    setShowRenameModal(true);
-    setShowDropdown(null);
-  };
+  const handleRename = channel => {
+    setSelectedChannel(channel)
+    setShowRenameModal(true)
+    setShowDropdown(null)
+  }
 
-  const handleRemove = (channel) => {
-    setSelectedChannel(channel);
-    setShowRemoveModal(true);
-    setShowDropdown(null);
-  };
+  const handleRemove = channel => {
+    setSelectedChannel(channel)
+    setShowRemoveModal(true)
+    setShowDropdown(null)
+  }
 
-  const isRemovable = (channel) => channel.name !== 'general' && channel.name !== 'random';
+  const isRemovable = channel => channel.name !== 'general' && channel.name !== 'random'
 
   return (
     <div className="d-flex flex-column h-100">
@@ -74,7 +74,7 @@ const ChannelsList = () => {
       </div>
 
       <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
-        {channels.map((channel) => (
+        {channels.map(channel => (
           <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
             <div className="d-flex justify-content-between align-items-start w-100" ref={dropdownRef}>
               <button
@@ -96,7 +96,7 @@ const ChannelsList = () => {
                   onClick={(e) => handleDropdownToggle(channel.id, e)}
                   data-testid="manage-channel-button"
                 >
-                  <i className="bi bi-chevron-down"></i>
+                  <i className="bi bi-chevron-down" />
                   <span className="ms-1">Управление каналом</span>
                 </button>
               )}
@@ -117,10 +117,10 @@ const ChannelsList = () => {
                   <button
                     type="button"
                     className="dropdown-item"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleRename(channel);
+                    onClick={e => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      handleRename(channel)
                     }}
                     data-testid="rename-channel-button"
                   >
@@ -131,10 +131,10 @@ const ChannelsList = () => {
                   <button
                     type="button"
                     className="dropdown-item text-danger"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleRemove(channel);
+                    onClick={e => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      handleRemove(channel)
                     }}
                   >
                     {t('manageChannelsBtns.delete')}
@@ -149,8 +149,8 @@ const ChannelsList = () => {
       <AddChannelModal
         isOpen={showAddModal}
         onClose={() => {
-          setShowAddModal(false);
-          setShowDropdown(null);
+          setShowAddModal(false)
+          setShowDropdown(null)
         }}
       />
 
@@ -158,8 +158,8 @@ const ChannelsList = () => {
         <RenameChannelModal
           isOpen={showRenameModal}
           onClose={() => {
-            setShowRenameModal(false);
-            setShowDropdown(null);
+            setShowRenameModal(false)
+            setShowDropdown(null)
           }}
           channel={selectedChannel}
         />
@@ -169,14 +169,14 @@ const ChannelsList = () => {
         <RemoveChannelModal
           isOpen={showRemoveModal}
           onClose={() => {
-            setShowRemoveModal(false);
-            setShowDropdown(null);
+            setShowRemoveModal(false)
+            setShowDropdown(null)
           }}
           channel={selectedChannel}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ChannelsList;
+export default ChannelsList

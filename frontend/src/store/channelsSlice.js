@@ -8,7 +8,8 @@ export const fetchChannels = createAsyncThunk(
     try {
       const response = await api.get('/channels')
       return response.data
-    } catch (error) {
+    } 
+    catch (error) {
       if (error.response?.status !== 401) {
         toast.error('Ошибка загрузки данных')
       }
@@ -24,7 +25,8 @@ export const createChannel = createAsyncThunk(
       const response = await api.post('/channels', channelData)
       toast.success('Канал создан')
       return response.data
-    } catch (error) {
+    } 
+    catch (error) {
       toast.error('Ошибка создания канала')
       return rejectWithValue(error.response?.data?.message || error.message)
     }
@@ -38,7 +40,8 @@ export const removeChannel = createAsyncThunk(
       await api.delete(`/channels/${channelId}`)
       toast.success('Канал удалён')
       return channelId
-    } catch (error) {
+    } 
+    catch (error) {
       toast.error('Ошибка удаления канала')
       return rejectWithValue(error.message)
     }
@@ -52,7 +55,8 @@ export const renameChannel = createAsyncThunk(
       const response = await api.patch(`/channels/${channelId}`, { name })
       toast.success('Канал переименован')
       return response.data
-    } catch (error) {
+    } 
+    catch (error) {
       toast.error('Ошибка переименования канала')
       return rejectWithValue(error.message)
     }
