@@ -14,7 +14,7 @@ export const fetchChannels = createAsyncThunk(
       }
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 export const createChannel = createAsyncThunk(
@@ -28,7 +28,7 @@ export const createChannel = createAsyncThunk(
       toast.error('Ошибка создания канала')
       return rejectWithValue(error.response?.data?.message || error.message)
     }
-  }
+  },
 )
 
 export const removeChannel = createAsyncThunk(
@@ -42,7 +42,7 @@ export const removeChannel = createAsyncThunk(
       toast.error('Ошибка удаления канала')
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 export const renameChannel = createAsyncThunk(
@@ -56,7 +56,7 @@ export const renameChannel = createAsyncThunk(
       toast.error('Ошибка переименования канала')
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 const channelsSlice = createSlice({

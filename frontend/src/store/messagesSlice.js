@@ -12,7 +12,7 @@ export const fetchMessages = createAsyncThunk(
       toast.error('Ошибка загрузки данных')
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 export const sendMessage = createAsyncThunk(
@@ -25,7 +25,7 @@ export const sendMessage = createAsyncThunk(
       toast.error('Ошибка отправки сообщения')
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 const messagesSlice = createSlice({
@@ -40,17 +40,17 @@ const messagesSlice = createSlice({
       // Проверяем дублирование по содержимому, каналу и времени (в пределах 1 секунды)
       const newMessage = action.payload
       const now = new Date().getTime()
-      
-      const existingMessage = state.items.find(msg => 
-        msg.body === newMessage.body && 
-        msg.channelId === newMessage.channelId &&
-        msg.username === newMessage.username &&
-        Math.abs(new Date(msg.createdAt || now).getTime() - now) < 1000
+
+      const existingMessage = state.items.find(msg =>
+        msg.body === newMessage.body
+        && msg.channelId === newMessage.channelId
+        && msg.username === newMessage.username
+        && Math.abs(new Date(msg.createdAt || now).getTime() - now) < 1000,
       )
-      
+
       if (!existingMessage) {
         const username = action.payload.username || action.payload.name || action.payload.login || 'User'
-        
+
         const messageWithUsername = {
           ...action.payload,
           username,
@@ -70,7 +70,7 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false
-        state.items = action.payload.map(message => {
+        state.items = action.payload.map((message) => {
           const username = message.username || message.name || message.login || 'User'
           return {
             ...message,

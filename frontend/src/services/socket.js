@@ -8,7 +8,6 @@ class SocketService {
   connect(token) {
     // Подключаемся к backend серверу на порту 5001
     const wsUrl = 'http://localhost:5001'
-    
     try {
       this.socket = io(wsUrl, {
         auth: {

@@ -17,7 +17,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error)
-  }
+  },
 )
 
 // Перехватчик для обработки ошибок авторизации
@@ -27,14 +27,14 @@ api.interceptors.response.use(
   },
   (error) => {
     // Редирект на логин только если мы не на странице логина или регистрации
-    if (error.response?.status === 401 && 
-        !window.location.pathname.includes('/login') && 
-        !window.location.pathname.includes('/signup')) {
+    if (error.response?.status === 401
+        && !window.location.pathname.includes('/login')
+        && !window.location.pathname.includes('/signup')) {
       localStorage.removeItem('token')
       window.location.href = '/login'
     }
     return Promise.reject(error)
-  }
+  },
 )
 
 export default api

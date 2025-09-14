@@ -12,7 +12,7 @@ export const fetchUser = createAsyncThunk(
       console.error('Error fetching user:', error)
       return rejectWithValue(error.message)
     }
-  }
+  },
 )
 
 const authSlice = createSlice({
@@ -48,15 +48,15 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(fetchUser.fulfilled, (state, action) => {
-      const fetchedUsername = action.payload?.username || action.payload?.name || action.payload?.login
-      if (fetchedUsername) {
-        state.user = { username: fetchedUsername }
-        localStorage.setItem('username', fetchedUsername)
-      } else {
-        state.user = action.payload
-      }
-    })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        const fetchedUsername = action.payload?.username || action.payload?.name || action.payload?.login
+        if (fetchedUsername) {
+          state.user = { username: fetchedUsername }
+          localStorage.setItem('username', fetchedUsername)
+        } else {
+          state.user = action.payload
+        }
+      })
   },
 })
 
