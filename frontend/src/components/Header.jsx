@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,8 +5,8 @@ import { logout } from '../store/authSlice'
 
 const Header = () => {
   const { t } = useTranslation()
-  const user = useSelector(state => state.auth.user)
-  const token = useSelector(state => state.auth.token)
+  const user = useSelector((state) => state.auth.user)
+  const token = useSelector((state) => state.auth.token)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -23,8 +22,8 @@ const Header = () => {
           {t('title')}
         </Link>
         {(user || token) && (
-          <button 
-            onClick={handleLogout} 
+          <button
+            onClick={handleLogout}
             className="btn btn-primary"
           >
             {t('logoutBtn')}

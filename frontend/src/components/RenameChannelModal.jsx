@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +10,7 @@ import { filterProfanity } from '../utils/profanityFilter'
 const RenameChannelModal = ({ isOpen, onClose, channel }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const channels = useSelector(state => state.channels.items)
+  const channels = useSelector((state) => state.channels.items)
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -19,8 +19,8 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
       .required(t('modals.addErrors.required'))
       .test('unique', t('modals.addErrors.repeats'), function (value) {
         if (!value || !channel) return true
-        return !channels.some(ch => 
-          ch.id !== channel.id && ch.name.toLowerCase() === value.toLowerCase()
+        return !channels.some((ch) =>
+          ch.id !== channel.id && ch.name.toLowerCase() === value.toLowerCase(),
         )
       }),
   })
@@ -28,9 +28,9 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const filteredName = filterProfanity(values.name.trim())
-      await dispatch(renameChannel({ 
-        channelId: channel.id, 
-        name: filteredName 
+      await dispatch(renameChannel({
+        channelId: channel.id,
+        name: filteredName,
       })).unwrap()
       resetForm()
       onClose()
@@ -42,7 +42,7 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
   }
 
   useEffect(() => {
-    const handleEscape = e => {
+    const handleEscape = (e) => {
       if (e.key === 'Escape') {
         onClose()
       }
@@ -58,24 +58,26 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
 
   return (
     <>
-      <div 
-        className="modal-backdrop fade show" 
-        onClick={onClose} 
+      <div
+        className="modal-backdrop fade show"
+        onClick={onClose}
         style={{ zIndex: 1040 }}
       />
-      <div 
-        className="modal fade show" 
-        style={{ display: 'block', zIndex: 1050 }} 
+      <div
+        className="modal fade show"
+        style={{ display: 'block', zIndex: 1050 }}
         tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <div className="modal-title h5">{t('modals.titles.renamingChannel')}</div>
-              <button 
-                type="button" 
-                className="btn-close" 
-                onClick={onClose} 
+              <div className="modal-title h5">
+                {t('modals.titles.renamingChannel')}
+              </div>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={onClose}
                 aria-label="Close"
               />
             </div>
@@ -88,8 +90,8 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
                 <Form>
                   <div className="modal-body">
                     <div className="mb-3">
-                      <label 
-                        htmlFor="channelName" 
+                      <label
+                        htmlFor="channelName"
                         className="form-label"
                       >
                         {t('modals.addLabel')}
@@ -102,39 +104,38 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
                         autoFocus
                         data-testid="channel-name-input"
                       />
-                      <ErrorMessage 
-                        name="name" 
-                        component="div" 
-                        className="text-danger small" 
+                      <ErrorMessage
+                        name="name"
+                        component="div"
+                        className="text-danger small"
                       />
                     </div>
                   </div>
                   <div className="modal-footer">
-                    <button 
-                      type="button" 
-                      onClick={onClose} 
+                    <button
+                      type="button"
+                      onClick={onClose}
                       className="btn btn-secondary"
                     >
                       {t('modals.renameBtns.cancel')}
                     </button>
-                    <button 
-                      type="submit" 
-                      disabled={isSubmitting} 
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
                       className="btn btn-primary"
                     >
-                      {isSubmitting 
+                      {isSubmitting
                         ? (
-                            <>
-                              <span 
-                                className="spinner-border spinner-border-sm me-2" 
-                                role="status" 
-                                aria-hidden="true"
-                              />
-                              {t('loading.saving')}
-                            </>
-                          ) 
-                        : t('modals.renameBtns.submit')
-                      }
+                          <>
+                            <span
+                              className="spinner-border spinner-border-sm me-2"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                            {t('loading.saving')}
+                          </>
+                        )
+                        : t('modals.renameBtns.submit')}
                     </button>
                   </div>
                 </Form>

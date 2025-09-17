@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -53,7 +53,9 @@ const LoginPage = () => {
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <div className="text-center">
-                  <h2 className="text-center mb-4">{t('loginPage.title')}</h2>
+                  <h2 className="text-center mb-4">
+                    {t('loginPage.title')}
+                  </h2>
                   {authError && (
                     <div
                       className="alert alert-danger"
@@ -118,9 +120,13 @@ const LoginPage = () => {
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span>{t('loginPage.noAcc')}</span>
-                    
-                    <Link to="/signup">{t('loginPage.signupLink')}</Link>
+                    <span>
+                      {t('loginPage.noAcc')}
+                    </span>
+
+                    <Link to="/signup">
+                      {t('loginPage.signupLink')}
+                    </Link>
                   </div>
                 </div>
               </div>

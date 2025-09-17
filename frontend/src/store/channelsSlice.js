@@ -8,8 +8,7 @@ export const fetchChannels = createAsyncThunk(
     try {
       const response = await api.get('/channels')
       return response.data
-    } 
-    catch (error) {
+    } catch (error) {
       if (error.response?.status !== 401) {
         toast.error('Ошибка загрузки данных')
       }
@@ -25,8 +24,7 @@ export const createChannel = createAsyncThunk(
       const response = await api.post('/channels', channelData)
       toast.success('Канал создан')
       return response.data
-    } 
-    catch (error) {
+    } catch (error) {
       toast.error('Ошибка создания канала')
       return rejectWithValue(error.response?.data?.message || error.message)
     }
@@ -40,8 +38,7 @@ export const removeChannel = createAsyncThunk(
       await api.delete(`/channels/${channelId}`)
       toast.success('Канал удалён')
       return channelId
-    } 
-    catch (error) {
+    } catch (error) {
       toast.error('Ошибка удаления канала')
       return rejectWithValue(error.message)
     }
@@ -55,8 +52,7 @@ export const renameChannel = createAsyncThunk(
       const response = await api.patch(`/channels/${channelId}`, { name })
       toast.success('Канал переименован')
       return response.data
-    } 
-    catch (error) {
+    } catch (error) {
       toast.error('Ошибка переименования канала')
       return rejectWithValue(error.message)
     }
@@ -76,7 +72,7 @@ const channelsSlice = createSlice({
       state.currentChannelId = action.payload
     },
     addChannel: (state, action) => {
-      const existingChannel = state.items.find(ch => ch.id === action.payload.id)
+      const existingChannel = state.items.find((ch) => ch.id === action.payload.id)
       if (!existingChannel) {
         state.items.push(action.payload)
         if (!state.currentChannelId) {
@@ -88,15 +84,15 @@ const channelsSlice = createSlice({
     },
     removeChannelById: (state, action) => {
       const removedId = action.payload
-      state.items = state.items.filter(channel => channel.id !== removedId)
+      state.items = state.items.filter((channel) => channel.id !== removedId)
       if (state.currentChannelId === removedId) {
-        const defaultChannel = state.items.find(channel => channel.name === 'general')
+        const defaultChannel = state.items.find((channel) => channel.name === 'general')
         state.currentChannelId = defaultChannel ? defaultChannel.id : (state.items[0]?.id || null)
       }
     },
     updateChannel: (state, action) => {
       const { id, ...updates } = action.payload
-      const channelIndex = state.items.findIndex(channel => channel.id === id)
+      const channelIndex = state.items.findIndex((channel) => channel.id === id)
       if (channelIndex !== -1) {
         state.items[channelIndex] = { ...state.items[channelIndex], ...updates }
       }
@@ -112,7 +108,7 @@ const channelsSlice = createSlice({
         state.loading = false
         state.items = action.payload
         if (state.items.length > 0 && !state.currentChannelId) {
-          const generalChannel = state.items.find(channel => channel.name === 'general')
+          const generalChannel = state.items.find((channel) => channel.name === 'general')
           state.currentChannelId = generalChannel ? generalChannel.id : state.items[0].id
         }
         // Убеждаемся, что ошибки сброшены
@@ -128,7 +124,7 @@ const channelsSlice = createSlice({
       })
       .addCase(createChannel.fulfilled, (state, action) => {
         state.loading = false
-        const existingChannel = state.items.find(ch => ch.id === action.payload.id)
+        const existingChannel = state.items.find((ch) => ch.id === action.payload.id)
         if (!existingChannel) {
           state.items.push(action.payload)
         }
@@ -147,9 +143,9 @@ const channelsSlice = createSlice({
       .addCase(removeChannel.fulfilled, (state, action) => {
         state.loading = false
         const removedId = action.payload
-        state.items = state.items.filter(channel => channel.id !== removedId)
+        state.items = state.items.filter((channel) => channel.id !== removedId)
         if (state.currentChannelId === removedId) {
-          const defaultChannel = state.items.find(channel => channel.name === 'general')
+          const defaultChannel = state.items.find((channel) => channel.name === 'general')
           state.currentChannelId = defaultChannel ? defaultChannel.id : (state.items[0]?.id || null)
         }
       })
@@ -164,7 +160,7 @@ const channelsSlice = createSlice({
       .addCase(renameChannel.fulfilled, (state, action) => {
         state.loading = false
         const { id, ...updates } = action.payload
-        const channelIndex = state.items.findIndex(channel => channel.id === id)
+        const channelIndex = state.items.findIndex((channel) => channel.id === id)
         if (channelIndex !== -1) {
           state.items[channelIndex] = { ...state.items[channelIndex], ...updates }
         }

@@ -31,8 +31,7 @@ class SocketService {
       this.socket.on('disconnect', (reason) => {
         console.log('WebSocket disconnected:', reason)
       })
-    } 
-    catch (error) {
+    } catch (error) {
       console.error('Failed to create WebSocket connection:', error)
     }
   }

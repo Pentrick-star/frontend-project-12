@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
@@ -10,7 +10,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
   const [isRemoving, setIsRemoving] = useState(false)
 
   useEffect(() => {
-    const handleEscape = e => {
+    const handleEscape = (e) => {
       if (e.key === 'Escape') {
         onClose()
       }
@@ -35,7 +35,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
     }
   }
 
-  if (!isOpen || !channel) return null;
+  if (!isOpen || !channel) return null
 
   return (
     <>
@@ -64,7 +64,12 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
             </div>
             <div className="modal-body">
               <p>
-                {t('modals.deleteQuestion')} <b>{channel.name}</b>?
+                {t('modals.deleteQuestion')}
+                {' '}
+                <b>
+                  {channel.name}
+                </b>
+                ?
               </p>
             </div>
             <div className="modal-footer">
@@ -81,19 +86,18 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
                 disabled={isRemoving}
                 className="btn btn-danger"
               >
-                {isRemoving 
+                {isRemoving
                   ? (
-                      <>
-                        <span
-                          className="spinner-border spinner-border-sm me-2"
-                          role="status"
-                          aria-hidden="true"
-                        />
-                        {t('loading.deleting')}
-                      </>
-                    ) 
-                  : t('modals.deleteBtns.delete')
-                }
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                      {t('loading.deleting')}
+                    </>
+                  )
+                  : t('modals.deleteBtns.delete')}
               </button>
             </div>
           </div>

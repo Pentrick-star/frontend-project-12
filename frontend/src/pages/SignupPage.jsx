@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -34,14 +34,14 @@ const SignupPage = () => {
         username: values.username,
         password: values.password,
       })
-      
+
       // После успешной регистрации сразу входим
       if (response.status === 201 || response.status === 200) {
         const loginResponse = await api.post('/login', {
           username: values.username,
           password: values.password,
         })
-        
+
         if (loginResponse.data.token) {
           console.log('SignupPage - login successful, token:', loginResponse.data.token)
           const { token } = loginResponse.data
@@ -73,7 +73,9 @@ const SignupPage = () => {
               </div>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <div className="text-center">
-                  <h2 className="text-center mb-4" data-testid="signup-title">{t('signupPage.title')}</h2>
+                  <h2 className="text-center mb-4" data-testid="signup-title">
+                    {t('signupPage.title')}
+                  </h2>
                   {signupError && (
                     <div className="alert alert-danger" role="alert">
                       {signupError}
@@ -87,7 +89,9 @@ const SignupPage = () => {
                     {({ isSubmitting }) => (
                       <Form data-testid="signup-form">
                         <div className="mb-3" data-testid="username-group">
-                          <label htmlFor="username" className="form-label">{t('signupPage.usernameLabel')}</label>
+                          <label htmlFor="username" className="form-label">
+                            {t('signupPage.usernameLabel')}
+                          </label>
                           <Field
                             type="text"
                             id="username"
@@ -99,7 +103,9 @@ const SignupPage = () => {
                         </div>
 
                         <div className="mb-3" data-testid="password-group">
-                          <label htmlFor="password" className="form-label">{t('signupPage.passwordLabel')}</label>
+                          <label htmlFor="password" className="form-label">
+                            {t('signupPage.passwordLabel')}
+                          </label>
                           <Field
                             type="password"
                             id="password"
@@ -111,7 +117,9 @@ const SignupPage = () => {
                         </div>
 
                         <div className="mb-4" data-testid="confirm-password-group">
-                          <label htmlFor="confirmPassword" className="form-label">{t('signupPage.confirmPasswordLabel')}</label>
+                          <label htmlFor="confirmPassword" className="form-label">
+                            {t('signupPage.confirmPasswordLabel')}
+                          </label>
                           <Field
                             type="password"
                             id="confirmPassword"
@@ -122,9 +130,9 @@ const SignupPage = () => {
                           <ErrorMessage name="confirmPassword" component="div" className="text-danger small" />
                         </div>
 
-                        <button 
-                          type="submit" 
-                          disabled={isSubmitting} 
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
                           className="w-100 btn btn-primary"
                           data-testid="signup-button"
                         >
@@ -134,9 +142,13 @@ const SignupPage = () => {
                     )}
                   </Formik>
                   <div className="text-center mt-3">
-                    <span>{t('signupPage.hasAcc')}</span>
-                    
-                    <Link to="/login">{t('signupPage.loginLink')}</Link>
+                    <span>
+                      {t('signupPage.hasAcc')}
+                    </span>
+
+                    <Link to="/login">
+                      {t('signupPage.loginLink')}
+                    </Link>
                   </div>
                 </div>
               </div>

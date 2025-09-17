@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { filterProfanity } from '../utils/profanityFilter'
@@ -7,17 +7,17 @@ import api from '../services/api'
 const MessageForm = () => {
   const { t } = useTranslation()
   const [message, setMessage] = useState('')
-  const { currentChannelId } = useSelector(state => state.channels)
-  const user = useSelector(state => state.auth.user)
-  
-  const handleSubmit = async e => {
+  const { currentChannelId } = useSelector((state) => state.channels)
+  const user = useSelector((state) => state.auth.user)
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!message.trim() || !currentChannelId) return
 
     try {
       const filteredMessage = filterProfanity(message.trim())
       const username = user?.username || localStorage.getItem('username') || 'User'
-      
+
       const messageData = {
         body: filteredMessage,
         channelId: currentChannelId,
@@ -33,7 +33,7 @@ const MessageForm = () => {
     }
   }
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(e)
@@ -45,20 +45,22 @@ const MessageForm = () => {
       <input
         type="text"
         value={message}
-        onChange={e => setMessage(e.target.value)}
+        onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={t('messagePlaceholder')}
         className="form-control"
         name="body"
         aria-label={t('newMessage')}
       />
-      <button 
-        type="submit" 
-        disabled={!message.trim()} 
+      <button
+        type="submit"
+        disabled={!message.trim()}
         className="btn btn-outline-secondary"
       >
         →
-        <span className="visually-hidden">{t('messageBtnText')}</span>
+        <span className="visually-hidden">
+          {t('messageBtnText')}
+        </span>
       </button>
     </form>
   )

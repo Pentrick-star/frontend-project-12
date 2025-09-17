@@ -8,8 +8,7 @@ export const fetchMessages = createAsyncThunk(
     try {
       const response = await api.get('/messages')
       return response.data
-    } 
-    catch (error) {
+    } catch (error) {
       toast.error('Ошибка загрузки данных')
       return rejectWithValue(error.message)
     }
@@ -22,8 +21,7 @@ export const sendMessage = createAsyncThunk(
     try {
       const response = await api.post('/messages', messageData)
       return response.data
-    } 
-    catch (error) {
+    } catch (error) {
       toast.error('Ошибка отправки сообщения')
       return rejectWithValue(error.message)
     }
@@ -43,7 +41,7 @@ const messagesSlice = createSlice({
       const newMessage = action.payload
       const now = new Date().getTime()
 
-      const existingMessage = state.items.find(msg =>
+      const existingMessage = state.items.find((msg) =>
         msg.body === newMessage.body
         && msg.channelId === newMessage.channelId
         && msg.username === newMessage.username
