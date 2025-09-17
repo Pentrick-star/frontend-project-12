@@ -3,5 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  esbuild: { jsx: 'automatic' }, // критично: не требовать глобальный React
+  esbuild: {
+    jsx: 'automatic',
+  },
 })
