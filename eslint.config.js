@@ -6,6 +6,7 @@ import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
   { ignores: ['**/dist/**', '**/build/**', '**/node_modules/**'] },
+
   {
     files: ['frontend/src/**/*.{js,jsx}'],
     languageOptions: {
@@ -21,8 +22,8 @@ export default defineConfig([
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-vars': 'error',
 
-      '@stylistic/arrow-parens': ['error', 'as-needed'],
-      '@stylistic/brace-style': ['error', 'stroustrup'],
+      '@stylistic/arrow-parens': ['error', 'always'],
+      '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: false }],
       '@stylistic/indent': ['error', 2],
       '@stylistic/no-trailing-spaces': 'error',
       '@stylistic/eol-last': ['error', 'always'],
@@ -35,4 +36,3 @@ export default defineConfig([
     settings: { react: { version: 'detect' } },
   },
 ])
-

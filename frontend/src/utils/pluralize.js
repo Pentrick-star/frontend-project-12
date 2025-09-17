@@ -8,6 +8,6 @@ export const pluralize = (count, forms) => {
   return forms[2] // сообщений
 }
 
-export const pluralizeMessages = count => {
+export const pluralizeMessages = (count) => {
   return pluralize(count, ['сообщение', 'сообщения', 'сообщений'])
 }
