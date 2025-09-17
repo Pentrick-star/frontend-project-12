@@ -10,7 +10,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
   const [isRemoving, setIsRemoving] = useState(false)
 
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = e => {
       if (e.key === 'Escape') {
         onClose()
       }
@@ -27,10 +27,12 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
       setIsRemoving(true)
       await dispatch(removeChannel(channel.id)).unwrap()
       onClose()
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Failed to remove channel:', error)
       // Ошибка уже обрабатывается в slice через toast
-    } finally {
+    }
+    finally {
       setIsRemoving(false)
     }
   }

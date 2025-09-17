@@ -30,10 +30,12 @@ const LoginPage = () => {
         dispatch(setUser({ username }))
         navigate('/')
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Login error:', error)
       setAuthError(t('loginPage.error'))
-    } finally {
+    }
+    finally {
       setSubmitting(false)
     }
   }

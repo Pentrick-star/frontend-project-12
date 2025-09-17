@@ -51,13 +51,16 @@ const SignupPage = () => {
           navigate('/')
         }
       }
-    } catch (error) {
+    }
+    catch (error) {
       if (error.response?.status === 409) {
         setSignupError(t('signupPage.signupError'))
-      } else {
+      }
+      else {
         setSignupError(t('networkError'))
       }
-    } finally {
+    }
+    finally {
       setSubmitting(false)
     }
   }

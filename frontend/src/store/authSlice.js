@@ -8,7 +8,8 @@ export const fetchUser = createAsyncThunk(
       const response = await api.get('/auth/me')
       console.log('Server response for /auth/me:', response.data)
       return response.data
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Error fetching user:', error)
       return rejectWithValue(error.message)
     }
@@ -23,7 +24,8 @@ const authSlice = createSlice({
       try {
         const storedUsername = localStorage.getItem('username')
         return storedUsername ? { username: storedUsername } : null
-      } catch {
+      }
+      catch {
         return null
       }
     })(),
@@ -39,21 +41,22 @@ const authSlice = createSlice({
         localStorage.setItem('username', action.payload.username)
       }
     },
-    logout: (state) => {
+    logout: state => {
       state.token = null
       state.user = null
       localStorage.removeItem('token')
       localStorage.removeItem('username')
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         const fetchedUsername = action.payload?.username || action.payload?.name || action.payload?.login
         if (fetchedUsername) {
           state.user = { username: fetchedUsername }
           localStorage.setItem('username', fetchedUsername)
-        } else {
+        }
+        else {
           state.user = action.payload
         }
       })
