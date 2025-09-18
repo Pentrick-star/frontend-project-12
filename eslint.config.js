@@ -22,7 +22,11 @@ export default defineConfig([
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-vars': 'error',
       '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: false }],
-      '@stylistic/indent': ['error', 2],
+      // Use dedicated JSX indent rule and ignore JSX in the base indent rule
+      '@stylistic/jsx-indent': ['error', 2],
+      '@stylistic/indent': ['error', 2, {
+        ignoredNodes: ['JSXElement', 'JSXElement *', 'JSXFragment', 'JSXFragment *'],
+      }],
       '@stylistic/no-trailing-spaces': 'error',
       '@stylistic/jsx-one-expression-per-line': 'error',
       '@stylistic/jsx-curly-newline': ['error', { multiline: 'consistent', singleline: 'consistent' }],
