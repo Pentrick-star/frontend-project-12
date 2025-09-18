@@ -10,7 +10,7 @@ const MessageForm = () => {
   const { currentChannelId } = useSelector(state => state.channels)
   const user = useSelector(state => state.auth.user)
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!message.trim() || !currentChannelId) return
 
@@ -34,7 +34,7 @@ const MessageForm = () => {
     }
   }
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(e)

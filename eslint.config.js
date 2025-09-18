@@ -25,7 +25,7 @@ export default defineConfig([
       '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: false }],
       '@stylistic/indent': ['error', 2],
       '@stylistic/no-trailing-spaces': 'error',
-      '@stylistic/eol-last': ['error', 'always'],
+      '@stylistic/arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
       '@stylistic/jsx-one-expression-per-line': 'error',
       '@stylistic/jsx-curly-newline': ['error', { multiline: 'consistent', singleline: 'consistent' }],
       '@stylistic/padded-blocks': ['error', 'never'],
