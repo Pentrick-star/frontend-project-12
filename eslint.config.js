@@ -33,6 +33,8 @@ export default defineConfig([
       '@stylistic/jsx-indent-props': ['error', 2],
       '@stylistic/arrow-parens': 'off',
       '@stylistic/indent': 'off',
+      '@stylistic/arrow-parens': ['error', 'as-needed'],
+      '@stylistic/indent': 'off',
     },
     settings: { react: { version: 'detect' } },
   },

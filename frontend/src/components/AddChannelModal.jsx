@@ -11,7 +11,7 @@ import { filterProfanity } from '../utils/profanityFilter'
 const AddChannelModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const channels = useSelector((state) => state.channels.items)
+  const channels = useSelector(state => state.channels.items)
 
   const validationSchema = Yup.object({
     name: Yup.string()
@@ -24,7 +24,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       })
       .test('unique', t('modals.addErrors.repeats'), function (value) {
         if (!value) return true
-        return !channels.some((channel) =>
+        return !channels.some(channel =>
           channel.name.toLowerCase() === value.toLowerCase(),
         )
       }),
@@ -47,7 +47,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   }
 
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = e => {
       if (e.key === 'Escape') {
         onClose()
       }

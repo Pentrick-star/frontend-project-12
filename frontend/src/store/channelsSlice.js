@@ -77,7 +77,7 @@ const channelsSlice = createSlice({
       state.currentChannelId = action.payload
     },
     addChannel: (state, action) => {
-      const existingChannel = state.items.find((ch) => ch.id === action.payload.id)
+      const existingChannel = state.items.find(ch => ch.id === action.payload.id)
       if (!existingChannel) {
         state.items.push(action.payload)
         if (!state.currentChannelId) {
@@ -89,23 +89,23 @@ const channelsSlice = createSlice({
     },
     removeChannelById: (state, action) => {
       const removedId = action.payload
-      state.items = state.items.filter((channel) => channel.id !== removedId)
+      state.items = state.items.filter(channel => channel.id !== removedId)
       if (state.currentChannelId === removedId) {
-        const defaultChannel = state.items.find((channel) => channel.name === 'general')
+        const defaultChannel = state.items.find(channel => channel.name === 'general')
         state.currentChannelId = defaultChannel ? defaultChannel.id : (state.items[0]?.id || null)
       }
     },
     updateChannel: (state, action) => {
       const { id, ...updates } = action.payload
-      const channelIndex = state.items.findIndex((channel) => channel.id === id)
+      const channelIndex = state.items.findIndex(channel => channel.id === id)
       if (channelIndex !== -1) {
         state.items[channelIndex] = { ...state.items[channelIndex], ...updates }
       }
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchChannels.pending, (state) => {
+      .addCase(fetchChannels.pending, state => {
         state.loading = true
         state.error = null
       })
@@ -113,7 +113,7 @@ const channelsSlice = createSlice({
         state.loading = false
         state.items = action.payload
         if (state.items.length > 0 && !state.currentChannelId) {
-          const generalChannel = state.items.find((channel) => channel.name === 'general')
+          const generalChannel = state.items.find(channel => channel.name === 'general')
           state.currentChannelId = generalChannel ? generalChannel.id : state.items[0].id
         }
         // Убеждаемся, что ошибки сброшены
@@ -123,13 +123,13 @@ const channelsSlice = createSlice({
         state.loading = false
         state.error = action.payload || action.error.message
       })
-      .addCase(createChannel.pending, (state) => {
+      .addCase(createChannel.pending, state => {
         state.loading = true
         state.error = null
       })
       .addCase(createChannel.fulfilled, (state, action) => {
         state.loading = false
-        const existingChannel = state.items.find((ch) => ch.id === action.payload.id)
+        const existingChannel = state.items.find(ch => ch.id === action.payload.id)
         if (!existingChannel) {
           state.items.push(action.payload)
         }
@@ -141,16 +141,16 @@ const channelsSlice = createSlice({
         state.loading = false
         state.error = action.payload || action.error.message
       })
-      .addCase(removeChannel.pending, (state) => {
+      .addCase(removeChannel.pending, state => {
         state.loading = true
         state.error = null
       })
       .addCase(removeChannel.fulfilled, (state, action) => {
         state.loading = false
         const removedId = action.payload
-        state.items = state.items.filter((channel) => channel.id !== removedId)
+        state.items = state.items.filter(channel => channel.id !== removedId)
         if (state.currentChannelId === removedId) {
-          const defaultChannel = state.items.find((channel) => channel.name === 'general')
+          const defaultChannel = state.items.find(channel => channel.name === 'general')
           state.currentChannelId = defaultChannel ? defaultChannel.id : (state.items[0]?.id || null)
         }
       })
@@ -158,14 +158,14 @@ const channelsSlice = createSlice({
         state.loading = false
         state.error = action.payload || action.error.message
       })
-      .addCase(renameChannel.pending, (state) => {
+      .addCase(renameChannel.pending, state => {
         state.loading = true
         state.error = null
       })
       .addCase(renameChannel.fulfilled, (state, action) => {
         state.loading = false
         const { id, ...updates } = action.payload
-        const channelIndex = state.items.findIndex((channel) => channel.id === id)
+        const channelIndex = state.items.findIndex(channel => channel.id === id)
         if (channelIndex !== -1) {
           state.items[channelIndex] = { ...state.items[channelIndex], ...updates }
         }

@@ -10,7 +10,7 @@ import RemoveChannelModal from './RemoveChannelModal'
 const ChannelsList = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const { items: channels, currentChannelId } = useSelector((state) => state.channels)
+  const { items: channels, currentChannelId } = useSelector(state => state.channels)
 
   const [showAddModal, setShowAddModal] = useState(false)
   const [showRenameModal, setShowRenameModal] = useState(false)
@@ -20,7 +20,7 @@ const ChannelsList = () => {
   const dropdownRef = useRef(null)
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(null)
       }
@@ -32,7 +32,7 @@ const ChannelsList = () => {
     }
   }, [])
 
-  const handleChannelClick = (channelId) => {
+  const handleChannelClick = channelId => {
     dispatch(setCurrentChannel(channelId))
     setShowDropdown(null)
   }
@@ -42,19 +42,19 @@ const ChannelsList = () => {
     setShowDropdown(showDropdown === channelId ? null : channelId)
   }
 
-  const handleRename = (channel) => {
+  const handleRename = channel => {
     setSelectedChannel(channel)
     setShowRenameModal(true)
     setShowDropdown(null)
   }
 
-  const handleRemove = (channel) => {
+  const handleRemove = channel => {
     setSelectedChannel(channel)
     setShowRemoveModal(true)
     setShowDropdown(null)
   }
 
-  const isRemovable = (channel) => channel.name !== 'general' && channel.name !== 'random'
+  const isRemovable = channel => channel.name !== 'general' && channel.name !== 'random'
 
   return (
     <div className="d-flex flex-column h-100">
@@ -79,7 +79,7 @@ const ChannelsList = () => {
       </div>
 
       <ul className="nav flex-column nav-pills nav-fill px-2" data-testid="channels-list">
-        {channels.map((channel) => (
+        {channels.map(channel => (
           <li key={channel.id} className="nav-item w-100 position-relative" data-testid={`channel-${channel.id}`}>
             <div className="d-flex justify-content-between align-items-start w-100" ref={dropdownRef}>
               <button
@@ -100,7 +100,7 @@ const ChannelsList = () => {
                 <button
                   type="button"
                   className="btn btn-sm text-dark p-0"
-                  onClick={(e) => handleDropdownToggle(channel.id, e)}
+                  onClick={e => handleDropdownToggle(channel.id, e)}
                   data-testid="manage-channel-button"
                 >
                   <i className="bi bi-chevron-down" />
@@ -126,7 +126,7 @@ const ChannelsList = () => {
                   <button
                     type="button"
                     className="dropdown-item"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault()
                       e.stopPropagation()
                       handleRename(channel)
@@ -140,7 +140,7 @@ const ChannelsList = () => {
                   <button
                     type="button"
                     className="dropdown-item text-danger"
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault()
                       e.stopPropagation()
                       handleRemove(channel)

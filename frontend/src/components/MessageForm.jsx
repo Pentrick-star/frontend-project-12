@@ -8,10 +8,10 @@ import api from '../services/api'
 const MessageForm = () => {
   const { t } = useTranslation()
   const [message, setMessage] = useState('')
-  const { currentChannelId } = useSelector((state) => state.channels)
-  const user = useSelector((state) => state.auth.user)
+  const { currentChannelId } = useSelector(state => state.channels)
+  const user = useSelector(state => state.auth.user)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault()
     if (!message.trim() || !currentChannelId) return
 
@@ -35,7 +35,7 @@ const MessageForm = () => {
     }
   }
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(e)
@@ -47,7 +47,7 @@ const MessageForm = () => {
       <input
         type="text"
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={e => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={t('messagePlaceholder')}
         className="form-control"
