@@ -21,7 +21,7 @@ export default defineConfig([
       ...react.configs.flat.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-vars': 'error',
-      '@stylistic/arrow-parens': ['error', 'as-needed'],
+      '@stylistic/arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
       '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: false }],
       '@stylistic/indent': ['error', 2],
       '@stylistic/no-trailing-spaces': 'error',
