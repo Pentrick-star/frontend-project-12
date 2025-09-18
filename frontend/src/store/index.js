@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './authSlice'
 import channelsReducer from './channelsSlice'

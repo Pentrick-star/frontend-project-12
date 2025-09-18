@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 import { io } from 'socket.io-client'
 
 class SocketService {

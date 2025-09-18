@@ -1,4 +1,4 @@
-// Временно отключаем Rollbar для учебного проекта
+/* eslint @stylistic/indent: 0 */
 const rollbar = {
   error: () => {},
   info: () => {},

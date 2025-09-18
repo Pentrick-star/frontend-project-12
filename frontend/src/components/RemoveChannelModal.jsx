@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'

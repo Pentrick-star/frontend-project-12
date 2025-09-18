@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'

@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 // Простой фильтр нецензурных слов
 const profaneWords = ['boobs', 'fuck', 'shit', 'ass', 'bitch', 'dick', 'pussy', 'cock']
 

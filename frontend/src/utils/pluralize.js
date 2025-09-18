@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 export const pluralize = (count, forms) => {
   if (count % 10 === 1 && count % 100 !== 11) {
     return forms[0] // сообщение

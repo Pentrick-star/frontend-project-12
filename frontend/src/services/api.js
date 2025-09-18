@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 import axios from 'axios'
 
 const api = axios.create({

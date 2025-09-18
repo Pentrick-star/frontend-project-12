@@ -1,3 +1,4 @@
+/* eslint @stylistic/indent: 0 */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 import api from '../services/api'
