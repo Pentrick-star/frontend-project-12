@@ -6,6 +6,7 @@ import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
   { ignores: ['**/dist/**', '**/build/**', '**/node_modules/**'] },
+
   {
     files: ['frontend/src/**/*.{js,jsx}'],
     languageOptions: {
@@ -18,18 +19,20 @@ export default defineConfig([
     rules: {
       ...js.configs.recommended.rules,
       ...react.configs.flat.recommended.rules,
+
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-vars': 'error',
+
       '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: false }],
-      '@stylistic/indent': 'off', // выключаем, чтобы CI не падал на JSX-отступах
       '@stylistic/no-trailing-spaces': 'error',
       '@stylistic/jsx-one-expression-per-line': 'error',
       '@stylistic/jsx-curly-newline': ['error', { multiline: 'consistent', singleline: 'consistent' }],
       '@stylistic/padded-blocks': ['error', 'never'],
       '@stylistic/multiline-ternary': ['error', 'always-multiline'],
       '@stylistic/semi': ['error', 'never'],
-      '@stylistic/arrow-parens': ['error', 'always'], // всегда ставим скобки — автофиксит
       '@stylistic/jsx-indent-props': ['error', 2],
+      '@stylistic/arrow-parens': 'off',
+      '@stylistic/indent': 'off',
     },
     settings: { react: { version: 'detect' } },
   },
