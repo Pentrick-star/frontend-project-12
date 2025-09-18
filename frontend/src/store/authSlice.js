@@ -41,14 +41,14 @@ const authSlice = createSlice({
         localStorage.setItem('username', action.payload.username)
       }
     },
-    logout: state => {
+    logout: (state) => {
       state.token = null
       state.user = null
       localStorage.removeItem('token')
       localStorage.removeItem('username')
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
         const fetchedUsername = action.payload?.username || action.payload?.name || action.payload?.login
