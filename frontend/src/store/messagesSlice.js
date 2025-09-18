@@ -43,7 +43,7 @@ const messagesSlice = createSlice({
       const newMessage = action.payload
       const now = new Date().getTime()
 
-      const existingMessage = state.items.find((msg) =>
+      const existingMessage = state.items.find(msg =>
         msg.body === newMessage.body
         && msg.channelId === newMessage.channelId
         && msg.username === newMessage.username
@@ -60,19 +60,19 @@ const messagesSlice = createSlice({
         state.items.push(messageWithUsername)
       }
     },
-    clearMessages: (state) => {
+    clearMessages: state => {
       state.items = []
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchMessages.pending, (state) => {
+      .addCase(fetchMessages.pending, state => {
         state.loading = true
         state.error = null
       })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.loading = false
-        state.items = action.payload.map((message) => {
+        state.items = action.payload.map(message => {
           const username = message.username || message.name || message.login || 'User'
           return {
             ...message,

@@ -10,9 +10,9 @@ import socketService from '../services/socket'
 const ChatPage = () => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const token = useSelector((state) => state.auth.token)
-  const { items: channels, currentChannelId, loading: channelsLoading } = useSelector((state) => state.channels)
-  const { items: messages, loading: messagesLoading } = useSelector((state) => state.messages)
+  const token = useSelector(state => state.auth.token)
+  const { items: channels, currentChannelId, loading: channelsLoading } = useSelector(state => state.channels)
+  const { items: messages, loading: messagesLoading } = useSelector(state => state.messages)
 
   useEffect(() => {
     if (!token) return
@@ -29,21 +29,21 @@ const ChatPage = () => {
     try {
       socketService.connect(token)
 
-      const handleNewMessage = (newMessage) => {
+      const handleNewMessage = newMessage => {
         const username = newMessage.username || 'User'
         const messageWithUsername = { ...newMessage, username }
         dispatch(addMessage(messageWithUsername))
       }
 
-      const handleNewChannel = (newChannel) => {
+      const handleNewChannel = newChannel => {
         dispatch(addChannel(newChannel))
       }
 
-      const handleRemoveChannel = (channelId) => {
+      const handleRemoveChannel = channelId => {
         dispatch(removeChannelById(channelId))
       }
 
-      const handleRenameChannel = (updatedChannel) => {
+      const handleRenameChannel = updatedChannel => {
         dispatch(updateChannel(updatedChannel))
       }
 
@@ -61,8 +61,8 @@ const ChatPage = () => {
     }
   }, [token, dispatch])
 
-  const currentChannel = channels.find((channel) => channel.id === currentChannelId)
-  const channelMessages = messages.filter((message) => message.channelId === currentChannelId)
+  const currentChannel = channels.find(channel => channel.id === currentChannelId)
+  const channelMessages = messages.filter(message => message.channelId === currentChannelId)
 
   if (channelsLoading || messagesLoading) {
     return (
@@ -111,7 +111,7 @@ const ChatPage = () => {
               )
               : channelMessages.length === 0
                 ? <div />
-                : channelMessages.map((message) => (
+                : channelMessages.map(message => (
                   <div key={message.id} className="text-break mb-2">
                     <b>
                       {message.username || 'User'}
