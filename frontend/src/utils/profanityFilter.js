@@ -1,7 +1,7 @@
 // Простой фильтр нецензурных слов
 const profaneWords = ['boobs', 'fuck', 'shit', 'ass', 'bitch', 'dick', 'pussy', 'cock']
 
-export const filterProfanity = (text) => {
+export const filterProfanity = text => {
   if (!text) return text
 
   let filteredText = text
@@ -13,7 +13,7 @@ export const filterProfanity = (text) => {
   return filteredText
 }
 
-export const isProfane = (text) => {
+export const isProfane = text => {
   if (!text) return false
 
   return profaneWords.some(word => {

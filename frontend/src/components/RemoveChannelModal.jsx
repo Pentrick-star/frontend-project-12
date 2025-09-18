@@ -10,7 +10,7 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
   const [isRemoving, setIsRemoving] = useState(false)
 
   useEffect(() => {
-    const handleEscape = (e) => {
+    const handleEscape = e => {
       if (e.key === 'Escape') {
         onClose()
       }
