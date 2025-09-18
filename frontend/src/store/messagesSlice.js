@@ -60,13 +60,13 @@ const messagesSlice = createSlice({
         state.items.push(messageWithUsername)
       }
     },
-    clearMessages: state => {
+    clearMessages: (state) => {
       state.items = []
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchMessages.pending, state => {
+      .addCase(fetchMessages.pending, (state) => {
         state.loading = true
         state.error = null
       })
