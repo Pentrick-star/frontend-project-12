@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4",
-    "@playwright/test": "^1.55.0"
+    "@playwright/test": "^1.55.0",
+    "@rollbar/react": "^0.11.2",
+    "rollbar": "^2.26.4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.4",
