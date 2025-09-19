@@ -8,6 +8,8 @@ import ChatPage from './pages/ChatPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import NotFoundPage from './pages/NotFoundPage'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          <ToastContainer position="top-right" autoClose={3000} />
         </div>
       </Router>
     </Provider>
