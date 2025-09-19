@@ -68,10 +68,11 @@ const AddChannelModal = ({ isOpen, onClose }) => {
       <div
         className="modal-backdrop fade show"
         onClick={onClose}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClose() }}
-        role="button"
-        tabIndex={0}
-        aria-label="Close modal backdrop"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClose()
+          }
+        }}
         style={{ zIndex: 1040 }}
       />
       <div

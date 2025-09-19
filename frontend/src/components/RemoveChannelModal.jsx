@@ -45,10 +45,11 @@ const RemoveChannelModal = ({ isOpen, onClose, channel }) => {
       <div
         className="modal-backdrop fade show"
         onClick={onClose}
-        onKeyDown={handleBackdropKeyDown}
-        role="button"
-        tabIndex={0}
-        aria-label="Close modal backdrop"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            onClose()
+          }
+        }}
         style={{ zIndex: 1040 }}
       />
       <div
