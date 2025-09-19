@@ -36,3 +36,6 @@ npx @hexlet/chat-server
 ```bash
 cd frontend && npm run dev
 ```
+
+### Demo
+- Приложение на Render: https://frontend-project-12-w7t9.onrender.com
