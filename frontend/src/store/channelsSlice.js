@@ -103,9 +103,9 @@ const channelsSlice = createSlice({
       }
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchChannels.pending, state => {
+      .addCase(fetchChannels.pending, (state) => {
         state.loading = true
         state.error = null
       })
@@ -123,7 +123,7 @@ const channelsSlice = createSlice({
         state.loading = false
         state.error = action.payload || action.error.message
       })
-      .addCase(createChannel.pending, state => {
+      .addCase(createChannel.pending, (state) => {
         state.loading = true
         state.error = null
       })
@@ -141,7 +141,7 @@ const channelsSlice = createSlice({
         state.loading = false
         state.error = action.payload || action.error.message
       })
-      .addCase(removeChannel.pending, state => {
+      .addCase(removeChannel.pending, (state) => {
         state.loading = true
         state.error = null
       })
@@ -158,7 +158,7 @@ const channelsSlice = createSlice({
         state.loading = false
         state.error = action.payload || action.error.message
       })
-      .addCase(renameChannel.pending, state => {
+      .addCase(renameChannel.pending, (state) => {
         state.loading = true
         state.error = null
       })

@@ -47,7 +47,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
   }
 
   useEffect(() => {
-    const handleEscape = e => {
+    const handleEscape = (e) => {
       if (e.key === 'Escape') {
         onClose()
       }

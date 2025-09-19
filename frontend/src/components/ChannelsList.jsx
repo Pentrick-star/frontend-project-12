@@ -20,7 +20,7 @@ const ChannelsList = () => {
   const dropdownRef = useRef(null)
 
   useEffect(() => {
-    const handleClickOutside = event => {
+    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(null)
       }
@@ -32,7 +32,7 @@ const ChannelsList = () => {
     }
   }, [])
 
-  const handleChannelClick = channelId => {
+  const handleChannelClick = (channelId) => {
     dispatch(setCurrentChannel(channelId))
     setShowDropdown(null)
   }
@@ -42,13 +42,13 @@ const ChannelsList = () => {
     setShowDropdown(showDropdown === channelId ? null : channelId)
   }
 
-  const handleRename = channel => {
+  const handleRename = (channel) => {
     setSelectedChannel(channel)
     setShowRenameModal(true)
     setShowDropdown(null)
   }
 
-  const handleRemove = channel => {
+  const handleRemove = (channel) => {
     setSelectedChannel(channel)
     setShowRemoveModal(true)
     setShowDropdown(null)
@@ -126,7 +126,7 @@ const ChannelsList = () => {
                   <button
                     type="button"
                     className="dropdown-item"
-                    onClick={e => {
+                    onClick={(e) => {
                       e.preventDefault()
                       e.stopPropagation()
                       handleRename(channel)
@@ -140,7 +140,7 @@ const ChannelsList = () => {
                   <button
                     type="button"
                     className="dropdown-item text-danger"
-                    onClick={e => {
+                    onClick={(e) => {
                       e.preventDefault()
                       e.stopPropagation()
                       handleRemove(channel)

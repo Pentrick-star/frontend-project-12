@@ -30,21 +30,21 @@ const ChatPage = () => {
     try {
       socketService.connect(token)
 
-      const handleNewMessage = newMessage => {
+      const handleNewMessage = (newMessage) => {
         const username = newMessage.username || 'User'
         const messageWithUsername = { ...newMessage, username }
         dispatch(addMessage(messageWithUsername))
       }
 
-      const handleNewChannel = newChannel => {
+      const handleNewChannel = (newChannel) => {
         dispatch(addChannel(newChannel))
       }
 
-      const handleRemoveChannel = channelId => {
+      const handleRemoveChannel = (channelId) => {
         dispatch(removeChannelById(channelId))
       }
 
-      const handleRenameChannel = updatedChannel => {
+      const handleRenameChannel = (updatedChannel) => {
         dispatch(updateChannel(updatedChannel))
       }
 

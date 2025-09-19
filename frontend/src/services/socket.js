@@ -25,11 +25,11 @@ class SocketService {
       })
 
       // Добавляем обработчики ошибок
-      this.socket.on('connect_error', error => {
+      this.socket.on('connect_error', (error) => {
         console.error('WebSocket connection error:', error)
       })
 
-      this.socket.on('disconnect', reason => {
+      this.socket.on('disconnect', (reason) => {
         console.log('WebSocket disconnected:', reason)
       })
     }
@@ -49,7 +49,7 @@ class SocketService {
     if (this.socket) {
       // Убираем предыдущий обработчик, если он есть
       this.socket.off('newMessage')
-      this.socket.on('newMessage', message => {
+      this.socket.on('newMessage', (message) => {
         callback(message)
       })
     }
@@ -59,7 +59,7 @@ class SocketService {
     if (this.socket) {
       // Убираем предыдущий обработчик, если он есть
       this.socket.off('newChannel')
-      this.socket.on('newChannel', data => {
+      this.socket.on('newChannel', (data) => {
         callback(data)
       })
     }

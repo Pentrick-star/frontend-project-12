@@ -5,7 +5,7 @@ import stylistic from '@stylistic/eslint-plugin'
 import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
-  { ignores: ['**/dist/**', '**/build/**', '**/node_modules/**'] },
+  { ignores: ['**/dist/**', '**/build/**', '**/node_modules/**', 'eslint.config.js'] },
 
   {
     files: ['frontend/src/**/*.{js,jsx}'],
@@ -31,10 +31,9 @@ export default defineConfig([
       '@stylistic/multiline-ternary': ['error', 'always-multiline'],
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/jsx-indent-props': ['error', 2],
-      '@stylistic/arrow-parens': 'off',
+
       '@stylistic/indent': 'off',
-      '@stylistic/arrow-parens': ['error', 'as-needed'],
-      '@stylistic/indent': 'off',
+      '@stylistic/arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
     },
     settings: { react: { version: 'detect' } },
   },
