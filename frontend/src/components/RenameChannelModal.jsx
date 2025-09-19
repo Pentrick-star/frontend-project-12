@@ -58,11 +58,21 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
 
   if (!isOpen || !channel) return null
 
+  function handleBackdropKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      onClose()
+    }
+  }
+
   return (
     <>
       <div
         className="modal-backdrop fade show"
         onClick={onClose}
+        onKeyDown={handleBackdropKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-label="Close modal backdrop"
         style={{ zIndex: 1040 }}
       />
       <div
