@@ -126,7 +126,7 @@ const ChatPage = () => {
                 ),
                 )}
           </div>
-          <div className="p-3 border-top bg-white">
+          <div className="mt-auto p-3 border-top bg-white">
             <MessageForm />
           </div>
         </div>
