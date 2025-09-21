@@ -35,6 +35,6 @@ export default defineConfig([
       '@stylistic/indent': 'off',
       '@stylistic/arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
     },
-    settings: { react: { version: 'detect' } },
+    settings: { react: { version: '19.1.1' } },
   },
 ])
