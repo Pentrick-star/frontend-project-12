@@ -17,7 +17,7 @@ function App() {
       <Router>
         <div className="d-flex flex-column h-100">
           <Header />
-          <Routes>
+          <Routes className="flex-grow-1">
             <Route
               path="/"
               element={(

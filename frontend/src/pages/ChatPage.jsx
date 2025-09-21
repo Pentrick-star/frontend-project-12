@@ -1,5 +1,5 @@
 /* eslint @stylistic/indent: 0 */
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { fetchChannels, addChannel, removeChannelById, updateChannel } from '../store/channelsSlice'
@@ -14,6 +14,11 @@ const ChatPage = () => {
   const token = useSelector(state => state.auth.token)
   const { items: channels, currentChannelId, loading: channelsLoading } = useSelector(state => state.channels)
   const { items: messages, loading: messagesLoading } = useSelector(state => state.messages)
+
+  const currentChannel = channels.find(channel => channel.id === currentChannelId)
+  const channelMessages = messages.filter(message => message.channelId === currentChannelId)
+
+  const messagesBoxRef = useRef(null)
 
   useEffect(() => {
     if (!token) return
@@ -62,8 +67,11 @@ const ChatPage = () => {
     }
   }, [token, dispatch])
 
-  const currentChannel = channels.find(channel => channel.id === currentChannelId)
-  const channelMessages = messages.filter(message => message.channelId === currentChannelId)
+  useEffect(() => {
+    if (messagesBoxRef.current) {
+      messagesBoxRef.current.scrollTop = messagesBoxRef.current.scrollHeight
+    }
+  }, [channelMessages])
 
   if (channelsLoading || messagesLoading) {
     return (
@@ -79,14 +87,14 @@ const ChatPage = () => {
 
   return (
     <div className="container-fluid h-100">
-      <div className="row g-0 h-100">
+      <div className="row g-0 h-100 flex-grow-1">
         <div className="col-4 col-md-3">
           <div className="h-100 border-end bg-light">
             <ChannelsList />
           </div>
         </div>
         <div className="col-8 col-md-9 d-flex flex-column h-100">
-          <div className="p-3 border-bottom bg-light">
+          <div className="p-3 border-bottom bg-light flex-shrink-0">
             <div>
               <b>
                 {currentChannel ? `# ${currentChannel.name}` : 'Выберите канал'}
@@ -99,7 +107,7 @@ const ChatPage = () => {
               </div>
             )}
           </div>
-          <div className="flex-grow-1 overflow-auto p-3" id="messages-box">
+          <div className="flex-grow-1 overflow-auto p-3" id="messages-box" ref={messagesBoxRef}>
             {messagesLoading
               ? (
                 <div className="d-flex justify-content-center align-items-center h-100">
@@ -126,7 +134,7 @@ const ChatPage = () => {
                 ),
                 )}
           </div>
-          <div className="mt-auto p-3 border-top bg-white">
+          <div className="mt-auto p-3 border-top bg-white flex-shrink-0">
             <MessageForm />
           </div>
         </div>
