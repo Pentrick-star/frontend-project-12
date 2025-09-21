@@ -1,5 +1,5 @@
 /* eslint @stylistic/indent: 0 */
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { fetchChannels, addChannel, removeChannelById, updateChannel } from '../store/channelsSlice'
@@ -14,7 +14,6 @@ const ChatPage = () => {
   const token = useSelector(state => state.auth.token)
   const { items: channels, currentChannelId, loading: channelsLoading } = useSelector(state => state.channels)
   const { items: messages, loading: messagesLoading } = useSelector(state => state.messages)
-  const messagesBoxRef = useRef(null)
 
   useEffect(() => {
     if (!token) return
@@ -63,12 +62,6 @@ const ChatPage = () => {
     }
   }, [token, dispatch])
 
-  useEffect(() => {
-    if (messagesBoxRef.current) {
-      messagesBoxRef.current.scrollTop = messagesBoxRef.current.scrollHeight
-    }
-  }, [channelMessages])
-
   const currentChannel = channels.find(channel => channel.id === currentChannelId)
   const channelMessages = messages.filter(message => message.channelId === currentChannelId)
 
@@ -106,7 +99,7 @@ const ChatPage = () => {
               </div>
             )}
           </div>
-          <div className="flex-grow-1 overflow-auto p-3" id="messages-box" ref={messagesBoxRef}>
+          <div className="flex-grow-1 overflow-auto p-3" id="messages-box">
             {messagesLoading
               ? (
                 <div className="d-flex justify-content-center align-items-center h-100">
@@ -133,7 +126,7 @@ const ChatPage = () => {
                 ),
                 )}
           </div>
-          <div className="mt-auto p-3 border-top bg-white">
+          <div className="p-3 border-top bg-white">
             <MessageForm />
           </div>
         </div>
