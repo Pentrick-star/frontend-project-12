@@ -102,6 +102,7 @@ const SignupPage = () => {
                             name="username"
                             className="form-control"
                             data-testid="username-field"
+                            autocomplete="username"
                           />
                           <ErrorMessage name="username" component="div" className="text-danger small" />
                         </div>
@@ -116,6 +117,7 @@ const SignupPage = () => {
                             name="password"
                             className="form-control"
                             data-testid="password-field"
+                            autocomplete="new-password"
                           />
                           <ErrorMessage name="password" component="div" className="text-danger small" />
                         </div>
@@ -130,6 +132,7 @@ const SignupPage = () => {
                             name="confirmPassword"
                             className="form-control"
                             data-testid="confirm-password-field"
+                            autocomplete="new-password"
                           />
                           <ErrorMessage name="confirmPassword" component="div" className="text-danger small" />
                         </div>

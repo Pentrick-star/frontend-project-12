@@ -111,6 +111,7 @@ const RenameChannelModal = ({ isOpen, onClose, channel }) => {
                         className="form-control"
                         autoFocus
                         data-testid="channel-name-input"
+                        autocomplete="off"
                       />
                       <ErrorMessage
                         name="name"

@@ -118,6 +118,7 @@ const AddChannelModal = ({ isOpen, onClose }) => {
                         autoFocus
                         data-testid="channel-name-input"
                         placeholder={t('modals.addLabel')}
+                        autocomplete="off"
                       />
                       <ErrorMessage name="name" component="div" className="text-danger small" />
                     </div>

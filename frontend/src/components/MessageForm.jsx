@@ -53,6 +53,7 @@ const MessageForm = () => {
         className="form-control"
         name="body"
         aria-label={t('newMessage')}
+        autocomplete="off"
       />
       <button
         type="submit"

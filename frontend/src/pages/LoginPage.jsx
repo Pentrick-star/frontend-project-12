@@ -85,6 +85,7 @@ const LoginPage = () => {
                             name="username"
                             className={`form-control ${authError ? 'is-invalid' : ''}`}
                             data-testid="username-field"
+                            autocomplete="username"
                           />
                           <ErrorMessage
                             name="username"
@@ -103,6 +104,7 @@ const LoginPage = () => {
                             name="password"
                             className={`form-control ${authError ? 'is-invalid' : ''}`}
                             data-testid="password-field"
+                            autocomplete="current-password"
                           />
                           <ErrorMessage
                             name="password"
