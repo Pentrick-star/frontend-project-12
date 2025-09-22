@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "npx @hexlet/chat-server --port 5001 & npx start-server -s ./frontend/dist",
+    "postinstall": "cd frontend && npm install"
   },
   "keywords": [],
   "author": "",

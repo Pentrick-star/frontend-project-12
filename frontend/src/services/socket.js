@@ -7,8 +7,8 @@ class SocketService {
   }
 
   connect(token) {
-    // Подключаемся к backend серверу на порту 5001
-    const wsUrl = 'http://localhost:5001'
+    // Подключаемся к backend серверу
+    const wsUrl = import.meta.env.VITE_WS_URL || 'http://localhost:5001'
     try {
       this.socket = io(wsUrl, {
         auth: {
