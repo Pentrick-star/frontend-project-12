@@ -38,4 +38,4 @@ cd frontend && npm run dev
 ```
 
 ### Demo
-- Приложение на Render: https://frontend-project-12-w7t9.onrender.com
+- Приложение на Render: https://frontend-project-12-8zuf.onrender.com
